@@ -231,6 +231,23 @@ window.PatronDB = (function () {
         const ls = localStorage.getItem(k);
         last[k] = ls == null ? undefined : _canon(ls);
       }
+      // ALWAYS, on every connected load: push any LOCAL-ONLY keys up to the cloud.
+      // Additive — it only uploads keys the cloud doesn't already have, so it can
+      // never overwrite another device's data. This reliably migrates a device's
+      // existing data up even when the fragile first-load seed below was missed
+      // (the bug that left the cloud empty). Runs on phone + PC harmlessly.
+      try {
+        const cloudNow = await _cloudGetAll();
+        for (let i = 0; i < localStorage.length; i++) {
+          const k = localStorage.key(i);
+          if (_skip(k) || (k in cloudNow)) continue;
+          const ls = localStorage.getItem(k);
+          if (ls == null) continue;
+          let val; try { val = JSON.parse(ls); } catch (_) { val = ls; }
+          _cloudSet(k, val);
+          last[k] = _canon(ls);
+        }
+      } catch (_) {}
       // FIRST LOAD ONLY: adopt the cloud copy before the page renders, then let
       // it render once. This reload happens before you've interacted, so it can't
       // eat anything. Guarded by a per-session flag so it runs at most once.
