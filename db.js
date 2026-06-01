@@ -1,5 +1,5 @@
 /* ============================================================
- * db.js — shared cloud sync for the Patron / Vitality suite.
+ * db.js — shared cloud sync for the Patron / Rowan suite.
  *
  * Matches the pattern the Gym page already uses: one Supabase
  * table called `app_state` holding { key, data, updated_at }.
