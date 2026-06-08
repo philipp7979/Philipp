@@ -19,7 +19,7 @@ img{max-width:100%;height:auto}
 @media (max-width:480px){input,select,textarea{font-size:16px !important}}
 @supports (padding:max(0px)){body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}}
 </style>
-<title>Philipp · dashboard</title>
+<title>YOUR NAME · dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -113,6 +113,8 @@ body { background: var(--bg); color: var(--fg); font-family: var(--font-ui), -ap
 .profileChip:hover { border-color: var(--brand-line); background: var(--brand-soft); }
 .profileChipNew { padding: 7px 14px; color: var(--brand); border-color: var(--brand-line); background: var(--brand-soft); }
 .profileAvatar { display:grid; place-items:center; width: 22px; height: 22px; border-radius: 50%; background: var(--brand); color: var(--brand-ink); font-family: var(--font-display); font-weight: 700; font-size: 12px; }
+.gearBtn { display:grid; place-items:center; width: 32px; height: 32px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); color: var(--fg-muted); font-size: 16px; cursor: pointer; transition: border-color var(--duration) var(--ease-premium), background var(--duration) var(--ease-premium); }
+.gearBtn:hover { border-color: var(--brand-line); background: var(--brand-soft); color: var(--brand); }
 
 /* Daily reminders */
 .reminders { display:flex; align-items:center; flex-wrap:wrap; gap: var(--space-2); margin-bottom: var(--space-5); }
@@ -382,8 +384,8 @@ function headerHtml(){
   const chip = profile
     ? '<button type="button" class="profileChip" data-action="open-profile" title="Edit your profile"><span class="profileAvatar">' + esc((name || '·').charAt(0).toUpperCase()) + '</span>' + esc(name || 'Profile') + '</button>'
     : '<button type="button" class="profileChip profileChipNew" data-action="open-profile">Set up profile</button>';
-  return '<header class="header"><div><h1 class="title">Philipp</h1><p class="subtitle">' + greeting + '</p></div>'
-    + '<div class="headerControls">' + themeSegHtml() + chip + '</div></header>';
+  return '<header class="header"><div><h1 class="title">YOUR NAME</h1><p class="subtitle">' + greeting + '</p></div>'
+    + '<div class="headerControls">' + themeSegHtml() + chip + '<button type="button" class="gearBtn" data-action="open-profile" title="Settings" aria-label="Open settings">⚙</button></div></header>';
 }
 
 function vitalsTileHtml(){
@@ -487,7 +489,7 @@ function tickerMetrics(){
 function tickerHtml(){
   const items = tickerMetrics();
   if (!items.length){
-    return '<div class="ticker"><div class="tickerLead"><span class="tickerPulse"></span>Philipp · Live</div>'
+    return '<div class="ticker"><div class="tickerLead"><span class="tickerPulse"></span>YOUR NAME · Live</div>'
       + '<div class="tickerViewport"><div class="tickerTrack" style="animation:none;padding-left:var(--space-5)">'
       + '<span class="tickerItem" style="border:0"><span class="tiLabel">No data yet — add vitals to go live</span></span>'
       + '</div></div></div>';
@@ -500,7 +502,7 @@ function tickerHtml(){
   const seq = items.map(chip).join('');
   // duration scales with item count so speed stays constant regardless of how much data we have
   const dur = Math.max(18, items.length * 6);
-  return '<div class="ticker"><div class="tickerLead"><span class="tickerPulse"></span>Philipp · Live</div>'
+  return '<div class="ticker"><div class="tickerLead"><span class="tickerPulse"></span>YOUR NAME · Live</div>'
     + '<div class="tickerViewport"><div class="tickerTrack" style="animation-duration:' + dur + 's">'
     + seq + seq + '</div></div></div>';
 }
@@ -519,7 +521,7 @@ function remindersHtml(){
 }
 function render(){
   document.getElementById('app').innerHTML =
-    headerHtml() + tickerHtml() + remindersHtml() + '<div class="bento">' + vitalsTileHtml() + APPS.map(cardHtml).join('') + '</div>';
+    headerHtml() + tickerHtml() + '<div class="bento">' + vitalsTileHtml() + APPS.map(cardHtml).join('') + '</div>';
   renderModal();
 }
 
@@ -751,7 +753,7 @@ window.addEventListener('storage', e => {
   if (e.key === HEALTH_KEY || e.key === LEGACY_WHOOP_KEY || e.key === null) { health = loadHealth(); render(); }
 });
 
-if (!profile) { ui.profileDraft = draftFromProfile(); ui.profileOpen = true; } // first run → onboarding prompt (init draft so typing is captured)
+if (!profile || !profile.onboarded) { ui.profileDraft = draftFromProfile(); ui.profileOpen = true; } // first run → onboarding prompt (init draft so typing is captured)
 applyTheme(currentTheme);
 
 // On a deployed host: pick up the OAuth return + pull the latest Whoop / Fitbit vitals.
@@ -772,6 +774,6 @@ applyTheme(currentTheme);
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="db.js?v=15"></script>
-<script src="cloud-sync.js?v=15"></script>
+
 </body>
 </html>
