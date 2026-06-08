@@ -1251,51 +1251,23 @@ const IMPORT_COPY = {
  * per-kind hint rides in the cheap, uncached user turn.
  * ------------------------------------------------------------------ */
 const EXTRACT_SYSTEM = [
-  'You are a precise financial-screenshot OCR extractor. You read ONE screenshot of a bank/brokerage statement, a subscriptions/billing page, or a purchase receipt, and return its line items by calling the `extract` tool. Output the tool call only — never prose.',
+  'You are a precise financial-screenshot OCR extractor. You read ONE screenshot of a bank/brokerage statement, a subscriptions/billing page, or a purchase receipt, and return its line items as a JSON object.',
   '',
-  'Each element of `items`:',
+  'Output ONLY a raw JSON object — no markdown, no code fences, no prose. Shape: {"items":[...]}',
+  '',
+  'Each item:',
   '- t: category — "bank","stocks","crypto","other" for statement/balance lines; "sub" for a recurring subscription; "order" for a receipt/purchase.',
   '- n: short name (account, holding, service, or merchant). No amounts inside the name.',
   '- a: numeric amount, no thousands separators or currency symbols (e.g. 1234.50).',
   '- c: ISO currency inferred from symbols/text — "CHF","USD","EUR","GBP". Omit if unsure.',
   '- p: billing period, subscriptions only — "monthly","yearly","weekly". Omit otherwise.',
   '',
-  'Rules: one item per distinct line; skip totals that merely sum other lines; omit any field you are unsure of (never emit null or empty strings); if nothing is readable, return an empty items array.',
+  'Rules: one item per distinct line; skip totals that merely sum other lines; omit any field you are unsure of (never emit null or empty strings); if nothing is readable, return {"items":[]}.',
   '',
-  'Examples (shape only):',
-  '"Checking $4,210.55" -> {"t":"bank","n":"Checking","a":4210.55,"c":"USD"}',
-  '"VTI 12 sh — €3,100" -> {"t":"stocks","n":"VTI","a":3100,"c":"EUR"}',
-  '"Netflix CHF 19.90/mo" -> {"t":"sub","n":"Netflix","a":19.9,"c":"CHF","p":"monthly"}',
-  '"Migros total 54.30 CHF" -> {"t":"order","n":"Migros","a":54.3,"c":"CHF"}',
+  'Examples:',
+  '"Checking $4,210.55" -> {"items":[{"t":"bank","n":"Checking","a":4210.55,"c":"USD"}]}',
+  '"Netflix CHF 19.90/mo" -> {"items":[{"t":"sub","n":"Netflix","a":19.9,"c":"CHF","p":"monthly"}]}',
 ].join('\n');
-// Compact tool schema → short keys keep the priciest part (output tokens) tiny.
-const EXTRACT_TOOL = {
-  type: 'function',
-  function: {
-    name: 'extract',
-    description: 'Return every line item read from the financial screenshot.',
-    parameters: {
-      type: 'object',
-      properties: {
-        items: {
-          type: 'array',
-          items: {
-            type: 'object',
-            properties: {
-              t: { type: 'string', description: 'Category: bank, stocks, crypto, other, sub, or order' },
-              n: { type: 'string', description: 'Short name of the account, holding, or merchant' },
-              a: { type: 'number', description: 'Numeric amount without currency symbols' },
-              c: { type: 'string', description: 'ISO currency code: CHF, USD, EUR, or GBP' },
-              p: { type: 'string', description: 'Billing period for subscriptions: monthly, yearly, or weekly' },
-            },
-            required: ['t', 'n', 'a'],
-          },
-        },
-      },
-      required: ['items'],
-    },
-  },
-};
 const KIND_HINT = {
   statement: 'This screenshot is a bank/brokerage statement. Extract every account/balance line.',
   subs: 'This screenshot is a subscriptions/billing page. Extract every recurring subscription.',
@@ -1473,8 +1445,7 @@ async function callExtract(kind, img) {
       model: settings.groqModel || DEFAULT_MODEL,
       max_tokens: 500,
       temperature: 0,
-      tools: [EXTRACT_TOOL],
-      tool_choice: { type: 'function', function: { name: 'extract' } },
+      response_format: { type: 'json_object' },
       messages: [
         { role: 'system', content: EXTRACT_SYSTEM },
         { role: 'user', content: [
@@ -1486,10 +1457,10 @@ async function callExtract(kind, img) {
   });
   const j = await r.json();
   if (j.error) { const e = new Error(j.error.message || ('Groq API error (HTTP ' + r.status + ')')); e.status = r.status; throw e; }
-  if (IS_DEV) { const u = j.usage || {}; console.log('[finance import] ' + kind + ' ' + img.w + '�' + img.h, { in: u.prompt_tokens, out: u.completion_tokens }); }
-  const toolCall = j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.tool_calls && j.choices[0].message.tool_calls[0];
-  if (!toolCall || !toolCall.function || !toolCall.function.arguments) throw new Error('The model did not return the expected structure.');
-  const result = JSON.parse(toolCall.function.arguments);
+  if (IS_DEV) { const u = j.usage || {}; console.log('[finance import] ' + kind + ' ' + img.w + 'x' + img.h, { in: u.prompt_tokens, out: u.completion_tokens }); }
+  const content = j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content;
+  if (!content) throw new Error('The model did not return a response.');
+  const result = JSON.parse(content);
   if (!Array.isArray(result.items)) throw new Error('The model did not return the expected structure.');
   return result.items;
 }
