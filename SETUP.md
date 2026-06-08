@@ -1,4 +1,4 @@
-# Setup — get your own copy running
+﻿# Setup â€” get your own copy running
 
 Everything below is one-time. Most of the app works instantly; API keys are
 optional and only needed for fitness-band sync.
@@ -8,16 +8,16 @@ On the GitHub page, click **Fork** (top-right). This makes your own copy.
 
 ## 2. Deploy to Vercel
 - Go to [vercel.com](https://vercel.com) and sign in with GitHub.
-- Click **Add New → Project**, pick your forked repo, and click **Deploy**.
-- Done — you get a live link like `https://your-app.vercel.app`.
+- Click **Add New â†’ Project**, pick your forked repo, and click **Deploy**.
+- Done â€” you get a live link like `https://your-app.vercel.app`.
 
 At this point the whole dashboard already works: finance, water, gym,
-supplements, goals, progress — all of it. Your data is saved in your browser.
+supplements, goals, progress â€” all of it. Your data is saved in your browser.
 
-## 3. (Optional) Fitness-band sync — Whoop / Fitbit
+## 3. (Optional) Fitness-band sync â€” Whoop / Fitbit
 Only do this if you want the "Connect Whoop" or "Connect Fitbit" buttons to work.
 
-In Vercel → **your Project → Settings → Environment Variables**, add the keys
+In Vercel â†’ **your Project â†’ Settings â†’ Environment Variables**, add the keys
 for whichever you want:
 
 ```
@@ -32,20 +32,20 @@ Where to get them is written step-by-step in **`.env.example`** and
 hit **Redeploy** in Vercel.
 
 ## 4. (Optional) Creator follower auto-refresh
-On the **Creator** page, the ↻ button auto-pulls follower counts:
-- **TikTok** — works with **no key at all** (reads your public profile). Just type your handle.
-- **YouTube** — add one optional key, then ↻ pulls subs/views. Get a free key at
-  [Google Cloud Console](https://console.cloud.google.com) → enable **YouTube Data API v3**,
-  then in Vercel → Settings → Environment Variables add `YOUTUBE_API_KEY` and Redeploy.
-- **Instagram** — manual entry (its API needs per-user login).
+On the **Creator** page, the â†» button auto-pulls follower counts:
+- **TikTok** â€” works with **no key at all** (reads your public profile). Just type your handle.
+- **YouTube** â€” add one optional key, then â†» pulls subs/views. Get a free key at
+  [Google Cloud Console](https://console.cloud.google.com) â†’ enable **YouTube Data API v3**,
+  then in Vercel â†’ Settings â†’ Environment Variables add `YOUTUBE_API_KEY` and Redeploy.
+- **Instagram** â€” manual entry (its API needs per-user login).
 
-> No Supabase, no database needed. Every API key above is optional — the dashboard works fully without them.
+> No Supabase, no database needed. Every API key above is optional â€” the dashboard works fully without them.
 
 ## 5. Install it on your phone (it's a real app)
 Open your Vercel link on your phone:
-- **iPhone:** Safari → Share → **Add to Home Screen**
-- **Android:** Chrome → **Install app** prompt
-It launches full-screen with its own icon — no browser bars.
+- **iPhone:** Safari â†’ Share â†’ **Add to Home Screen**
+- **Android:** Chrome â†’ **Install app** prompt
+It launches full-screen with its own icon â€” no browser bars.
 
 ---
 

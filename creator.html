@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -19,7 +19,7 @@ img{max-width:100%;height:auto}
 @media (max-width:480px){input,select,textarea{font-size:16px !important}}
 @supports (padding:max(0px)){body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}}
 </style>
-<title>Creator Â· standalone</title>
+<title>Creator · standalone</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -27,7 +27,7 @@ img{max-width:100%;height:auto}
 <style>
 
 /* ============================================================
- * Creator â€” restyled to "Patron": soft-dark electric-violet
+ * Creator — restyled to "Patron": soft-dark electric-violet
  * modern-fintech skin. Same token system + 3 themes as the suite.
  * Legacy --accent / --accent-rgb / --mint* aliases repoint to the
  * brand per theme so inline-JS rgba() calls retint correctly.
@@ -240,11 +240,11 @@ body{background:var(--bg);color:var(--fg);font-family:var(--font-inter),-apple-s
 <main class="page grain-overlay"><div class="shell" id="app"></div></main>
 <script>
 /* ============================ Platform maps ============================ */
-const PLATFORM_SHORT={tiktok:'TT',instagram:'IG',youtube:'YT',youtube_long:'YT',x:'X',linkedin:'IN',threads:'TH',substack:'SS',patreon:'PT',etsy:'ET',shopify:'SH',website:'WB',other:'Â·Â·'};
+const PLATFORM_SHORT={tiktok:'TT',instagram:'IG',youtube:'YT',youtube_long:'YT',x:'X',linkedin:'IN',threads:'TH',substack:'SS',patreon:'PT',etsy:'ET',shopify:'SH',website:'WB',other:'··'};
 const PLATFORM_LABELS={tiktok:'TikTok',instagram:'Instagram',youtube:'YouTube',youtube_long:'YouTube (long)',x:'X / Twitter',linkedin:'LinkedIn',threads:'Threads',substack:'Substack',patreon:'Patreon',etsy:'Etsy',shopify:'Shopify',website:'Website',other:'Other'};
 const ALL_PLATFORMS=['tiktok','instagram','youtube','youtube_long','x','linkedin','threads','substack','patreon','etsy','shopify','website','other'];
 const UNITS=['posts','videos','shorts','episodes','newsletters'];
-const LIVE=new Set(['youtube','youtube_long','tiktok']); // auto-refresh: TikTok (scrape) + YouTube (API). IG needs per-user OAuth â†’ manual.
+const LIVE=new Set(['youtube','youtube_long','tiktok']); // auto-refresh: TikTok (scrape) + YouTube (API). IG needs per-user OAuth → manual.
 const ON_SERVER=location.protocol==='http:'||location.protocol==='https:'; // scrape/API only work on the deployed host
 const DAY=86400000;
 
@@ -305,7 +305,7 @@ function themeSegHtml(){return '<div class="themeSeg" role="radiogroup" aria-lab
 function seed(){
   const now=Date.now();
   return {
-    name:(function(){try{var p=JSON.parse(localStorage.getItem('patron_profile_v1')||'null');return (p&&p.name)?p.name:'Your Name';}catch(e){return 'Your Name';}})(), emoji:'ðŸŽ¬', archetype:'Creator',
+    name:(function(){try{var p=JSON.parse(localStorage.getItem('patron_profile_v1')||'null');return (p&&p.name)?p.name:'Your Name';}catch(e){return 'Your Name';}})(), emoji:'🎬', archetype:'Creator',
     blurb:'Social-first. TikTok, Reels, Shorts, YouTube.',
     schedules:[{id:genId('sch'),platform:'youtube',label:'Youtube',target:1,unit:'videos',period:'weekly',done:0}],
     accounts:[
@@ -325,12 +325,12 @@ const ui={editAccounts:false,editSchedule:null,addAccount:false,refreshing:null}
 /* ============================ Mutations ============================ */
 function refreshErr(j){
   const e=j&&j.error;
-  if(e==='rate_limited')return 'TikTok rate-limited the request â€” wait a minute and try again.';
-  if(e==='not_found')return "Couldn't find that profile â€” double-check the handle.";
-  if(e==='parse_failed')return (j&&j.message)||"Couldn't read the count â€” TikTok may have changed their page.";
-  if(e==='not_configured')return 'YouTube isnâ€™t configured on the host yet (needs YOUTUBE_API_KEY). Enter it manually for now.';
+  if(e==='rate_limited')return 'TikTok rate-limited the request — wait a minute and try again.';
+  if(e==='not_found')return "Couldn't find that profile — double-check the handle.";
+  if(e==='parse_failed')return (j&&j.message)||"Couldn't read the count — TikTok may have changed their page.";
+  if(e==='not_configured')return 'YouTube isn’t configured on the host yet (needs YOUTUBE_API_KEY). Enter it manually for now.';
   if(e==='no_handle')return 'Add a handle first, then refresh.';
-  return 'Refresh failed â€” try again shortly.';
+  return 'Refresh failed — try again shortly.';
 }
 function pushHist(a){const last=a.history&&a.history[a.history.length-1];const snap={t:Date.now(),count:a.followers};if(typeof a.lifetimeViews==='number')snap.views=a.lifetimeViews;if(typeof a.videoCount==='number')snap.videos=a.videoCount;if(last&&Date.now()-last.t<60000){a.history[a.history.length-1]=snap;}else{a.history=(a.history||[]).concat(snap);if(a.history.length>30)a.history.shift();}}
 const A={
@@ -344,11 +344,11 @@ const A={
   async refresh(id){
     const a=state.accounts.find(x=>x.id===id);if(!a)return;
     if(!a.handle||!a.handle.trim()){alert('Add a handle first (tap Edit), then refresh.');return;}
-    if(!ON_SERVER){alert('Live auto-refresh runs on the deployed app (Vercel) â€” locally just tap Edit and type the number. Growth + sparklines build as you update.');return;}
+    if(!ON_SERVER){alert('Live auto-refresh runs on the deployed app (Vercel) — locally just tap Edit and type the number. Growth + sparklines build as you update.');return;}
     let ep;
     if(a.platform==='tiktok')ep='/api/tiktok?handle='+encodeURIComponent(a.handle);
     else if(a.platform==='youtube'||a.platform==='youtube_long')ep='/api/youtube?handle='+encodeURIComponent(a.handle);
-    else{alert((PLATFORM_LABELS[a.platform]||a.platform)+' auto-refresh needs that platformâ€™s login (OAuth), which isnâ€™t set up. Enter it manually via Edit.');return;}
+    else{alert((PLATFORM_LABELS[a.platform]||a.platform)+' auto-refresh needs that platform’s login (OAuth), which isn’t set up. Enter it manually via Edit.');return;}
     ui.refreshing=id;render();
     try{
       const j=await (await fetch(ep,{cache:'no-store'})).json();
@@ -359,7 +359,7 @@ const A={
       if(j.avatarUrl)a.avatarUrl=j.avatarUrl;
       if(typeof a.followers==='number')pushHist(a);
       ui.refreshing=null;save();render();
-    }catch(e){ui.refreshing=null;render();alert('Refresh failed â€” network error. Try again shortly.');}
+    }catch(e){ui.refreshing=null;render();alert('Refresh failed — network error. Try again shortly.');}
   },
   addLink(label,url){state.links.push({id:genId('lnk'),label:label.trim()||'Link',url:url.trim()});save();render();},
   updateLink(id,patch){const l=state.links.find(x=>x.id===id);if(l)Object.assign(l,patch);save();render();},
@@ -369,7 +369,7 @@ const A={
 /* ============================ Views ============================ */
 function headerHtml(){
   return '<header class="header"><div class="headerLeft">'
-    +'<a class="back" href="index.html"><span class="backArrow">â†</span> Philipp</a>'
+    +'<a class="back" href="index.html"><span class="backArrow">←</span> Philipp</a>'
     +'<div class="detailHero"><span class="detailEmoji">'+esc(state.emoji)+'</span><div class="detailHeroText"><h1 class="title">'+esc(state.name)+'</h1><span class="detailChip">'+esc(state.archetype)+'</span></div></div>'
     +(state.blurb?'<p class="detailBlurb">'+esc(state.blurb)+'</p>':'')
     +'</div><div class="headerRight">'+themeSegHtml()+'</div></header>';
@@ -395,30 +395,30 @@ function scheduleSection(){
         +'</div>';
     }
     return '<div class="scheduleRow '+(hit?'scheduleRowHit':'')+'">'
-      +'<div class="scheduleInfo"><div class="scheduleTitleRow"><span class="platformBadge">'+PLATFORM_SHORT[s.platform]+'</span><span class="scheduleLabel">'+esc(s.label)+'</span><span class="scheduleSpec">'+target+' '+esc(s.unit)+' '+period+'</span><button class="scheduleGear" data-act="editSchedule" data-id="'+s.id+'">âš™</button></div>'
+      +'<div class="scheduleInfo"><div class="scheduleTitleRow"><span class="platformBadge">'+PLATFORM_SHORT[s.platform]+'</span><span class="scheduleLabel">'+esc(s.label)+'</span><span class="scheduleSpec">'+target+' '+esc(s.unit)+' '+period+'</span><button class="scheduleGear" data-act="editSchedule" data-id="'+s.id+'">⚙</button></div>'
       +'<div class="scheduleProgressRow"><span class="scheduleCount"><span class="scheduleCountNum">'+done+'</span><span class="scheduleCountSlash">/</span><span class="scheduleCountTarget">'+target+'</span></span><div class="scheduleBar"><div class="progressFill '+(hit?'progressFillDone':'')+'" style="width:'+pct+'%"></div></div></div></div>'
-      +'<div class="scheduleControls">'+cd+'<div class="scheduleLogGroup"><button class="scheduleMinus" data-act="logMinus" data-id="'+s.id+'"'+(done<=0?' disabled':'')+'>âˆ’</button><button class="scheduleLogBtn" data-act="logPlus" data-id="'+s.id+'">+ shipped</button></div></div>'
+      +'<div class="scheduleControls">'+cd+'<div class="scheduleLogGroup"><button class="scheduleMinus" data-act="logMinus" data-id="'+s.id+'"'+(done<=0?' disabled':'')+'>−</button><button class="scheduleLogBtn" data-act="logPlus" data-id="'+s.id+'">+ shipped</button></div></div>'
       +editor+'</div>';
   }).join('');
-  const setup=(!state.setupDismissed)?'<button class="setupPill" data-act="editSchedule" data-id="'+state.schedules[0].id+'"><span class="setupDot"></span>Finish setup Â· <b>1 left</b> â†’</button>':'';
-  return '<section class="card"><div class="cardHead"><span class="eyebrow"><span class="eyebrowMark">Â·01</span><span class="eyebrowRule"></span>Schedule</span>'+setup+'</div>'
+  const setup=(!state.setupDismissed)?'<button class="setupPill" data-act="editSchedule" data-id="'+state.schedules[0].id+'"><span class="setupDot"></span>Finish setup · <b>1 left</b> →</button>':'';
+  return '<section class="card"><div class="cardHead"><span class="eyebrow"><span class="eyebrowMark">·01</span><span class="eyebrowRule"></span>Schedule</span>'+setup+'</div>'
     +'<div class="scheduleList">'+rows+'</div><button class="addBtnGhost" data-act="addSchedule">+ Add schedule</button></section>';
 }
 
 function refreshBtnHtml(a){
   const loading=ui.refreshing===a.id;
-  return '<button class="refreshBtn'+(loading?' refreshing':'')+'" data-act="refresh" data-id="'+a.id+'"'+(loading?' disabled':'')+' title="Refresh from '+esc(PLATFORM_LABELS[a.platform]||a.platform)+'">'+(loading?'â€¦':'â†»')+'</button>';
+  return '<button class="refreshBtn'+(loading?' refreshing':'')+'" data-act="refresh" data-id="'+a.id+'"'+(loading?' disabled':'')+' title="Refresh from '+esc(PLATFORM_LABELS[a.platform]||a.platform)+'">'+(loading?'…':'↻')+'</button>';
 }
 function accountCardCompact(a){
   const isYT=a.platform==='youtube'||a.platform==='youtube_long';
   const delta=deltaSinceDays(a.history,'count',7);
   const series=(a.history||[]).map(s=>s.count).filter(v=>typeof v==='number');
   let deltaHtml='';
-  if(delta!==null&&delta!==0)deltaHtml='<span class="delta '+(delta>=0?'deltaUp':'deltaDown')+'">'+(delta>=0?'â–²':'â–¼')+' '+Math.abs(delta).toLocaleString()+'</span>';
+  if(delta!==null&&delta!==0)deltaHtml='<span class="delta '+(delta>=0?'deltaUp':'deltaDown')+'">'+(delta>=0?'▲':'▼')+' '+Math.abs(delta).toLocaleString()+'</span>';
   const av=a.avatarUrl?'<img src="'+esc(a.avatarUrl)+'" alt="">':'<span class="avatarFallback">'+PLATFORM_SHORT[a.platform]+'</span>';
-  return '<article class="accountCard"><div class="accountTop"><span class="avatar">'+av+'</span><span class="accountHandle" title="'+esc(a.handle)+'">'+esc(a.handle||'â€”')+'</span>'
+  return '<article class="accountCard"><div class="accountTop"><span class="avatar">'+av+'</span><span class="accountHandle" title="'+esc(a.handle)+'">'+esc(a.handle||'—')+'</span>'
     +(LIVE.has(a.platform)?refreshBtnHtml(a):'')+'</div>'
-    +'<div class="accountNumRow"><span class="accountNum">'+(typeof a.followers==='number'?a.followers.toLocaleString():'â€”')+'</span><span class="accountNumLabel">'+(isYT?'subs':'followers')+'</span>'+deltaHtml+'</div>'
+    +'<div class="accountNumRow"><span class="accountNum">'+(typeof a.followers==='number'?a.followers.toLocaleString():'—')+'</span><span class="accountNumLabel">'+(isYT?'subs':'followers')+'</span>'+deltaHtml+'</div>'
     +(series.length>=2?sparkSvg(series,30):'')+'</article>';
 }
 function accountEditRow(a){
@@ -427,7 +427,7 @@ function accountEditRow(a){
     +'<input class="input" data-acc="'+a.id+'" data-f="handle" value="'+esc(a.handle)+'" placeholder="@handle">'
     +'<input class="input" type="number" min="0" data-acc="'+a.id+'" data-f="followers" value="'+(a.followers==null?'':a.followers)+'" placeholder="followers">'
     +(LIVE.has(a.platform)?refreshBtnHtml(a):'<span class="deltaMuted">manual</span>')
-    +'<button class="delBtn" data-act="rmAccount" data-id="'+a.id+'">Ã—</button></li>';
+    +'<button class="delBtn" data-act="rmAccount" data-id="'+a.id+'">×</button></li>';
 }
 function accountsSection(){
   const reach=state.accounts.reduce((s,a)=>s+(typeof a.followers==='number'?a.followers:0),0);
@@ -437,7 +437,7 @@ function accountsSection(){
     body='<ul class="accountList">'+state.accounts.map(accountEditRow).join('')+'</ul>'
       +'<form class="addForm" data-act="addAccountForm"><select class="select" id="newPlat">'+ALL_PLATFORMS.map(p=>'<option value="'+p+'">'+PLATFORM_LABELS[p]+'</option>').join('')+'</select><input class="input" id="newHandle" placeholder="@handle or url"><button type="submit" class="primaryBtn">+ Add</button></form>';
   } else body='<div class="accountGrid">'+state.accounts.map(accountCardCompact).join('')+'</div>';
-  return '<section class="card"><div class="cardHead"><span class="eyebrow"><span class="eyebrowMark">Â·02</span><span class="eyebrowRule"></span>Accounts</span>'
+  return '<section class="card"><div class="cardHead"><span class="eyebrow"><span class="eyebrowMark">·02</span><span class="eyebrowRule"></span>Accounts</span>'
     +'<div class="headRight">'+(reach>0?'<span class="ccReach">'+reach.toLocaleString()+'<span class="ccReachLabel">reach</span></span>':'')
     +(state.accounts.length>0?'<button class="editBtn" data-act="toggleEdit">'+(ui.editAccounts?'Done':'Edit')+'</button>':'')+'</div></div>'
     +body+'</section>';
@@ -454,8 +454,8 @@ function platformAnalytics(a){
   const viewsLabel=isYT?'views':'likes';
   let deltaHtml;
   if(weekly===null)deltaHtml='<span class="deltaMuted">refresh again later for this week</span>';
-  else if(weekly===0)deltaHtml='<span class="deltaFlat">Â· flat this week</span>';
-  else deltaHtml='<span class="delta '+(weekly>=0?'deltaUp':'deltaDown')+'">'+(weekly>=0?'â†‘':'â†“')+' '+Math.abs(weekly).toLocaleString()+' this week</span>';
+  else if(weekly===0)deltaHtml='<span class="deltaFlat">· flat this week</span>';
+  else deltaHtml='<span class="delta '+(weekly>=0?'deltaUp':'deltaDown')+'">'+(weekly>=0?'↑':'↓')+' '+Math.abs(weekly).toLocaleString()+' this week</span>';
   let foot='';
   if(typeof views==='number')foot+='<span class="secondaryStat">'+fmtCount(views)+' '+viewsLabel+'</span>';
   if(typeof videos==='number')foot+='<span class="secondaryStat">'+videos+' videos</span>';
@@ -475,24 +475,24 @@ function analyticsSection(){
   let body;
   if(!hasData)body='<p class="emptyText">Add a YouTube, TikTok or Instagram account above and your reach, views, uploads and growth trends show up here.</p>';
   else{
-    function chip(v,suffix){if(v===null)return '<span class="deltaMuted">refresh again later for '+suffix+'</span>';if(v===0)return '<span class="deltaFlat">Â· flat '+suffix+'</span>';return '<span class="delta '+(v>=0?'deltaUp':'deltaDown')+'">'+(v>=0?'â†‘':'â†“')+' '+Math.abs(v).toLocaleString()+' '+suffix+'</span>';}
+    function chip(v,suffix){if(v===null)return '<span class="deltaMuted">refresh again later for '+suffix+'</span>';if(v===0)return '<span class="deltaFlat">· flat '+suffix+'</span>';return '<span class="delta '+(v>=0?'deltaUp':'deltaDown')+'">'+(v>=0?'↑':'↓')+' '+Math.abs(v).toLocaleString()+' '+suffix+'</span>';}
     body='<div class="statsHero"><div><span class="statsHeroLabel">Total reach</span><div class="statsHeroNum">'+reach.toLocaleString()+'</div>'
       +'<div class="statsHeroMeta">'+chip(weekly,'this week')+chip(monthly,'this month')+(reach<milestone?'<span class="statsHeroMilestone">'+fmtCount(milestone-reach)+' to '+fmtCount(milestone)+'</span>':'')+'</div></div>'
       +(series.length>=2?'<div class="statsHeroSpark">'+sparkSvg(series,64)+'</div>':'<div></div>')+'</div>'
       +'<div class="platformGrid">'+platforms.map(platformAnalytics).join('')+'</div>';
   }
-  return '<section class="card"><div class="cardHead"><span class="eyebrow"><span class="eyebrowMark">Â·03</span><span class="eyebrowRule"></span>Analytics</span></div>'+body+'</section>';
+  return '<section class="card"><div class="cardHead"><span class="eyebrow"><span class="eyebrowMark">·03</span><span class="eyebrowRule"></span>Analytics</span></div>'+body+'</section>';
 }
 
 function linksSection(){
   let body;
-  if(state.links.length===0)body='<p class="emptyText">Your link-in-bio. Store, latest video, free guide, booking â€” drop a name and URL and it\'s one tap from here.</p>';
-  else body='<ul class="linkList">'+state.links.map(l=>'<li class="linkRow"><input class="input" data-lnk="'+l.id+'" data-f="label" value="'+esc(l.label)+'" placeholder="Label"><input class="input" data-lnk="'+l.id+'" data-f="url" value="'+esc(l.url)+'" placeholder="https://..."><a class="linkOpen" href="'+esc(l.url||'#')+'" target="_blank" rel="noopener noreferrer">â†—</a><button class="delBtn" data-act="rmLink" data-id="'+l.id+'">Ã—</button></li>').join('')+'</ul>';
-  return '<section class="card"><div class="cardHead"><span class="eyebrow"><span class="eyebrowMark">Â·04</span><span class="eyebrowRule"></span>Links</span></div>'+body
+  if(state.links.length===0)body='<p class="emptyText">Your link-in-bio. Store, latest video, free guide, booking — drop a name and URL and it\'s one tap from here.</p>';
+  else body='<ul class="linkList">'+state.links.map(l=>'<li class="linkRow"><input class="input" data-lnk="'+l.id+'" data-f="label" value="'+esc(l.label)+'" placeholder="Label"><input class="input" data-lnk="'+l.id+'" data-f="url" value="'+esc(l.url)+'" placeholder="https://..."><a class="linkOpen" href="'+esc(l.url||'#')+'" target="_blank" rel="noopener noreferrer">↗</a><button class="delBtn" data-act="rmLink" data-id="'+l.id+'">×</button></li>').join('')+'</ul>';
+  return '<section class="card"><div class="cardHead"><span class="eyebrow"><span class="eyebrowMark">·04</span><span class="eyebrowRule"></span>Links</span></div>'+body
     +'<form class="addForm" data-act="addLinkForm"><input class="input" id="newLabel" placeholder="Label (e.g. Store)"><input class="input" id="newUrl" placeholder="https://..."><button type="submit" class="primaryBtn">+ Add</button></form>'
     +'<p class="noteLine">'+(ON_SERVER
-        ?'Hit â†» on TikTok &amp; YouTube accounts to auto-pull live follower counts. Other platforms: tap Edit and enter numbers â€” growth + sparklines build as you go.'
-        :'Live auto-refresh (â†») runs on the deployed app. Opened locally, tap Edit on Accounts to enter/update numbers â€” growth + sparklines build as you go.')
+        ?'Hit ↻ on TikTok &amp; YouTube accounts to auto-pull live follower counts. Other platforms: tap Edit and enter numbers — growth + sparklines build as you go.'
+        :'Live auto-refresh (↻) runs on the deployed app. Opened locally, tap Edit on Accounts to enter/update numbers — growth + sparklines build as you go.')
       +'</p></section>';
 }
 

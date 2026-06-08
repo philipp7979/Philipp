@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 <link rel="icon" type="image/svg+xml" href="icon.svg" />
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
-<title>Macros Â· Philipp</title>
+<title>Macros · Philipp</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="theme.css" />
 
 <style>
-  /* page-specific layout â€” all colours/sizes still come from theme.css tokens */
+  /* page-specific layout — all colours/sizes still come from theme.css tokens */
   .macroGrid { display:grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-3); }
   @media (max-width: 560px) { .macroGrid { grid-template-columns: repeat(2, 1fr); } }
   .macroBox { display:flex; flex-direction:column; gap:4px; padding: var(--space-4); border:1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); }
@@ -30,7 +30,7 @@
   .macroVal { font-family: var(--font-display); font-weight:600; font-size: var(--text-2xl); letter-spacing:-0.02em; font-variant-numeric: tabular-nums; }
   .macroLabel { font-family: var(--font-mono); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color: var(--muted); }
 
-  /* MyFitnessPal-style header: Goal âˆ’ Food = Remaining + a progress bar */
+  /* MyFitnessPal-style header: Goal − Food = Remaining + a progress bar */
   .calHead { display:flex; align-items:center; justify-content:space-between; gap: var(--space-4); flex-wrap:wrap; margin-bottom: var(--space-4); }
   .calMath { display:flex; align-items:center; gap: var(--space-5); flex-wrap:wrap; }
   .calCell { display:flex; flex-direction:column; gap:2px; }
@@ -69,7 +69,7 @@
 <script src="theme.js"></script>
 <script>
 /* ============================================================
- * Macros â€” a simple daily food + macro tracker.
+ * Macros — a simple daily food + macro tracker.
  * Data is saved per-day in localStorage under macros_standalone_v1.
  * ============================================================ */
 const STORE_KEY = 'macros_standalone_v1';
@@ -131,12 +131,12 @@ function summaryHtml(){
   const over = remaining < 0;
   const pct = Math.min(100, goal > 0 ? (t.cal / goal) * 100 : 0);
 
-  // MyFitnessPal-style: Goal âˆ’ Food = Remaining
+  // MyFitnessPal-style: Goal − Food = Remaining
   const cell = (cls, n, l) => '<div class="calCell ' + cls + '"><span class="n">' + round(n) + '</span><span class="l">' + l + '</span></div>';
   const head = '<div class="calHead">'
     + '<div class="calMath">'
     + cell('', goal, 'goal')
-    + '<span class="calOp">âˆ’</span>'
+    + '<span class="calOp">−</span>'
     + cell('', t.cal, 'food')
     + '<span class="calOp">=</span>'
     + cell('remain' + (over ? ' over' : ''), Math.abs(remaining), over ? 'over' : 'remaining')
@@ -161,11 +161,11 @@ function summaryHtml(){
 function resultsInner(){
   const q = query.trim().toLowerCase();
   matches = q ? FOODS.filter(f => f.name.toLowerCase().includes(q)).slice(0, 8) : [];
-  if (!q) return '<p class="empty">Start typing to find a foodâ€¦</p>';
+  if (!q) return '<p class="empty">Start typing to find a food…</p>';
   if (!matches.length) return '<p class="empty">No match. (Add it to the FOODS list in macros.html.)</p>';
   return matches.map((f, i) =>
     '<div class="foodRow"><div><div class="foodName">' + esc(f.name) + '</div>'
-    + '<div class="meta">' + f.cal + ' kcal Â· ' + f.p + 'P / ' + f.c + 'C / ' + f.f + 'F per 100g</div></div>'
+    + '<div class="meta">' + f.cal + ' kcal · ' + f.p + 'P / ' + f.c + 'C / ' + f.f + 'F per 100g</div></div>'
     + '<div style="display:flex;align-items:center;gap:8px;">'
     + '<input class="fieldInput gramInput" type="number" min="0" placeholder="g" data-grams="' + i + '" />'
     + '<button class="btn btn-primary" data-add="' + i + '">Add</button></div></div>').join('');
@@ -182,14 +182,14 @@ function logHtml(){
   if (!log.length) return '<h2 class="sectionTitle">Logged today</h2><p class="empty">Nothing logged yet.</p>';
   const rows = log.map((e, i) =>
     '<div class="logRow"><div><div class="foodName">' + esc(e.name) + ' <span class="meta">' + e.grams + 'g</span></div>'
-    + '<div class="nums">' + round(e.cal) + ' kcal Â· ' + round(e.p) + 'P / ' + round(e.c) + 'C / ' + round(e.f) + 'F</div></div>'
-    + '<button class="xBtn" data-del="' + i + '" title="Remove">Ã—</button></div>').join('');
+    + '<div class="nums">' + round(e.cal) + ' kcal · ' + round(e.p) + 'P / ' + round(e.c) + 'C / ' + round(e.f) + 'F</div></div>'
+    + '<button class="xBtn" data-del="' + i + '" title="Remove">×</button></div>').join('');
   return '<h2 class="sectionTitle">Logged today</h2><div class="logList">' + rows + '</div>';
 }
 
 function headerHtml(){
-  return '<header class="header"><div><h1 class="title">Macros</h1><p class="subtitle">protein Â· carbs Â· fat</p></div>'
-    + '<div class="headerControls"><a class="backLink" href="index.html">â† Dashboard</a><span id="themeSeg"></span></div></header>';
+  return '<header class="header"><div><h1 class="title">Macros</h1><p class="subtitle">protein · carbs · fat</p></div>'
+    + '<div class="headerControls"><a class="backLink" href="index.html">← Dashboard</a><span id="themeSeg"></span></div></header>';
 }
 
 function render(){

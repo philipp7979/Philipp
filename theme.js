@@ -1,5 +1,5 @@
-﻿/* ============================================================
- * theme.js â€” shared theme engine for the Patron / Philipp suite.
+/* ============================================================
+ * theme.js — shared theme engine for the Patron / Philipp suite.
  *
  * Include this once near the end of <body>:
  *   <script src="theme.js"></script>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -22,7 +22,7 @@ img{max-width:100%;height:auto}
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script>try{document.documentElement.setAttribute("data-theme",localStorage.getItem("patron_theme")||"nocturne");}catch(e){document.documentElement.setAttribute("data-theme","nocturne");}</script>
-<title>Dashboard Â· Philipp</title>
+<title>Dashboard · Philipp</title>
 <style>
 :root {
   color-scheme: dark;
@@ -311,7 +311,7 @@ body::after {
   .day-ring-percent { font-size: 32px; }
   .day-ring-status { font-size: 13px; }
 }
-/* Estimated sleep line â€” recommended bedtime derived from vitals */
+/* Estimated sleep line — recommended bedtime derived from vitals */
 .day-ring-est {
   display: inline-flex; align-items: center; gap: 7px;
   margin-top: 2px; padding: 5px 11px;
@@ -747,7 +747,7 @@ body::after {
 <body>
 <div class="page">
 
-  <a class="back" href="index.html"><span class="backArrow">â†</span> Philipp</a>
+  <a class="back" href="index.html"><span class="backArrow">←</span> Philipp</a>
   <div class="dash-head"><h1 class="dash-title" id="dashTitle">Dashboard</h1><div class="themeSeg" role="radiogroup" aria-label="Theme"><button type="button" class="themeBtn" data-theme="nocturne"><span class="themeSwatch" style="background:#8B7CFF"></span><span class="themeBtnLabel">Nocturne</span></button><button type="button" class="themeBtn" data-theme="aurora"><span class="themeSwatch" style="background:linear-gradient(135deg,#8B7BFF,#4FE3D0)"></span><span class="themeBtnLabel">Aurora</span></button><button type="button" class="themeBtn" data-theme="daylight"><span class="themeSwatch" style="background:#6A45FF"></span><span class="themeBtnLabel">Daylight</span></button></div></div>
 
   <div class="ticker-row">
@@ -756,8 +756,8 @@ body::after {
       <div class="goal-ticker-label">GOALS</div>
       <div class="goal-ticker-stage" id="goalTickerStage">
         <div class="goal-ticker-row">
-          <span class="goal-ticker-status" data-status="">â€”</span>
-          <span class="goal-ticker-text">Loadingâ€¦</span>
+          <span class="goal-ticker-status" data-status="">—</span>
+          <span class="goal-ticker-text">Loading…</span>
         </div>
       </div>
       <div class="goal-ticker-meta" id="goalTickerMeta">0/0</div>
@@ -765,7 +765,7 @@ body::after {
   </div>
 
   <div class="day-ring-wrap">
-    <button type="button" class="day-ring-gear" id="dayRingGear" title="Wake &amp; sleep settings" aria-label="Wake and sleep settings">âš™</button>
+    <button type="button" class="day-ring-gear" id="dayRingGear" title="Wake &amp; sleep settings" aria-label="Wake and sleep settings">⚙</button>
     <div class="day-pop" id="dayPop" hidden>
       <div class="day-pop-title">Wake &amp; sleep window</div>
       <div class="day-pop-note" id="dayPopNote">Pulls your times from Whoop / Apple Watch. Switch to Manual to set them yourself.</div>
@@ -795,15 +795,15 @@ body::after {
         <circle class="day-ring-fill"  cx="60" cy="60" r="52" id="dayRingFill" filter="url(#dayRingGlow)" />
       </svg>
       <div class="day-ring-overlay">
-        <div class="day-ring-percent" id="dayRingPercent">â€”</div>
-        <div class="day-ring-phase"   id="dayRingPhase">â€”</div>
-        <div class="day-ring-clock"   id="dayRingClock">â€”</div>
+        <div class="day-ring-percent" id="dayRingPercent">—</div>
+        <div class="day-ring-phase"   id="dayRingPhase">—</div>
+        <div class="day-ring-clock"   id="dayRingClock">—</div>
       </div>
     </div>
     <div class="day-ring-text">
-      <div class="day-ring-status"    id="dayRingStatus">Loadingâ€¦</div>
-      <div class="day-ring-remaining" id="dayRingRemaining">â€”</div>
-      <div class="day-ring-hours"     id="dayRingHours">8:00 AM â€“ 12:00 AM</div>
+      <div class="day-ring-status"    id="dayRingStatus">Loading…</div>
+      <div class="day-ring-remaining" id="dayRingRemaining">—</div>
+      <div class="day-ring-hours"     id="dayRingHours">8:00 AM – 12:00 AM</div>
       <div class="day-ring-est"       id="dayRingEst" hidden></div>
       <div class="day-ring-est-sub"   id="dayRingEstSub"></div>
     </div>
@@ -816,7 +816,7 @@ body::after {
     <div class="gm-card" id="gmCardToday">
       <div class="gm-header">
         <div class="gm-header-left">
-          <div class="gm-eyebrow" id="todayLabel">Today â€”</div>
+          <div class="gm-eyebrow" id="todayLabel">Today —</div>
           <div class="gm-progress-row">
             <span class="gm-progress-num"   id="gmProgressNum">0</span>
             <span class="gm-progress-total" id="gmProgressTotal">/ 0</span>
@@ -824,19 +824,19 @@ body::after {
           </div>
         </div>
         <div class="gm-streak" id="gmStreak">
-          <span class="gm-streak-icon">âš¡</span>
+          <span class="gm-streak-icon">⚡</span>
           <span class="gm-streak-num" id="gmStreakNum">0</span>
           <span>day streak</span>
         </div>
       </div>
       <div class="gm-bar" id="gmBar"></div>
       <ul id="goalList" class="goal-list gm-list"></ul>
-      <div id="emptyState" class="empty-state">No goals for today yet â€” add one below.</div>
+      <div id="emptyState" class="empty-state">No goals for today yet — add one below.</div>
       <button type="button" id="gmPushBtn" class="gm-push-btn" style="display:none;">Push remaining to tomorrow</button>
       <div class="goal-input-wrap gm-input-wrap">
-        <input id="goalInput" class="gm-input" type="text" placeholder="Add a goal for todayâ€¦" autocomplete="off">
+        <input id="goalInput" class="gm-input" type="text" placeholder="Add a goal for today…" autocomplete="off">
         <button type="button" id="goalAddBtn"    class="gm-add">+ Add</button>
-        <button type="button" id="goalPolishBtn" class="gm-polish">âœ¨ Polish</button>
+        <button type="button" id="goalPolishBtn" class="gm-polish">✨ Polish</button>
         <div class="gm-status" id="polishStatus"></div>
       </div>
     </div>
@@ -845,7 +845,7 @@ body::after {
     <div class="gm-card gm-card-tomorrow" id="gmCardTomorrow">
       <div class="gm-header">
         <div class="gm-header-left">
-          <div class="gm-eyebrow" id="tomorrowLabel">Plan tomorrow â€”</div>
+          <div class="gm-eyebrow" id="tomorrowLabel">Plan tomorrow —</div>
           <div class="gm-tomorrow-sub">Write tonight, locked until 6 AM.</div>
         </div>
         <div class="gm-tomorrow-count" id="gmTomorrowCount">0 planned</div>
@@ -853,9 +853,9 @@ body::after {
       <ul id="tomorrowList" class="goal-list gm-list"></ul>
       <div id="tomorrowEmpty" class="empty-state">Nothing planned for tomorrow yet</div>
       <div class="goal-input-wrap gm-input-wrap">
-        <input id="tomorrowInput" class="gm-input" type="text" placeholder="Add a goal for tomorrowâ€¦" autocomplete="off">
+        <input id="tomorrowInput" class="gm-input" type="text" placeholder="Add a goal for tomorrow…" autocomplete="off">
         <button type="button" id="tomorrowAddBtn"    class="gm-add">+ Add</button>
-        <button type="button" id="tomorrowPolishBtn" class="gm-polish">âœ¨ Polish</button>
+        <button type="button" id="tomorrowPolishBtn" class="gm-polish">✨ Polish</button>
         <div class="gm-status" id="tomorrowStatus"></div>
       </div>
     </div>
@@ -867,11 +867,11 @@ body::after {
 (function () {
   'use strict';
 
-  // Paste your Anthropic key here to enable âœ¨ Polish. Empty = falls back to plain add.
-  const GROQ_API_KEY = ''; // paste your Groq key here to enable ✨ Polish
+  // Paste your Anthropic key here to enable ✨ Polish. Empty = falls back to plain add.
+  const GROQ_API_KEY = ''; // paste your Groq key here to enable ? Polish
 
   // Day window is dynamic: pulled from the suite-wide vitals record (Whoop / Apple
-  // Watch / manual entry), or overridden manually via the âš™ popover. Defaults 8 / 24.
+  // Watch / manual entry), or overridden manually via the ⚙ popover. Defaults 8 / 24.
   let WAKE_HOUR  = 8;
   let SLEEP_HOUR = 24;
   const DAY_WINDOW_KEY = 'goals:dayWindow';
@@ -1033,16 +1033,16 @@ body::after {
     const goals = getGoals(todayKey());
     const total = goals.length;
     const done  = goals.filter(g => g.done).length;
-    if (total === 0) return { items: [{ status: 'empty',   text: 'No goals set for today â€” add one to get rolling.' }], done, total };
-    if (done === total) return { items: [{ status: 'done', text: 'âœ“ All goals done â€” solid day.' }], done, total };
+    if (total === 0) return { items: [{ status: 'empty',   text: 'No goals set for today — add one to get rolling.' }], done, total };
+    if (done === total) return { items: [{ status: 'done', text: '✓ All goals done — solid day.' }], done, total };
     const items = goals.filter(g => !g.done).map(g => ({ status: 'pending', text: g.text }));
     return { items, done, total };
   }
 
   function statusGlyph(status) {
-    if (status === 'done') return 'âœ“';
-    if (status === 'pending') return 'â—‹';
-    return 'Â·';
+    if (status === 'done') return '✓';
+    if (status === 'pending') return '○';
+    return '·';
   }
 
   // Single-row crossfade: keep one row in the DOM, fade it out, swap
@@ -1148,7 +1148,7 @@ body::after {
       const r = h.recovery;
       need += r < 34 ? 1 : r < 50 ? 0.5 : r < 67 ? 0.25 : 0;
       need = Math.round(need * 10) / 10;
-      basis = 'for ' + need + 'h â€” tuned to your ' + Math.round(r) + '% recovery';
+      basis = 'for ' + need + 'h — tuned to your ' + Math.round(r) + '% recovery';
     } else {
       need = Math.round(need * 10) / 10;
       basis = 'for your ' + need + 'h sleep target';
@@ -1160,13 +1160,13 @@ body::after {
     const hoursEl = document.getElementById('dayRingHours');
     const estEl   = document.getElementById('dayRingEst');
     const estSub  = document.getElementById('dayRingEstSub');
-    if (hoursEl) hoursEl.textContent = dec2clock(WAKE_HOUR) + ' â€“ ' + dec2clock(SLEEP_HOUR);
+    if (hoursEl) hoursEl.textContent = dec2clock(WAKE_HOUR) + ' – ' + dec2clock(SLEEP_HOUR);
     if (!estEl || !estSub) return;
     const est = estimatedBedtime(w);
     if (est) {
       estEl.hidden = false;
-      estEl.innerHTML = 'ðŸ’¤ Sleep by <b>' + dec2clock(est.bedDec) + '</b>';
-      estSub.textContent = est.basis + (w.source && w.source !== 'manual-override' && w.source !== 'default' ? ' Â· via ' + sourceLabel(w.source) : '');
+      estEl.innerHTML = '💤 Sleep by <b>' + dec2clock(est.bedDec) + '</b>';
+      estSub.textContent = est.basis + (w.source && w.source !== 'manual-override' && w.source !== 'default' ? ' · via ' + sourceLabel(w.source) : '');
     } else {
       estEl.hidden = true;
       estSub.textContent = 'Add vitals (Whoop / Apple Watch) to estimate your ideal bedtime.';
@@ -1192,9 +1192,9 @@ body::after {
     if (hours < WAKE_HOUR) {
       fillEl.setAttribute('stroke-dashoffset', C);
       fillEl.style.stroke = '#4D4B47';
-      percentEl.textContent = 'â€”';
+      percentEl.textContent = '—';
       phaseEl.textContent   = 'SLEEPING';
-      statusEl.textContent  = 'ðŸ˜´ Still sleeping';
+      statusEl.textContent  = '😴 Still sleeping';
       const minsUntil = (WAKE_HOUR - hours) * 60;
       remainingEl.textContent = formatRemaining(minsUntil) + ' until wake-up';
       return;
@@ -1205,7 +1205,7 @@ body::after {
       fillEl.style.stroke = '#FB7185';
       percentEl.textContent = '100%';
       phaseEl.textContent   = 'PAST BEDTIME';
-      statusEl.textContent  = 'âš ï¸ Past bedtime';
+      statusEl.textContent  = '⚠️ Past bedtime';
       remainingEl.textContent = 'Sleep!';
       return;
     }
@@ -1217,11 +1217,11 @@ body::after {
     percentEl.textContent = Math.floor(percent) + '%';
 
     let phase, status;
-    if (percent < 25)      { phase = 'MORNING';   status = 'â˜€ï¸ Morning â€” fresh start'; }
-    else if (percent < 50) { phase = 'MIDDAY';    status = 'âš¡ Midday â€” keep moving'; }
-    else if (percent < 75) { phase = 'AFTERNOON'; status = 'ðŸ”¥ Afternoon â€” push it'; }
-    else if (percent < 90) { phase = 'EVENING';   status = 'â³ Evening â€” wrap up'; }
-    else                   { phase = 'BEDTIME';   status = 'ðŸŒ™ Bedtime soon'; }
+    if (percent < 25)      { phase = 'MORNING';   status = '☀️ Morning — fresh start'; }
+    else if (percent < 50) { phase = 'MIDDAY';    status = '⚡ Midday — keep moving'; }
+    else if (percent < 75) { phase = 'AFTERNOON'; status = '🔥 Afternoon — push it'; }
+    else if (percent < 90) { phase = 'EVENING';   status = '⏳ Evening — wrap up'; }
+    else                   { phase = 'BEDTIME';   status = '🌙 Bedtime soon'; }
     phaseEl.textContent  = phase;
     statusEl.textContent = status;
 
@@ -1299,7 +1299,7 @@ body::after {
 
     const handle = document.createElement('span');
     handle.className = 'gm-handle';
-    handle.textContent = 'â‹®â‹®';
+    handle.textContent = '⋮⋮';
     li.appendChild(handle);
 
     const cb = document.createElement('input');
@@ -1327,7 +1327,7 @@ body::after {
     const queueBtn = document.createElement('button');
     queueBtn.type = 'button';
     queueBtn.className = 'gm-queue-btn' + (goal.queued ? ' gm-queue-active' : '');
-    queueBtn.textContent = 'âš¡';
+    queueBtn.textContent = '⚡';
     queueBtn.title = 'Queue for productivity window';
     if (readOnly) queueBtn.disabled = true;
     queueBtn.addEventListener('click', () => {
@@ -1344,7 +1344,7 @@ body::after {
     del.type = 'button';
     del.className = 'goal-delete';
     del.setAttribute('aria-label', 'Delete goal');
-    del.textContent = 'Ã—';
+    del.textContent = '×';
     del.addEventListener('click', () => {
       const list = getGoals(key);
       list.splice(idx, 1);
@@ -1366,11 +1366,11 @@ body::after {
     document.getElementById('gmProgressTotal').textContent = '/ ' + total;
     const label = document.getElementById('gmProgressLabel');
     if (total === 0)        label.textContent = 'no goals yet';
-    else if (done === total) label.textContent = 'all done â€” solid day';
+    else if (done === total) label.textContent = 'all done — solid day';
     else                     label.textContent = 'complete';
 
     document.getElementById('todayLabel').textContent =
-      'Today â€” ' + formatDate(getActiveDateString());
+      'Today — ' + formatDate(getActiveDateString());
 
     const bar = document.getElementById('gmBar');
     bar.innerHTML = '';
@@ -1397,7 +1397,7 @@ body::after {
     const list = getGoals(tomorrowKey());
     document.getElementById('gmTomorrowCount').textContent = list.length + ' planned';
     document.getElementById('tomorrowLabel').textContent =
-      'Plan tomorrow â€” ' + formatDate(getTomorrowDateString());
+      'Plan tomorrow — ' + formatDate(getTomorrowDateString());
   }
 
   function renderListInto(goals, listEl, emptyEl, key, readOnly) {
@@ -1414,7 +1414,7 @@ body::after {
       toggle.type = 'button';
       toggle.className = 'gm-show-toggle';
       const updateLabel = () => {
-        toggle.textContent = expanded ? 'Show less â–´' : ('Show ' + (goals.length - 5) + ' more â–¾');
+        toggle.textContent = expanded ? 'Show less ▴' : ('Show ' + (goals.length - 5) + ' more ▾');
       };
       updateLabel();
       toggle.addEventListener('click', () => {
@@ -1515,7 +1515,7 @@ body::after {
       if (!text) return;
       if (!GROQ_API_KEY) {
         plainAdd(text);
-        showStatus(statusEl, 'Polish needs a Groq API key — added as-typed.', false);
+        showStatus(statusEl, 'Polish needs a Groq API key � added as-typed.', false);
         return;
       }
       polishBtn.disabled = true;
@@ -1524,7 +1524,7 @@ body::after {
         plainAdd(polished);
       } catch (e) {
         plainAdd(text);
-        showStatus(statusEl, 'Polish failed â€” added as-typed.', true);
+        showStatus(statusEl, 'Polish failed — added as-typed.', true);
       } finally {
         polishBtn.disabled = false;
       }
@@ -1579,8 +1579,8 @@ body::after {
       sleepIn.value = dec2hm(w.sleepHour);
       const hasVitals = !!w.health && (w.health.wakeTime || w.health.bedtime);
       srcEl.innerHTML = hasVitals
-        ? 'Vitals source: <b>' + sourceLabel(w.health.source) + '</b>' + (w.health.wakeTime && w.health.bedtime ? ' â€” wake ' + dec2clock(hm2dec(w.health.wakeTime)) + ', bed ' + dec2clock(hm2dec(w.health.bedtime)) : '')
-        : 'No wake/sleep times in your vitals yet â€” add them on the dashboard or set Manual.';
+        ? 'Vitals source: <b>' + sourceLabel(w.health.source) + '</b>' + (w.health.wakeTime && w.health.bedtime ? ' — wake ' + dec2clock(hm2dec(w.health.wakeTime)) + ', bed ' + dec2clock(hm2dec(w.health.bedtime)) : '')
+        : 'No wake/sleep times in your vitals yet — add them on the dashboard or set Manual.';
       paintMode();
     }
     function open()  { fillFromState(); pop.hidden = false; }
@@ -1614,14 +1614,14 @@ body::after {
   // Re-render when storage changes from another tab (or our bridged parent).
   window.addEventListener('storage', (e) => {
     loadToday(); loadTomorrow(); renderStreak();
-    // vitals updated elsewhere (dashboard / Whoop tab) â†’ refresh the day window
+    // vitals updated elsewhere (dashboard / Whoop tab) → refresh the day window
     if (!e || !e.key || e.key === SUITE_HEALTH_KEY || e.key === LEGACY_WHOOP_KEY || e.key === DAY_WINDOW_KEY) updateDayRing();
   });
 })();
 </script>
 
 <script>(function(){function cur(){try{return localStorage.getItem("patron_theme")||"nocturne";}catch(e){return "nocturne";}}function paint(){var c=cur();document.querySelectorAll(".themeBtn").forEach(function(b){b.classList.toggle("themeBtnActive",b.dataset.theme===c);});}document.addEventListener("click",function(e){var b=e.target.closest(".themeBtn");if(!b)return;var n=b.dataset.theme;document.documentElement.setAttribute("data-theme",n);try{localStorage.setItem("patron_theme",n);}catch(e){}paint();});paint();})();</script>
-<script>(function(){try{var p=JSON.parse(localStorage.getItem('patron_profile_v1')||'null');var n=(p&&p.name)?String(p.name).trim():'';var el=document.getElementById('dashTitle');if(el)el.textContent=(n?n+'â€™s':'Your')+' Dashboard';}catch(e){}})();</script>
+<script>(function(){try{var p=JSON.parse(localStorage.getItem('patron_profile_v1')||'null');var n=(p&&p.name)?String(p.name).trim():'';var el=document.getElementById('dashTitle');if(el)el.textContent=(n?n+'’s':'Your')+' Dashboard';}catch(e){}})();</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="db.js?v=15"></script>
 <script src="cloud-sync.js?v=15"></script>

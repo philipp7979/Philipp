@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -19,7 +19,7 @@ img{max-width:100%;height:auto}
 @media (max-width:480px){input,select,textarea{font-size:16px !important}}
 @supports (padding:max(0px)){body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}}
 </style>
-<title>Supplements Â· standalone</title>
+<title>Supplements · standalone</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -27,7 +27,7 @@ img{max-width:100%;height:auto}
 <style>
 
 /* ============================================================
- * Supplements â€” restyled to "Patron": soft-dark electric-violet
+ * Supplements — restyled to "Patron": soft-dark electric-violet
  * modern-fintech skin. Same token system + 3 themes as Finance.
  * Logic untouched.
  * ============================================================ */
@@ -346,54 +346,54 @@ select.tunerInput { padding-right: 26px; background-image: linear-gradient(45deg
 
 <script>
 /* ============================================================
- * DATA â€” ported verbatim from supplements.ts
+ * DATA — ported verbatim from supplements.ts
  * ============================================================ */
 const SUPPLEMENT_DB = [
-  { id: 'creatine', name: 'Creatine monohydrate', icon: 'ðŸ‹ï¸', dose: '5 g', window: 'anytime', note: 'Daily. Consistency matters more than timing.', helps: 'Increases strength, power, and short-term work capacity. Mild cognitive benefit.', bestTime: 'Any time of day, every day. Skip the loading phase. It isnâ€™t necessary.', aliases: ['creatine'], brand: 'Bulk Supplements (micronised) or Thorne', priceUsdMonthly: 10, baseScore: 8, signalBoosts: { 'heavy-training': 2, 'bulk-goal': 2, 'recomp-goal': 1, 'aging': 1, 'beginner-training': -1 } },
-  { id: 'beta-alanine', name: 'Beta-alanine', icon: 'ðŸ‹ï¸', dose: '2-5 g', window: 'morning', note: 'Split doses if the tingles bother you.', helps: 'Buffers muscle acidity. Improves endurance on sets in the 1-4 min range.', bestTime: 'Daily. Effect is from saturation, not timing of the dose itself.', aliases: ['beta alanine'], brand: 'Bulk Supplements CarnoSyn', priceUsdMonthly: 20, baseScore: 5, signalBoosts: { 'heavy-training': 2, 'bulk-goal': 1 } },
-  { id: 'l-citrulline', name: 'L-citrulline', icon: 'ðŸ‹ï¸', dose: '6-8 g', window: 'morning', note: 'Empty stomach for absorption.', helps: 'Boosts nitric oxide â†’ better pumps and endurance.', bestTime: '30-45 min before training.', aliases: ['citrulline', 'citrulline malate'], brand: 'Bulk Supplements', priceUsdMonthly: 25, baseScore: 5, signalBoosts: { 'heavy-training': 2, 'bulk-goal': 1 } },
-  { id: 'whey', name: 'Whey protein', icon: 'ðŸ¥¤', dose: '25-40 g', window: 'anytime', note: 'Use to hit daily protein target.', helps: 'Fast-digesting protein for muscle repair + daily protein hitting.', bestTime: 'Post-workout or any meal where youâ€™re short on protein.', aliases: ['whey', 'protein powder'], brand: 'Optimum Nutrition Gold Standard or Transparent Labs', priceUsdMonthly: 50, baseScore: 7, signalBoosts: { 'bulk-goal': 2, 'recomp-goal': 1, 'heavy-training': 1 } },
-  { id: 'casein', name: 'Casein protein', icon: 'ðŸ¥¤', dose: '25-40 g', window: 'evening', note: 'Slow-release. Good before bed.', helps: 'Slow-digesting protein. Sustained amino release overnight.', bestTime: '30-60 min before bed.', aliases: ['casein'], brand: 'Optimum Nutrition Gold Standard Casein', priceUsdMonthly: 45, baseScore: 5, signalBoosts: { 'bulk-goal': 2, 'heavy-training': 1 } },
-  { id: 'l-carnitine', name: 'L-carnitine', icon: 'ðŸ‹ï¸', dose: '1-2 g', window: 'morning', note: 'Take with carbs for uptake.', helps: 'Helps shuttle fat into mitochondria. Modest endurance + recovery effect.', bestTime: 'With a carb-containing meal, ideally pre-workout.', aliases: ['carnitine'], brand: 'NOW Foods L-Carnitine', priceUsdMonthly: 20, baseScore: 4, signalBoosts: { 'cut-goal': 1, 'heavy-training': 1 } },
-  { id: 'alcar', name: 'Acetyl-L-carnitine', icon: 'ðŸ§ ', dose: '500 mg - 2 g', window: 'morning', note: 'Crosses blood-brain barrier. Cognitive variant.', helps: 'Cognitive + mood support; may sharpen focus.', bestTime: 'AM, on an empty stomach if you can tolerate it.', aliases: ['alcar', 'acetyl carnitine'], brand: 'Doctorâ€™s Best Acetyl-L-Carnitine', priceUsdMonthly: 25, baseScore: 5, signalBoosts: { 'aging': 1, 'general-health-goal': 1, 'has-stims': 1 } },
-  { id: 'vit-d3', name: 'Vitamin D3', icon: 'â˜€ï¸', dose: '2,000-5,000 IU', window: 'lunch', note: 'Fat-soluble. Pair with your biggest meal.', helps: 'Immune, bone, and mood support. Most people are deficient.', bestTime: 'Daily, with whatever meal has the most fat.', aliases: ['vit d', 'vitamin d', 'd3', 'cholecalciferol'], brand: 'Thorne Vitamin D-5,000 or NOW Foods', priceUsdMonthly: 10, baseScore: 8, signalBoosts: { 'general-health-goal': 1, 'aging': 1, 'senior': 2 } },
-  { id: 'vit-k2', name: 'Vitamin K2 (MK-7)', icon: 'ðŸ’Š', dose: '100-200 mcg', window: 'lunch', note: 'Pair with D3 for calcium routing.', helps: 'Directs calcium to bones, away from arteries. Synergistic with D3.', bestTime: 'Same meal as your D3.', aliases: ['vit k', 'vitamin k', 'k2', 'mk7'], brand: 'Life Extension Super K with MK-7', priceUsdMonthly: 20, baseScore: 5, signalBoosts: { 'aging': 1, 'senior': 2 } },
-  { id: 'vit-c', name: 'Vitamin C', icon: 'ðŸŠ', dose: '500-1,000 mg', window: 'morning', note: 'Water-soluble. Split doses if above 500 mg.', helps: 'Antioxidant + collagen synthesis cofactor. Mild immune support.', bestTime: 'AM, with food. Split larger doses across the day.', aliases: ['vit c', 'ascorbic acid'], brand: 'NOW Foods Vitamin C', priceUsdMonthly: 12, baseScore: 5, signalBoosts: { 'has-nicotine': 1, 'general-health-goal': 1 } },
-  { id: 'b12', name: 'Vitamin B12', icon: 'âš¡', dose: '500-1,000 mcg', window: 'morning', note: 'Methylcobalamin form is best absorbed.', helps: 'Energy, nerve function, red blood cell production.', bestTime: 'AM. Can be stimulating for some.', aliases: ['b12', 'methylcobalamin'], brand: 'Jarrow Methyl-B12 (sublingual)', priceUsdMonthly: 12, baseScore: 5, signalBoosts: { 'aging': 1, 'senior': 1 } },
-  { id: 'b-complex', name: 'B-complex', icon: 'âš¡', dose: '1 cap', window: 'morning', note: 'All B vitamins together. Energy support.', helps: 'Broad energy + nervous system cofactors. Useful if diet is thin.', bestTime: 'AM with food. Can be stimulating.', aliases: ['b complex', 'b vitamins'], brand: 'Thorne Basic B Complex', priceUsdMonthly: 18, baseScore: 5, signalBoosts: { 'general-health-goal': 1, 'has-stims': 1 } },
-  { id: 'multivitamin', name: 'Multivitamin', icon: 'ðŸ’Š', dose: '1 serving', window: 'lunch', note: 'Take with food for absorption.', helps: 'Backstop for the micronutrients your diet misses.', bestTime: 'With the biggest meal of the day.', aliases: ['multi', 'multivitamin'], brand: 'Thorne Basic Nutrients 2/Day', priceUsdMonthly: 30, baseScore: 6, signalBoosts: { 'general-health-goal': 2, 'beginner-training': 1 } },
-  { id: 'mag-glycinate', name: 'Magnesium glycinate', icon: 'ðŸŒ™', dose: '200-400 mg', window: 'evening', note: 'Sleep helper. 30-60 min before bed.', helps: 'Relaxes muscles + nervous system. Improves sleep quality.', bestTime: '30-60 min before bed.', aliases: ['magnesium', 'mag glycinate', 'bisglycinate'], brand: 'Doctorâ€™s Best High Absorption or Thorne', priceUsdMonthly: 20, baseScore: 8, signalBoosts: { 'has-stims': 2, 'poor-sleep': 2, 'low-recovery': 2, 'high-caffeine': 1, 'aging': 1 } },
-  { id: 'mag-threonate', name: 'Magnesium L-threonate', icon: 'ðŸ§ ', dose: '144 mg elemental', window: 'evening', note: 'Crosses the blood-brain barrier.', helps: 'Cognitive variant of magnesium. Sleep + memory support.', bestTime: '60-90 min before bed.', aliases: ['magtein', 'threonate'], brand: 'Magtein (Life Extension Neuro-Mag)', priceUsdMonthly: 35, baseScore: 6, signalBoosts: { 'aging': 1, 'poor-sleep': 1, 'has-stims': 1 } },
-  { id: 'zinc', name: 'Zinc', icon: 'ðŸ’Š', dose: '15-30 mg', window: 'evening', note: 'Donâ€™t pair with calcium or iron.', helps: 'Immune + hormonal support. Donâ€™t megadose long-term.', bestTime: 'With dinner, away from calcium/iron.', aliases: ['zinc'], brand: 'Thorne Zinc Picolinate', priceUsdMonthly: 10, baseScore: 5, signalBoosts: { 'male': 1, 'heavy-training': 1 } },
-  { id: 'iron', name: 'Iron', icon: 'ðŸ’Š', dose: '18-65 mg', window: 'morning', note: 'Only supplement if labs confirm deficiency.', helps: 'Treats iron-deficiency anemia. Only supplement if labs confirm low.', bestTime: 'AM on empty stomach with a vit C source (orange juice).', aliases: ['iron'], brand: 'Thorne Iron Bisglycinate', priceUsdMonthly: 15, baseScore: 3, signalBoosts: { 'female': 2 } },
-  { id: 'omega-3', name: 'Omega-3 (Fish oil)', icon: 'ðŸŸ', dose: '2-3 g EPA + DHA', window: 'lunch', note: 'Take with the fattiest meal of the day.', helps: 'Anti-inflammatory, brain + cardiovascular support.', bestTime: 'With the meal that has the most fat.', aliases: ['omega 3', 'omega3', 'fish oil', 'epa', 'dha'], brand: 'Nordic Naturals Ultimate Omega or Carlson', priceUsdMonthly: 30, baseScore: 7, signalBoosts: { 'aging': 2, 'senior': 2, 'general-health-goal': 1, 'heavy-training': 1 } },
-  { id: 'l-theanine', name: 'L-theanine', icon: 'ðŸ§ ', dose: '100-200 mg', window: 'morning', note: 'Stack with caffeine 2:1 for cleaner focus.', helps: 'Calm, focused alertness. Takes the edge off caffeine.', bestTime: 'With your morning coffee.', aliases: ['theanine'], brand: 'NOW Foods Suntheanine', priceUsdMonthly: 15, baseScore: 5, signalBoosts: { 'high-caffeine': 3, 'very-high-caffeine': 4, 'has-stims': 2 } },
-  { id: 'rhodiola', name: 'Rhodiola rosea', icon: 'ðŸŒ¿', dose: '200-400 mg', window: 'morning', note: 'Adaptogen. Stress + energy.', helps: 'Reduces stress-related fatigue. Mild stimulant feel.', bestTime: 'AM on empty stomach.', aliases: ['rhodiola'], brand: 'NOW Foods Rhodiola', priceUsdMonthly: 22, baseScore: 4, signalBoosts: { 'cut-goal': 1, 'general-health-goal': 1 } },
-  { id: 'lions-mane', name: 'Lionâ€™s mane', icon: 'ðŸ„', dose: '500-1,000 mg', window: 'morning', note: 'Daily for cognitive support.', helps: 'Supports nerve growth factor. Long-term cognitive benefit.', bestTime: 'AM with breakfast.', aliases: ['lions mane', 'hericium'], brand: 'Host Defense or Real Mushrooms', priceUsdMonthly: 30, baseScore: 5, signalBoosts: { 'general-health-goal': 1, 'aging': 1 } },
-  { id: 'alpha-gpc', name: 'Alpha-GPC', icon: 'ðŸ§ ', dose: '300-600 mg', window: 'morning', note: 'Choline source. Focus.', helps: 'Boosts acetylcholine. Sharper focus and learning.', bestTime: '30 min before deep work or training.', aliases: ['alpha gpc'], brand: 'Double Wood Alpha-GPC', priceUsdMonthly: 25, baseScore: 5, signalBoosts: { 'heavy-training': 1, 'has-stims': 1 } },
-  { id: 'nac', name: 'NAC', icon: 'ðŸ’Š', dose: '600-1,800 mg', window: 'morning', note: 'Glutathione precursor. Split doses.', helps: 'Antioxidant + liver support. Useful for heavy training loads.', bestTime: 'AM on empty stomach.', aliases: ['nac', 'n-acetyl cysteine'], brand: 'NOW Foods NAC or Jarrow', priceUsdMonthly: 20, baseScore: 5, signalBoosts: { 'has-stims': 1, 'has-nicotine': 2, 'has-alcohol': 2, 'heavy-training': 1 } },
-  { id: 'melatonin', name: 'Melatonin', icon: 'ðŸŒ™', dose: '0.3-3 mg', window: 'evening', note: 'Lowest effective dose. More isnâ€™t better.', helps: 'Shifts circadian rhythm. Useful for jet lag or chronotype shifts.', bestTime: '30-60 min before target bedtime.', aliases: ['melatonin'], brand: 'NOW Foods (look for 0.5-1 mg tabs)', priceUsdMonthly: 8, baseScore: 5, signalBoosts: { 'poor-sleep': 2 } },
-  { id: 'glycine', name: 'Glycine', icon: 'ðŸŒ™', dose: '3 g', window: 'evening', note: 'Sleep onset. Drops body temp slightly.', helps: 'Lowers core body temperature â†’ faster sleep onset.', bestTime: 'Right before bed.', aliases: ['glycine'], brand: 'NOW Foods Glycine Powder', priceUsdMonthly: 12, baseScore: 5, signalBoosts: { 'poor-sleep': 2 } },
-  { id: 'ashwagandha', name: 'Ashwagandha', icon: 'ðŸŒ¿', dose: '300-600 mg', window: 'evening', note: 'KSM-66 is the most-studied form.', helps: 'Lowers cortisol + stress. Modest sleep + recovery benefit.', bestTime: 'With dinner. Calming effect.', aliases: ['ashwagandha', 'ksm-66'], brand: 'NutriRise KSM-66 (the specific extract matters)', priceUsdMonthly: 25, baseScore: 5, signalBoosts: { 'low-recovery': 3, 'poor-sleep': 2, 'has-stims': 1, 'heavy-training': 1 } },
-  { id: 'tryptophan', name: 'L-tryptophan', icon: 'ðŸŒ™', dose: '500 mg - 1 g', window: 'evening', note: 'Serotonin precursor.', helps: 'Supports serotonin â†’ melatonin pathway for sleep onset.', bestTime: '60 min before bed, away from protein meals.', aliases: ['tryptophan'], brand: 'NOW Foods L-Tryptophan', priceUsdMonthly: 18, baseScore: 4, signalBoosts: { 'poor-sleep': 1 } },
-  { id: 'apigenin', name: 'Apigenin', icon: 'ðŸŒ™', dose: '50 mg', window: 'evening', note: 'Chamomile-derived calming compound.', helps: 'Mild GABA-ergic relaxation. Pairs with magnesium.', bestTime: '30 min before bed.', aliases: ['apigenin'], brand: 'Double Wood Apigenin', priceUsdMonthly: 25, baseScore: 4, signalBoosts: { 'poor-sleep': 1, 'has-stims': 1 } },
-  { id: 'caffeine', name: 'Caffeine', icon: 'â˜•', dose: '100-200 mg', window: 'morning', note: 'Stack with L-theanine for cleaner focus.', helps: 'Wakefulness + endurance. Half-life is ~5 h, so careful past noon.', bestTime: '90 min after waking. Lets cortisol peak first.', aliases: ['caffeine'], brand: 'Nutricost Caffeine 100 mg', priceUsdMonthly: 5, baseScore: 3, signalBoosts: { 'cut-goal': 1 } },
-  { id: 'probiotics', name: 'Probiotics', icon: 'ðŸ¦ ', dose: '10-50 billion CFU', window: 'morning', note: 'Empty stomach or with light meal.', helps: 'Gut flora support. Quality + strain matter more than CFU count.', bestTime: 'AM on empty stomach.', aliases: ['probiotic'], brand: 'Seed DS-01 or Garden of Life Raw', priceUsdMonthly: 35, baseScore: 5, signalBoosts: { 'general-health-goal': 1 } },
-  { id: 'curcumin', name: 'Curcumin', icon: 'ðŸŒ¿', dose: '500-1,000 mg', window: 'lunch', note: 'With black pepper + fat for absorption.', helps: 'Anti-inflammatory. Joint + recovery support.', bestTime: 'With a fatty meal.', aliases: ['curcumin', 'turmeric'], brand: 'Thorne Curcumin Phytosome (Meriva)', priceUsdMonthly: 25, baseScore: 5, signalBoosts: { 'heavy-training': 1, 'aging': 1, 'low-recovery': 1 } },
-  { id: 'coq10', name: 'CoQ10 / Ubiquinol', icon: 'ðŸ’Š', dose: '100-200 mg', window: 'lunch', note: 'Fat-soluble. With biggest meal.', helps: 'Mitochondrial support. Worth it if youâ€™re on a statin.', bestTime: 'With the fattiest meal of the day.', aliases: ['coq10', 'ubiquinol'], brand: 'Qunol Mega CoQ10 or Thorne Q-Best 100', priceUsdMonthly: 35, baseScore: 5, signalBoosts: { 'senior': 2, 'aging': 1 } },
-  { id: 'berberine', name: 'Berberine', icon: 'ðŸ’Š', dose: '500 mg', window: 'lunch', note: 'Take just before carb-heavy meals.', helps: 'Improves glucose handling. Comparable to metformin in some studies.', bestTime: '15 min before meals. Split across the day.', aliases: ['berberine'], brand: 'Thorne Berberine-500', priceUsdMonthly: 25, baseScore: 5, signalBoosts: { 'cut-goal': 1, 'aging': 1 } },
-  { id: 'collagen', name: 'Collagen peptides', icon: 'ðŸ’…', dose: '10-20 g', window: 'anytime', note: 'With vitamin C for synthesis.', helps: 'Connective tissue + skin support. Most useful 30-60 min pre-load.', bestTime: 'Anytime. Many take it pre-workout for joints.', aliases: ['collagen'], brand: 'Vital Proteins Collagen Peptides', priceUsdMonthly: 30, baseScore: 5, signalBoosts: { 'aging': 1, 'senior': 1, 'heavy-training': 1 } },
-  { id: 'tongkat', name: 'Tongkat ali', icon: 'ðŸŒ¿', dose: '200-400 mg', window: 'morning', note: 'Cycle 8 weeks on, 2-4 off.', helps: 'May support endogenous testosterone. Mild energy + libido lift.', bestTime: 'AM on empty stomach.', aliases: ['tongkat', 'longjack'], brand: 'Nutricost Tongkat Ali 200 mg', priceUsdMonthly: 40, baseScore: 4, signalBoosts: { 'male': 1, 'aging': 1 } },
-  { id: 'fadogia', name: 'Fadogia agrestis', icon: 'ðŸŒ¿', dose: '600 mg', window: 'morning', note: 'Cycle 8 weeks on / off.', helps: 'Often stacked with tongkat for hormonal support.', bestTime: 'AM, alongside tongkat if stacking.', aliases: ['fadogia'], brand: 'Double Wood Fadogia Agrestis', priceUsdMonthly: 30, baseScore: 3, signalBoosts: { 'male': 1 } },
-  { id: 'reishi', name: 'Reishi', icon: 'ðŸ„', dose: '1-2 g', window: 'evening', note: 'Calming adaptogen.', helps: 'Immune + sleep support. Subtle calming effect.', bestTime: 'With dinner or before bed.', aliases: ['reishi', 'ganoderma'], brand: 'Host Defense Reishi', priceUsdMonthly: 25, baseScore: 4, signalBoosts: { 'poor-sleep': 1, 'low-recovery': 1 } },
-  { id: 'cordyceps', name: 'Cordyceps', icon: 'ðŸ„', dose: '1-3 g', window: 'morning', note: 'Energy + endurance support.', helps: 'Modest endurance + oxygen utilization boost.', bestTime: 'AM, pre-workout if training in the morning.', aliases: ['cordyceps'], brand: 'Real Mushrooms Cordyceps-M', priceUsdMonthly: 25, baseScore: 4, signalBoosts: { 'heavy-training': 1, 'cut-goal': 1 } },
+  { id: 'creatine', name: 'Creatine monohydrate', icon: '🏋️', dose: '5 g', window: 'anytime', note: 'Daily. Consistency matters more than timing.', helps: 'Increases strength, power, and short-term work capacity. Mild cognitive benefit.', bestTime: 'Any time of day, every day. Skip the loading phase. It isn’t necessary.', aliases: ['creatine'], brand: 'Bulk Supplements (micronised) or Thorne', priceUsdMonthly: 10, baseScore: 8, signalBoosts: { 'heavy-training': 2, 'bulk-goal': 2, 'recomp-goal': 1, 'aging': 1, 'beginner-training': -1 } },
+  { id: 'beta-alanine', name: 'Beta-alanine', icon: '🏋️', dose: '2-5 g', window: 'morning', note: 'Split doses if the tingles bother you.', helps: 'Buffers muscle acidity. Improves endurance on sets in the 1-4 min range.', bestTime: 'Daily. Effect is from saturation, not timing of the dose itself.', aliases: ['beta alanine'], brand: 'Bulk Supplements CarnoSyn', priceUsdMonthly: 20, baseScore: 5, signalBoosts: { 'heavy-training': 2, 'bulk-goal': 1 } },
+  { id: 'l-citrulline', name: 'L-citrulline', icon: '🏋️', dose: '6-8 g', window: 'morning', note: 'Empty stomach for absorption.', helps: 'Boosts nitric oxide → better pumps and endurance.', bestTime: '30-45 min before training.', aliases: ['citrulline', 'citrulline malate'], brand: 'Bulk Supplements', priceUsdMonthly: 25, baseScore: 5, signalBoosts: { 'heavy-training': 2, 'bulk-goal': 1 } },
+  { id: 'whey', name: 'Whey protein', icon: '🥤', dose: '25-40 g', window: 'anytime', note: 'Use to hit daily protein target.', helps: 'Fast-digesting protein for muscle repair + daily protein hitting.', bestTime: 'Post-workout or any meal where you’re short on protein.', aliases: ['whey', 'protein powder'], brand: 'Optimum Nutrition Gold Standard or Transparent Labs', priceUsdMonthly: 50, baseScore: 7, signalBoosts: { 'bulk-goal': 2, 'recomp-goal': 1, 'heavy-training': 1 } },
+  { id: 'casein', name: 'Casein protein', icon: '🥤', dose: '25-40 g', window: 'evening', note: 'Slow-release. Good before bed.', helps: 'Slow-digesting protein. Sustained amino release overnight.', bestTime: '30-60 min before bed.', aliases: ['casein'], brand: 'Optimum Nutrition Gold Standard Casein', priceUsdMonthly: 45, baseScore: 5, signalBoosts: { 'bulk-goal': 2, 'heavy-training': 1 } },
+  { id: 'l-carnitine', name: 'L-carnitine', icon: '🏋️', dose: '1-2 g', window: 'morning', note: 'Take with carbs for uptake.', helps: 'Helps shuttle fat into mitochondria. Modest endurance + recovery effect.', bestTime: 'With a carb-containing meal, ideally pre-workout.', aliases: ['carnitine'], brand: 'NOW Foods L-Carnitine', priceUsdMonthly: 20, baseScore: 4, signalBoosts: { 'cut-goal': 1, 'heavy-training': 1 } },
+  { id: 'alcar', name: 'Acetyl-L-carnitine', icon: '🧠', dose: '500 mg - 2 g', window: 'morning', note: 'Crosses blood-brain barrier. Cognitive variant.', helps: 'Cognitive + mood support; may sharpen focus.', bestTime: 'AM, on an empty stomach if you can tolerate it.', aliases: ['alcar', 'acetyl carnitine'], brand: 'Doctor’s Best Acetyl-L-Carnitine', priceUsdMonthly: 25, baseScore: 5, signalBoosts: { 'aging': 1, 'general-health-goal': 1, 'has-stims': 1 } },
+  { id: 'vit-d3', name: 'Vitamin D3', icon: '☀️', dose: '2,000-5,000 IU', window: 'lunch', note: 'Fat-soluble. Pair with your biggest meal.', helps: 'Immune, bone, and mood support. Most people are deficient.', bestTime: 'Daily, with whatever meal has the most fat.', aliases: ['vit d', 'vitamin d', 'd3', 'cholecalciferol'], brand: 'Thorne Vitamin D-5,000 or NOW Foods', priceUsdMonthly: 10, baseScore: 8, signalBoosts: { 'general-health-goal': 1, 'aging': 1, 'senior': 2 } },
+  { id: 'vit-k2', name: 'Vitamin K2 (MK-7)', icon: '💊', dose: '100-200 mcg', window: 'lunch', note: 'Pair with D3 for calcium routing.', helps: 'Directs calcium to bones, away from arteries. Synergistic with D3.', bestTime: 'Same meal as your D3.', aliases: ['vit k', 'vitamin k', 'k2', 'mk7'], brand: 'Life Extension Super K with MK-7', priceUsdMonthly: 20, baseScore: 5, signalBoosts: { 'aging': 1, 'senior': 2 } },
+  { id: 'vit-c', name: 'Vitamin C', icon: '🍊', dose: '500-1,000 mg', window: 'morning', note: 'Water-soluble. Split doses if above 500 mg.', helps: 'Antioxidant + collagen synthesis cofactor. Mild immune support.', bestTime: 'AM, with food. Split larger doses across the day.', aliases: ['vit c', 'ascorbic acid'], brand: 'NOW Foods Vitamin C', priceUsdMonthly: 12, baseScore: 5, signalBoosts: { 'has-nicotine': 1, 'general-health-goal': 1 } },
+  { id: 'b12', name: 'Vitamin B12', icon: '⚡', dose: '500-1,000 mcg', window: 'morning', note: 'Methylcobalamin form is best absorbed.', helps: 'Energy, nerve function, red blood cell production.', bestTime: 'AM. Can be stimulating for some.', aliases: ['b12', 'methylcobalamin'], brand: 'Jarrow Methyl-B12 (sublingual)', priceUsdMonthly: 12, baseScore: 5, signalBoosts: { 'aging': 1, 'senior': 1 } },
+  { id: 'b-complex', name: 'B-complex', icon: '⚡', dose: '1 cap', window: 'morning', note: 'All B vitamins together. Energy support.', helps: 'Broad energy + nervous system cofactors. Useful if diet is thin.', bestTime: 'AM with food. Can be stimulating.', aliases: ['b complex', 'b vitamins'], brand: 'Thorne Basic B Complex', priceUsdMonthly: 18, baseScore: 5, signalBoosts: { 'general-health-goal': 1, 'has-stims': 1 } },
+  { id: 'multivitamin', name: 'Multivitamin', icon: '💊', dose: '1 serving', window: 'lunch', note: 'Take with food for absorption.', helps: 'Backstop for the micronutrients your diet misses.', bestTime: 'With the biggest meal of the day.', aliases: ['multi', 'multivitamin'], brand: 'Thorne Basic Nutrients 2/Day', priceUsdMonthly: 30, baseScore: 6, signalBoosts: { 'general-health-goal': 2, 'beginner-training': 1 } },
+  { id: 'mag-glycinate', name: 'Magnesium glycinate', icon: '🌙', dose: '200-400 mg', window: 'evening', note: 'Sleep helper. 30-60 min before bed.', helps: 'Relaxes muscles + nervous system. Improves sleep quality.', bestTime: '30-60 min before bed.', aliases: ['magnesium', 'mag glycinate', 'bisglycinate'], brand: 'Doctor’s Best High Absorption or Thorne', priceUsdMonthly: 20, baseScore: 8, signalBoosts: { 'has-stims': 2, 'poor-sleep': 2, 'low-recovery': 2, 'high-caffeine': 1, 'aging': 1 } },
+  { id: 'mag-threonate', name: 'Magnesium L-threonate', icon: '🧠', dose: '144 mg elemental', window: 'evening', note: 'Crosses the blood-brain barrier.', helps: 'Cognitive variant of magnesium. Sleep + memory support.', bestTime: '60-90 min before bed.', aliases: ['magtein', 'threonate'], brand: 'Magtein (Life Extension Neuro-Mag)', priceUsdMonthly: 35, baseScore: 6, signalBoosts: { 'aging': 1, 'poor-sleep': 1, 'has-stims': 1 } },
+  { id: 'zinc', name: 'Zinc', icon: '💊', dose: '15-30 mg', window: 'evening', note: 'Don’t pair with calcium or iron.', helps: 'Immune + hormonal support. Don’t megadose long-term.', bestTime: 'With dinner, away from calcium/iron.', aliases: ['zinc'], brand: 'Thorne Zinc Picolinate', priceUsdMonthly: 10, baseScore: 5, signalBoosts: { 'male': 1, 'heavy-training': 1 } },
+  { id: 'iron', name: 'Iron', icon: '💊', dose: '18-65 mg', window: 'morning', note: 'Only supplement if labs confirm deficiency.', helps: 'Treats iron-deficiency anemia. Only supplement if labs confirm low.', bestTime: 'AM on empty stomach with a vit C source (orange juice).', aliases: ['iron'], brand: 'Thorne Iron Bisglycinate', priceUsdMonthly: 15, baseScore: 3, signalBoosts: { 'female': 2 } },
+  { id: 'omega-3', name: 'Omega-3 (Fish oil)', icon: '🐟', dose: '2-3 g EPA + DHA', window: 'lunch', note: 'Take with the fattiest meal of the day.', helps: 'Anti-inflammatory, brain + cardiovascular support.', bestTime: 'With the meal that has the most fat.', aliases: ['omega 3', 'omega3', 'fish oil', 'epa', 'dha'], brand: 'Nordic Naturals Ultimate Omega or Carlson', priceUsdMonthly: 30, baseScore: 7, signalBoosts: { 'aging': 2, 'senior': 2, 'general-health-goal': 1, 'heavy-training': 1 } },
+  { id: 'l-theanine', name: 'L-theanine', icon: '🧠', dose: '100-200 mg', window: 'morning', note: 'Stack with caffeine 2:1 for cleaner focus.', helps: 'Calm, focused alertness. Takes the edge off caffeine.', bestTime: 'With your morning coffee.', aliases: ['theanine'], brand: 'NOW Foods Suntheanine', priceUsdMonthly: 15, baseScore: 5, signalBoosts: { 'high-caffeine': 3, 'very-high-caffeine': 4, 'has-stims': 2 } },
+  { id: 'rhodiola', name: 'Rhodiola rosea', icon: '🌿', dose: '200-400 mg', window: 'morning', note: 'Adaptogen. Stress + energy.', helps: 'Reduces stress-related fatigue. Mild stimulant feel.', bestTime: 'AM on empty stomach.', aliases: ['rhodiola'], brand: 'NOW Foods Rhodiola', priceUsdMonthly: 22, baseScore: 4, signalBoosts: { 'cut-goal': 1, 'general-health-goal': 1 } },
+  { id: 'lions-mane', name: 'Lion’s mane', icon: '🍄', dose: '500-1,000 mg', window: 'morning', note: 'Daily for cognitive support.', helps: 'Supports nerve growth factor. Long-term cognitive benefit.', bestTime: 'AM with breakfast.', aliases: ['lions mane', 'hericium'], brand: 'Host Defense or Real Mushrooms', priceUsdMonthly: 30, baseScore: 5, signalBoosts: { 'general-health-goal': 1, 'aging': 1 } },
+  { id: 'alpha-gpc', name: 'Alpha-GPC', icon: '🧠', dose: '300-600 mg', window: 'morning', note: 'Choline source. Focus.', helps: 'Boosts acetylcholine. Sharper focus and learning.', bestTime: '30 min before deep work or training.', aliases: ['alpha gpc'], brand: 'Double Wood Alpha-GPC', priceUsdMonthly: 25, baseScore: 5, signalBoosts: { 'heavy-training': 1, 'has-stims': 1 } },
+  { id: 'nac', name: 'NAC', icon: '💊', dose: '600-1,800 mg', window: 'morning', note: 'Glutathione precursor. Split doses.', helps: 'Antioxidant + liver support. Useful for heavy training loads.', bestTime: 'AM on empty stomach.', aliases: ['nac', 'n-acetyl cysteine'], brand: 'NOW Foods NAC or Jarrow', priceUsdMonthly: 20, baseScore: 5, signalBoosts: { 'has-stims': 1, 'has-nicotine': 2, 'has-alcohol': 2, 'heavy-training': 1 } },
+  { id: 'melatonin', name: 'Melatonin', icon: '🌙', dose: '0.3-3 mg', window: 'evening', note: 'Lowest effective dose. More isn’t better.', helps: 'Shifts circadian rhythm. Useful for jet lag or chronotype shifts.', bestTime: '30-60 min before target bedtime.', aliases: ['melatonin'], brand: 'NOW Foods (look for 0.5-1 mg tabs)', priceUsdMonthly: 8, baseScore: 5, signalBoosts: { 'poor-sleep': 2 } },
+  { id: 'glycine', name: 'Glycine', icon: '🌙', dose: '3 g', window: 'evening', note: 'Sleep onset. Drops body temp slightly.', helps: 'Lowers core body temperature → faster sleep onset.', bestTime: 'Right before bed.', aliases: ['glycine'], brand: 'NOW Foods Glycine Powder', priceUsdMonthly: 12, baseScore: 5, signalBoosts: { 'poor-sleep': 2 } },
+  { id: 'ashwagandha', name: 'Ashwagandha', icon: '🌿', dose: '300-600 mg', window: 'evening', note: 'KSM-66 is the most-studied form.', helps: 'Lowers cortisol + stress. Modest sleep + recovery benefit.', bestTime: 'With dinner. Calming effect.', aliases: ['ashwagandha', 'ksm-66'], brand: 'NutriRise KSM-66 (the specific extract matters)', priceUsdMonthly: 25, baseScore: 5, signalBoosts: { 'low-recovery': 3, 'poor-sleep': 2, 'has-stims': 1, 'heavy-training': 1 } },
+  { id: 'tryptophan', name: 'L-tryptophan', icon: '🌙', dose: '500 mg - 1 g', window: 'evening', note: 'Serotonin precursor.', helps: 'Supports serotonin → melatonin pathway for sleep onset.', bestTime: '60 min before bed, away from protein meals.', aliases: ['tryptophan'], brand: 'NOW Foods L-Tryptophan', priceUsdMonthly: 18, baseScore: 4, signalBoosts: { 'poor-sleep': 1 } },
+  { id: 'apigenin', name: 'Apigenin', icon: '🌙', dose: '50 mg', window: 'evening', note: 'Chamomile-derived calming compound.', helps: 'Mild GABA-ergic relaxation. Pairs with magnesium.', bestTime: '30 min before bed.', aliases: ['apigenin'], brand: 'Double Wood Apigenin', priceUsdMonthly: 25, baseScore: 4, signalBoosts: { 'poor-sleep': 1, 'has-stims': 1 } },
+  { id: 'caffeine', name: 'Caffeine', icon: '☕', dose: '100-200 mg', window: 'morning', note: 'Stack with L-theanine for cleaner focus.', helps: 'Wakefulness + endurance. Half-life is ~5 h, so careful past noon.', bestTime: '90 min after waking. Lets cortisol peak first.', aliases: ['caffeine'], brand: 'Nutricost Caffeine 100 mg', priceUsdMonthly: 5, baseScore: 3, signalBoosts: { 'cut-goal': 1 } },
+  { id: 'probiotics', name: 'Probiotics', icon: '🦠', dose: '10-50 billion CFU', window: 'morning', note: 'Empty stomach or with light meal.', helps: 'Gut flora support. Quality + strain matter more than CFU count.', bestTime: 'AM on empty stomach.', aliases: ['probiotic'], brand: 'Seed DS-01 or Garden of Life Raw', priceUsdMonthly: 35, baseScore: 5, signalBoosts: { 'general-health-goal': 1 } },
+  { id: 'curcumin', name: 'Curcumin', icon: '🌿', dose: '500-1,000 mg', window: 'lunch', note: 'With black pepper + fat for absorption.', helps: 'Anti-inflammatory. Joint + recovery support.', bestTime: 'With a fatty meal.', aliases: ['curcumin', 'turmeric'], brand: 'Thorne Curcumin Phytosome (Meriva)', priceUsdMonthly: 25, baseScore: 5, signalBoosts: { 'heavy-training': 1, 'aging': 1, 'low-recovery': 1 } },
+  { id: 'coq10', name: 'CoQ10 / Ubiquinol', icon: '💊', dose: '100-200 mg', window: 'lunch', note: 'Fat-soluble. With biggest meal.', helps: 'Mitochondrial support. Worth it if you’re on a statin.', bestTime: 'With the fattiest meal of the day.', aliases: ['coq10', 'ubiquinol'], brand: 'Qunol Mega CoQ10 or Thorne Q-Best 100', priceUsdMonthly: 35, baseScore: 5, signalBoosts: { 'senior': 2, 'aging': 1 } },
+  { id: 'berberine', name: 'Berberine', icon: '💊', dose: '500 mg', window: 'lunch', note: 'Take just before carb-heavy meals.', helps: 'Improves glucose handling. Comparable to metformin in some studies.', bestTime: '15 min before meals. Split across the day.', aliases: ['berberine'], brand: 'Thorne Berberine-500', priceUsdMonthly: 25, baseScore: 5, signalBoosts: { 'cut-goal': 1, 'aging': 1 } },
+  { id: 'collagen', name: 'Collagen peptides', icon: '💅', dose: '10-20 g', window: 'anytime', note: 'With vitamin C for synthesis.', helps: 'Connective tissue + skin support. Most useful 30-60 min pre-load.', bestTime: 'Anytime. Many take it pre-workout for joints.', aliases: ['collagen'], brand: 'Vital Proteins Collagen Peptides', priceUsdMonthly: 30, baseScore: 5, signalBoosts: { 'aging': 1, 'senior': 1, 'heavy-training': 1 } },
+  { id: 'tongkat', name: 'Tongkat ali', icon: '🌿', dose: '200-400 mg', window: 'morning', note: 'Cycle 8 weeks on, 2-4 off.', helps: 'May support endogenous testosterone. Mild energy + libido lift.', bestTime: 'AM on empty stomach.', aliases: ['tongkat', 'longjack'], brand: 'Nutricost Tongkat Ali 200 mg', priceUsdMonthly: 40, baseScore: 4, signalBoosts: { 'male': 1, 'aging': 1 } },
+  { id: 'fadogia', name: 'Fadogia agrestis', icon: '🌿', dose: '600 mg', window: 'morning', note: 'Cycle 8 weeks on / off.', helps: 'Often stacked with tongkat for hormonal support.', bestTime: 'AM, alongside tongkat if stacking.', aliases: ['fadogia'], brand: 'Double Wood Fadogia Agrestis', priceUsdMonthly: 30, baseScore: 3, signalBoosts: { 'male': 1 } },
+  { id: 'reishi', name: 'Reishi', icon: '🍄', dose: '1-2 g', window: 'evening', note: 'Calming adaptogen.', helps: 'Immune + sleep support. Subtle calming effect.', bestTime: 'With dinner or before bed.', aliases: ['reishi', 'ganoderma'], brand: 'Host Defense Reishi', priceUsdMonthly: 25, baseScore: 4, signalBoosts: { 'poor-sleep': 1, 'low-recovery': 1 } },
+  { id: 'cordyceps', name: 'Cordyceps', icon: '🍄', dose: '1-3 g', window: 'morning', note: 'Energy + endurance support.', helps: 'Modest endurance + oxygen utilization boost.', bestTime: 'AM, pre-workout if training in the morning.', aliases: ['cordyceps'], brand: 'Real Mushrooms Cordyceps-M', priceUsdMonthly: 25, baseScore: 4, signalBoosts: { 'heavy-training': 1, 'cut-goal': 1 } },
 ];
 
 const WINDOWS = [
-  { key: 'morning', icon: 'ðŸŒ…', title: 'Morning', time: '7-10 AM', cutoffHour: 10 },
-  { key: 'lunch',   icon: 'ðŸ½ï¸', title: 'Lunch',   time: '12-2 PM', cutoffHour: 14 },
-  { key: 'evening', icon: 'ðŸŒ™', title: 'Evening', time: '9-11 PM', cutoffHour: 23 },
-  { key: 'anytime', icon: 'â±ï¸', title: 'Anytime', time: 'No fixed window', cutoffHour: null },
+  { key: 'morning', icon: '🌅', title: 'Morning', time: '7-10 AM', cutoffHour: 10 },
+  { key: 'lunch',   icon: '🍽️', title: 'Lunch',   time: '12-2 PM', cutoffHour: 14 },
+  { key: 'evening', icon: '🌙', title: 'Evening', time: '9-11 PM', cutoffHour: 23 },
+  { key: 'anytime', icon: '⏱️', title: 'Anytime', time: 'No fixed window', cutoffHour: null },
 ];
 
 const WINDOW_CUTOFFS = { morning: 10, lunch: 14, evening: 23, anytime: null };
@@ -419,7 +419,7 @@ const SIGNAL_LABELS = {
 };
 
 /* ============================================================
- * RECOMMENDER â€” ported from signals.ts
+ * RECOMMENDER — ported from signals.ts
  * ============================================================ */
 function extractSignals(u) {
   const sig = [];
@@ -492,7 +492,7 @@ function buyUrlFor(s) {
 }
 
 /* ============================================================
- * STATE â€” ported from state.ts (localStorage)
+ * STATE — ported from state.ts (localStorage)
  * ============================================================ */
 const LS_KEY = 'supplements_standalone_v1';
 const THEMES = [
@@ -602,7 +602,7 @@ function effectiveMetrics() {
 /* UI session state (not persisted) */
 const ui = {
   // add form
-  name: '', dose: '', windowKey: 'anytime', note: '', icon: 'ðŸ’Š', sourceId: null,
+  name: '', dose: '', windowKey: 'anytime', note: '', icon: '💊', sourceId: null,
   searchOpen: false, focusIdx: -1, infoForId: null,
   // stack + rec inline info popovers
   stackInfoFor: null,
@@ -637,7 +637,7 @@ function addItem(input) {
   if (!name) return;
   state.items.push({
     id, name,
-    icon: input.icon || 'ðŸ’Š',
+    icon: input.icon || '💊',
     dose: (input.dose || '').trim(),
     window: input.window,
     note: (input.note || '').trim(),
@@ -704,13 +704,13 @@ function infoPopoverHtml(s, opts) {
   opts = opts || {};
   const win = windowMeta(s.window);
   const winLine = (win ? (win.icon + ' ' + (win.title.toLowerCase())) : s.window) +
-    (win && win.time && win.cutoffHour !== null ? (' Â· ' + win.time) : '');
+    (win && win.time && win.cutoffHour !== null ? (' · ' + win.time) : '');
   return ''
     + '<div class="infoPopover" role="dialog" aria-label="' + esc(s.name) + ' info">'
     +   '<header class="infoHead">'
     +     '<span class="infoIcon" aria-hidden>' + s.icon + '</span>'
     +     '<h3 class="infoName">' + esc(s.name) + '</h3>'
-    +     '<button type="button" class="infoClose" data-action="info-close" aria-label="Close info">Ã—</button>'
+    +     '<button type="button" class="infoClose" data-action="info-close" aria-label="Close info">×</button>'
     +   '</header>'
     +   '<dl class="infoBody">'
     +     '<div class="infoRow"><dt class="infoLabel">What it does</dt><dd class="infoVal">' + esc(s.helps) + '</dd></div>'
@@ -724,7 +724,7 @@ function infoPopoverHtml(s, opts) {
     +     '</dd></div>'
     +   '</dl>'
     +   (opts.hideAdd ? '' :
-        '<footer class="infoFoot"><button type="button" class="infoAddBtn" data-action="info-add" data-id="' + esc(s.id) + '">Order â†’</button></footer>')
+        '<footer class="infoFoot"><button type="button" class="infoAddBtn" data-action="info-add" data-id="' + esc(s.id) + '">Order →</button></footer>')
     + '</div>';
 }
 
@@ -734,10 +734,10 @@ function headerHtml() {
   const dayLabel = DOW[d.getDay()] + ', ' + MON[d.getMonth()] + ' ' + d.getDate();
   return ''
     + '<header class="header"><div class="headerLeft">'
-    +   '<a class="back" href="index.html"><span class="backArrow">â†</span> Philipp</a>'
+    +   '<a class="back" href="index.html"><span class="backArrow">←</span> Philipp</a>'
     +   '<span class="dayPill">' + dayLabel + '</span>'
     +   '<h1 class="title">Supplements</h1>'
-    +   '<p class="subtitle">Daily stack Â· resets at 6 AM</p>'
+    +   '<p class="subtitle">Daily stack · resets at 6 AM</p>'
     + '</div>'
     + '<div class="headerRight"><div class="themeSeg" role="radiogroup" aria-label="Theme">'
     +   THEMES.map(t => '<button type="button" class="themeBtn ' + (t.key === currentTheme ? 'themeBtnActive' : '') + '" data-action="theme" data-theme="' + t.key + '"><span class="themeSwatch" style="background:' + t.swatch + '"></span>' + t.label + '</button>').join('')
@@ -766,8 +766,8 @@ function heroHtml() {
   }
   return ''
     + '<section class="heroCard">'
-    +   '<span class="heroEyebrow"><span class="heroEyebrowMark">Â·01</span><span class="heroEyebrowRule"></span>Today</span>'
-    +   '<div class="heroNumWrap"><span class="heroNum">' + taken + '</span><span class="heroNumSlash"> / </span><span class="heroNumTotal">' + (total || 'â€”') + '</span></div>'
+    +   '<span class="heroEyebrow"><span class="heroEyebrowMark">·01</span><span class="heroEyebrowRule"></span>Today</span>'
+    +   '<div class="heroNumWrap"><span class="heroNum">' + taken + '</span><span class="heroNumSlash"> / </span><span class="heroNumTotal">' + (total || '—') + '</span></div>'
     +   '<div class="progressTrack" aria-hidden><div class="progressFill ' + (hitAll ? 'progressFillDone' : '') + '" style="width:' + pct + '%"></div></div>'
     +   '<p class="helper ' + (helperGood ? 'helperGood' : '') + '">' + esc(helper) + '</p>'
     +   flags
@@ -777,7 +777,7 @@ function heroHtml() {
 /* ---- Stack list ---- */
 function stackHtml() {
   if (state.items.length === 0) {
-    return '<section class="emptyCard"><p class="emptyText">Your stack is empty. Add your first supplement below. Search any name and weâ€™ll pre-fill the dose + timing.</p></section>';
+    return '<section class="emptyCard"><p class="emptyText">Your stack is empty. Add your first supplement below. Search any name and we’ll pre-fill the dose + timing.</p></section>';
   }
   const tt = todayTaken();
   const now = new Date();
@@ -795,7 +795,7 @@ function stackHtml() {
       const isTaken = !!tt[item.id];
       const isLow = state.low.includes(item.id);
       const isMissed = isPastCutoff && !isTaken;
-      const meta = [item.dose, item.note].filter(Boolean).join(' Â· ');
+      const meta = [item.dose, item.note].filter(Boolean).join(' · ');
       const rowClasses = ['itemRow', isTaken ? 'itemRowTaken' : '', (isMissed && !isTaken) ? 'itemRowMissed' : ''].filter(Boolean).join(' ');
       const infoOpen = ui.stackInfoFor === item.id;
       html += '<li class="' + rowClasses + '">'
@@ -805,10 +805,10 @@ function stackHtml() {
         +     (dbRow ? '<button type="button" class="infoBtnInline" data-action="stack-info" data-id="' + esc(item.id) + '" aria-pressed="' + infoOpen + '" title="What it does, when, how">i</button>' : '')
         +   '</div>' + (meta ? '<div class="itemMeta">' + esc(meta) + '</div>' : '') + '</div>'
         +   '<div class="itemQuietActions">'
-        +     '<button type="button" class="lowBtn ' + (isLow ? 'lowBtnOn' : '') + '" data-action="toggle-low" data-id="' + esc(item.id) + '" aria-pressed="' + isLow + '" title="' + (isLow ? 'Clear running-low flag' : 'Flag as running low') + '">' + (isLow ? 'âš ' : 'â†“') + '</button>'
-        +     '<button type="button" class="delBtn" data-action="remove" data-id="' + esc(item.id) + '" title="Remove">Ã—</button>'
+        +     '<button type="button" class="lowBtn ' + (isLow ? 'lowBtnOn' : '') + '" data-action="toggle-low" data-id="' + esc(item.id) + '" aria-pressed="' + isLow + '" title="' + (isLow ? 'Clear running-low flag' : 'Flag as running low') + '">' + (isLow ? '⚠' : '↓') + '</button>'
+        +     '<button type="button" class="delBtn" data-action="remove" data-id="' + esc(item.id) + '" title="Remove">×</button>'
         +   '</div>'
-        +   '<button type="button" class="checkBtn ' + (isTaken ? 'checkBtnOn' : '') + '" data-action="toggle-taken" data-id="' + esc(item.id) + '" aria-pressed="' + isTaken + '">' + (isTaken ? 'âœ“' : '') + '</button>'
+        +   '<button type="button" class="checkBtn ' + (isTaken ? 'checkBtnOn' : '') + '" data-action="toggle-taken" data-id="' + esc(item.id) + '" aria-pressed="' + isTaken + '">' + (isTaken ? '✓' : '') + '</button>'
         + '</div>'
         + (infoOpen && dbRow ? '<div class="itemInfoSlot">' + infoPopoverHtml(dbRow, { hideAdd: true }) + '</div>' : '')
         + '</li>';
@@ -830,7 +830,7 @@ function addFormHtml() {
       dropdown += '<li class="searchResultLi">'
         + '<button type="button" role="option" aria-selected="' + (i === ui.focusIdx) + '" class="searchResult ' + (i === ui.focusIdx ? 'searchResultFocus' : '') + '" data-action="pick" data-id="' + esc(s.id) + '">'
         +   '<span class="searchResultIcon" aria-hidden>' + s.icon + '</span>'
-        +   '<span class="searchResultBody"><span class="searchResultName">' + esc(s.name) + '</span><span class="searchResultMeta">' + esc(s.dose + ' Â· ' + windowLabel(s.window)) + '</span></span>'
+        +   '<span class="searchResultBody"><span class="searchResultName">' + esc(s.name) + '</span><span class="searchResultMeta">' + esc(s.dose + ' · ' + windowLabel(s.window)) + '</span></span>'
         + '</button>'
         + '<button type="button" class="infoBtn" data-action="search-info" data-id="' + esc(s.id) + '" title="What it does, when, how">i</button>'
         + '</li>';
@@ -845,16 +845,16 @@ function addFormHtml() {
   let hint = '';
   if (ui.name.trim()) {
     const w = windowMeta(ui.windowKey);
-    hint = '<p class="addHint">' + (ui.dose ? esc(ui.dose) + ' Â· ' : '') + (w ? w.icon + ' ' + esc(w.title.toLowerCase()) : '') + (ui.sourceId ? ' Â· from library' : ' Â· custom entry') + '</p>';
+    hint = '<p class="addHint">' + (ui.dose ? esc(ui.dose) + ' · ' : '') + (w ? w.icon + ' ' + esc(w.title.toLowerCase()) : '') + (ui.sourceId ? ' · from library' : ' · custom entry') + '</p>';
   }
   const opts = WINDOWS.map(w => '<option value="' + w.key + '"' + (w.key === ui.windowKey ? ' selected' : '') + '>' + esc(w.title) + '</option>').join('');
   return ''
     + '<section class="addCard">'
-    +   '<span class="heroEyebrow"><span class="heroEyebrowMark">Â·02</span><span class="heroEyebrowRule"></span>Add to stack</span>'
+    +   '<span class="heroEyebrow"><span class="heroEyebrowMark">·02</span><span class="heroEyebrowRule"></span>Add to stack</span>'
     +   '<form class="addForm" id="addForm" autocomplete="off">'
     +     '<div class="addNameWrap" id="addNameWrap">'
     +       '<label class="addLabel" for="supplement-search-input">Search</label>'
-    +       '<input id="supplement-search-input" type="text" class="addInput addSearchInput" placeholder="Type a name: Creatine, Vitamin D, magnesiumâ€¦" value="' + esc(ui.name) + '" spellcheck="false" autocomplete="off" />'
+    +       '<input id="supplement-search-input" type="text" class="addInput addSearchInput" placeholder="Type a name: Creatine, Vitamin D, magnesium…" value="' + esc(ui.name) + '" spellcheck="false" autocomplete="off" />'
     +       dropdown
     +       pinnedInfo
     +     '</div>'
@@ -881,7 +881,7 @@ function buildTickerItems(signals, caffeine) {
 
 function tunerHtml() {
   function sel(id, label, value, options, disabled) {
-    let o = '<option value=""' + (value === '' ? ' selected' : '') + '>â€”</option>';
+    let o = '<option value=""' + (value === '' ? ' selected' : '') + '>—</option>';
     o += options.map(opt => '<option value="' + opt[0] + '"' + (value === opt[0] ? ' selected' : '') + '>' + opt[1] + '</option>').join('');
     return '<div class="tunerField"><label class="tunerLabel" for="' + id + '">' + label + '</label><select id="' + id + '" class="tunerInput" data-tuner="' + id + '"' + (disabled ? ' disabled' : '') + '>' + o + '</select></div>';
   }
@@ -891,19 +891,19 @@ function tunerHtml() {
   const lockNote = locked ? '<span class="tunerFromWhoop">' + healthSourceLabel(whoopData) + '</span>' : '';
   let html = '<div class="tuner">'
     + sel('t-sex', 'Sex', profile.sex, [['M','Male'],['F','Female']])
-    + '<div class="tunerField"><label class="tunerLabel" for="t-age">Age</label><input id="t-age" type="number" min="0" max="120" class="tunerInput" data-tuner="t-age" placeholder="â€”" value="' + (profile.age === '' ? '' : esc(profile.age)) + '" /></div>'
+    + '<div class="tunerField"><label class="tunerLabel" for="t-age">Age</label><input id="t-age" type="number" min="0" max="120" class="tunerInput" data-tuner="t-age" placeholder="—" value="' + (profile.age === '' ? '' : esc(profile.age)) + '" /></div>'
     + sel('t-goal', 'Goal', profile.goal, [['cut','Cut'],['bulk','Bulk'],['recomp','Recomp'],['maintain','Maintain'],['general_health','General health']])
     + sel('t-gym', 'Training', profile.gymLevel, [['beginner','Beginner'],['intermediate','Intermediate'],['advanced','Advanced']])
     + '<div class="tunerField"><label class="tunerLabel" for="t-caf">Caffeine mg/day</label><input id="t-caf" type="number" min="0" max="1000" step="10" class="tunerInput" data-tuner="t-caf" placeholder="0" value="' + (profile.caffeineMgPerDay || '') + '" /></div>'
-    + '<div class="tunerField"><label class="tunerLabel" for="t-rec">Recovery %' + lockNote + '</label><input id="t-rec" type="number" min="0" max="100" class="tunerInput" data-tuner="t-rec" placeholder="â€”" value="' + (recVal === '' ? '' : esc(recVal)) + '"' + (locked ? ' disabled' : '') + ' /></div>'
+    + '<div class="tunerField"><label class="tunerLabel" for="t-rec">Recovery %' + lockNote + '</label><input id="t-rec" type="number" min="0" max="100" class="tunerInput" data-tuner="t-rec" placeholder="—" value="' + (recVal === '' ? '' : esc(recVal)) + '"' + (locked ? ' disabled' : '') + ' /></div>'
     + sel('t-sleep', 'Sleep' + lockNote, m.sleep || '', [['good','Good'],['fair','Fair'],['poor','Poor']], locked);
   if (whoopData) {
     html += '<div class="tunerField tunerWhoop"><label class="tunerLabel">Vitals</label>'
       + '<label class="whoopToggle"><input type="checkbox" data-tuner="t-whoop"' + (profile.useWhoop ? ' checked' : '') + ' /> use my ' + esc(healthSourceLabel(whoopData)) + ' data</label>'
-      + '<span class="whoopMeta">recovery + sleep Â· synced ' + whoopAgo(whoopData.ts) + '</span></div>';
+      + '<span class="whoopMeta">recovery + sleep · synced ' + whoopAgo(whoopData.ts) + '</span></div>';
   }
   html += '</div>';
-  if (!whoopData) html += '<p class="tunerHint">No vitals yet â€” <a class="tunerHintLink" href="index.html">add recovery &amp; sleep on the dashboard</a> (Whoop, Apple Watch, or manual) and they auto-fill here.</p>';
+  if (!whoopData) html += '<p class="tunerHint">No vitals yet — <a class="tunerHintLink" href="index.html">add recovery &amp; sleep on the dashboard</a> (Whoop, Apple Watch, or manual) and they auto-fill here.</p>';
   return html;
 }
 
@@ -930,22 +930,22 @@ function recsHtml() {
   const recommendations = res.recommendations;
   const tickerItems = buildTickerItems(signals, user.caffeineMgPerDay);
 
-  let header = '<header class="recHead"><span class="heroEyebrow"><span class="heroEyebrowMark">Â·03</span><span class="heroEyebrowRule"></span>Recommended for you</span>';
+  let header = '<header class="recHead"><span class="heroEyebrow"><span class="heroEyebrowMark">·03</span><span class="heroEyebrowRule"></span>Recommended for you</span>';
   if (tickerItems.length >= 2) {
     const rolled = tickerItems.concat(tickerItems);
     header += '<div class="recTicker" role="status" aria-label="Live inputs driving these picks">'
-      + '<div class="recTickerEyebrow"><span class="recTickerPulse" aria-hidden></span>Philipp Â· live</div>'
+      + '<div class="recTickerEyebrow"><span class="recTickerPulse" aria-hidden></span>Philipp · live</div>'
       + '<div class="recTickerScroll"><div class="recTickerTrack">'
       + rolled.map(it => '<span class="recTickerItem" data-tone="' + it.tone + '">' + esc(it.text) + '</span>').join('')
       + '</div></div></div>';
   } else {
-    header += '<p class="recSignalsEmpty">Set your profile below to unlock personalised picks â€” sex, goal, training level, and caffeine all tune the scores.</p>';
+    header += '<p class="recSignalsEmpty">Set your profile below to unlock personalised picks — sex, goal, training level, and caffeine all tune the scores.</p>';
   }
   header += '</header>';
 
   let body;
   if (recommendations.length === 0) {
-    body = '<p class="recEmpty">Nothing strongly indicated yet. Add more stack items and weâ€™ll tune the recommendations as your profile fills in.</p>';
+    body = '<p class="recEmpty">Nothing strongly indicated yet. Add more stack items and we’ll tune the recommendations as your profile fills in.</p>';
   } else {
     const packed = packToBudget(recommendations, budget);
     const totalInBudget = packed.inBudget.reduce((s, r) => s + r.supplement.priceUsdMonthly, 0);
@@ -966,14 +966,14 @@ function recsHtml() {
         +   '<div class="recBody">'
         +     '<div class="recNameRow"><span class="recIcon" aria-hidden>' + s.icon + '</span><span class="recName">' + esc(s.name) + '</span>'
         +       '<button type="button" class="infoBtnInline" data-action="rec-info" data-id="' + esc(s.id) + '" aria-pressed="' + infoOpen + '">i</button></div>'
-        +     '<div class="recMeta"><span class="recDose">' + esc(s.dose) + '</span><span class="recMetaSep">Â·</span>'
-        +       '<span class="recWindow">' + (win ? win.icon + ' ' + esc(win.title.toLowerCase()) : '') + '</span><span class="recMetaSep">Â·</span>'
-        +       '<a class="recBrandLink" href="' + esc(buyUrlFor(s)) + '" target="_blank" rel="noopener noreferrer" title="Find ' + esc(s.brand.split(/\s+or\s+/i)[0]) + ' ' + esc(s.name) + '">' + esc(s.brand) + '<span class="recBrandIcon" aria-hidden>â†—</span></a>'
+        +     '<div class="recMeta"><span class="recDose">' + esc(s.dose) + '</span><span class="recMetaSep">·</span>'
+        +       '<span class="recWindow">' + (win ? win.icon + ' ' + esc(win.title.toLowerCase()) : '') + '</span><span class="recMetaSep">·</span>'
+        +       '<a class="recBrandLink" href="' + esc(buyUrlFor(s)) + '" target="_blank" rel="noopener noreferrer" title="Find ' + esc(s.brand.split(/\s+or\s+/i)[0]) + ' ' + esc(s.name) + '">' + esc(s.brand) + '<span class="recBrandIcon" aria-hidden>↗</span></a>'
         +     '</div>'
         +     why
         +   '</div>'
         +   '<div class="recRight"><span class="recPrice">~$' + s.priceUsdMonthly + '<span class="recPriceUnit">/mo</span></span>'
-        +     '<a class="recAddBtn" href="' + esc(buyUrlFor(s)) + '" target="_blank" rel="noopener noreferrer" title="Find this product">Order â†’</a>'
+        +     '<a class="recAddBtn" href="' + esc(buyUrlFor(s)) + '" target="_blank" rel="noopener noreferrer" title="Find this product">Order →</a>'
         +   '</div>'
         + '</div>'
         + (infoOpen ? '<div class="recInfoSlot">' + infoPopoverHtml(s, { hideAdd: false }) + '</div>' : '')
@@ -1025,7 +1025,7 @@ function render() {
  * EVENT WIRING (delegated)
  * ============================================================ */
 function resetAddForm() {
-  ui.name = ''; ui.dose = ''; ui.windowKey = 'anytime'; ui.note = ''; ui.icon = 'ðŸ’Š';
+  ui.name = ''; ui.dose = ''; ui.windowKey = 'anytime'; ui.note = ''; ui.icon = '💊';
   ui.sourceId = null; ui.searchOpen = false; ui.focusIdx = -1; ui.infoForId = null;
 }
 function pickResult(s) {
@@ -1038,7 +1038,7 @@ function pickResult(s) {
 function submitAdd() {
   const trimmed = ui.name.trim();
   if (!trimmed) return;
-  addItem({ name: trimmed, icon: ui.icon || 'ðŸ’Š', dose: ui.dose, window: ui.windowKey, note: ui.note, sourceId: ui.sourceId });
+  addItem({ name: trimmed, icon: ui.icon || '💊', dose: ui.dose, window: ui.windowKey, note: ui.note, sourceId: ui.sourceId });
   resetAddForm();
   render();
   const inp = document.getElementById('supplement-search-input');
@@ -1074,7 +1074,7 @@ document.addEventListener('input', e => {
   if (!t) return;
   if (t.id === 'supplement-search-input') {
     ui.name = t.value; ui.searchOpen = true; ui.focusIdx = -1;
-    ui.sourceId = null; ui.note = ''; ui.icon = 'ðŸ’Š'; ui.infoForId = null;
+    ui.sourceId = null; ui.note = ''; ui.icon = '💊'; ui.infoForId = null;
     render();
   } else if (t.id === 'supplement-dose-input') {
     // Re-render to refresh the hint line + Add button enabled state.
@@ -1138,7 +1138,7 @@ document.addEventListener('mousedown', e => {
   if (ui.searchOpen || ui.infoForId) { ui.searchOpen = false; ui.infoForId = null; render(); }
 });
 
-// 6 AM rollover tick â€” refresh derived "today" state without a manual reload.
+// 6 AM rollover tick — refresh derived "today" state without a manual reload.
 setInterval(() => { render(); }, 60000);
 
 // Live-update when the Whoop tab connects/disconnects in another tab.
