@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -19,7 +19,7 @@ img{max-width:100%;height:auto}
 @media (max-width:480px){input,select,textarea{font-size:16px !important}}
 @supports (padding:max(0px)){body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}}
 </style>
-<title>Water · standalone</title>
+<title>Water Â· standalone</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -27,7 +27,7 @@ img{max-width:100%;height:auto}
 <style>
 
 /* ============================================================
- * Water — restyled to "Patron": soft-dark electric-violet
+ * Water â€” restyled to "Patron": soft-dark electric-violet
  * modern-fintech skin. Same token system + 3 themes as the suite.
  * Hydration accent = brand violet; "healthy zone" hit = green.
  * --accent/--mint aliases repoint to brand per theme.
@@ -224,12 +224,12 @@ function getLocalDateKey(d){d=d||new Date();const y=d.getFullYear(),m=String(d.g
 function unitVolMl(s){if(s.unit==='bottle')return s.bottleMl||500;if(s.unit==='glass')return s.glassMl||250;if(s.unit==='oz')return 30;return 1;}
 function unitLabel(s,plural){if(s.unit==='bottle')return plural?'bottles':'bottle';if(s.unit==='glass')return plural?'glasses':'glass';return s.unit;}
 function fmtMl(ml){if(ml>=1000)return (ml/1000).toFixed(1)+' L';return Math.round(ml)+' ml';}
-// Typical adult MAX therapeutic dose (mg) per drug — the anchor we scale dry-mouth/thirst-blunting risk against.
+// Typical adult MAX therapeutic dose (mg) per drug â€” the anchor we scale dry-mouth/thirst-blunting risk against.
 // Sources: FDA labeling / GoodRx dosing. Used only to turn an mg into a 0-1 "fraction of a full dose".
 const STIM_DOSE_REF={concerta:72,ritalin:60,methylphenidate:72,focalin:40,dexmethylphenidate:40,
   vyvanse:70,elvanse:70,lisdexamfetamine:70,adderall:60,'adderall xr':60,amphetamine:60,mydayis:50,
   dexedrine:40,dexamfetamine:40,dextroamphetamine:40,modafinil:400,armodafinil:250};
-const STIM_FLOOR=200,STIM_CEIL=400,STIM_DEFAULT=300,STIM_TOTAL_CAP=600; // ml — precautionary, bounded
+const STIM_FLOOR=200,STIM_CEIL=400,STIM_DEFAULT=300,STIM_TOTAL_CAP=600; // ml â€” precautionary, bounded
 function stimRef(name){const n=String(name||'').toLowerCase();let best=null;for(const k in STIM_DOSE_REF){if(n.indexOf(k)!==-1&&(!best||k.length>best.length))best=k;}return best?STIM_DOSE_REF[best]:null;}
 function stimWaterMl(stims){
   if(!Array.isArray(stims)||!stims.length)return 0;
@@ -246,7 +246,7 @@ function computeTarget(s){
   const base=(s.weightKg||0)*35;
   // exercise: ~500 ml per hour of activity (ACSM during-exercise range 400-800 ml/h, mid)
   const exercise=(s.activityHrsPerDay||0)*500;
-  // caffeine: negligible <=300 mg/day; +~1 ml/mg above that (heuristic — diuretic effect is small)
+  // caffeine: negligible <=300 mg/day; +~1 ml/mg above that (heuristic â€” diuretic effect is small)
   const caffeine=Math.max(0,(s.caffeineMgPerDay||0)-300)*1;
   // stimulants: dose-aware precautionary allowance (200-400 ml/drug by mg vs typical max dose, capped 600).
   // No clinical mg->water formula exists; this is a bounded heuristic for dry mouth / blunted thirst.
@@ -259,7 +259,7 @@ function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'
 
 /* ===================== State ===================== */
 const LS='water_standalone_v1';
-// Common ADHD / wakefulness stimulants for the search box. Free text is allowed too — type anything.
+// Common ADHD / wakefulness stimulants for the search box. Free text is allowed too â€” type anything.
 const STIM_OPTIONS=['Concerta','Ritalin','Methylphenidate','Vyvanse','Elvanse','Adderall','Adderall XR','Dexedrine','Dexamfetamine','Focalin','Mydayis','Modafinil','Armodafinil'];
 const THEMES=[{key:'nocturne',label:'Nocturne',swatch:'#8B7CFF'},{key:'aurora',label:'Aurora',swatch:'linear-gradient(135deg,#8B7BFF,#4FE3D0)'},{key:'daylight',label:'Daylight',swatch:'#6A45FF'}];
 let currentTheme=(function(){try{return localStorage.getItem('patron_theme')||'nocturne';}catch(e){return 'nocturne';}})();
@@ -267,7 +267,7 @@ if(!THEMES.some(t=>t.key===currentTheme))currentTheme='nocturne';
 function applyTheme(name){if(!THEMES.some(t=>t.key===name))name='nocturne';currentTheme=name;document.documentElement.setAttribute('data-theme',name);try{localStorage.setItem('patron_theme',name);}catch(e){}render();}
 function themeSegHtml(){return '<div class="themeSeg" role="radiogroup" aria-label="Theme">'+THEMES.map(t=>'<button type="button" class="themeBtn '+(t.key===currentTheme?'themeBtnActive':'')+'" data-act="theme" data-theme="'+t.key+'"><span class="themeSwatch" style="background:'+t.swatch+'"></span>'+t.label+'</button>').join('')+'</div>';}
 function seed(){
-  const logs={};const samples=[6,5,6,4,6,7,3,6,5,6,2,6,4]; // last 13 days (oldest→newest), today stays 0
+  const logs={};const samples=[6,5,6,4,6,7,3,6,5,6,2,6,4]; // last 13 days (oldestâ†’newest), today stays 0
   for(let i=0;i<samples.length;i++){const d=new Date();d.setDate(d.getDate()-(samples.length-i));logs[getLocalDateKey(d)]=samples[i];}
   var _p=null;try{_p=JSON.parse(localStorage.getItem('patron_profile_v1')||'null');}catch(e){}
   return {version:2,unit:'bottle',bottleMl:500,glassMl:250,
@@ -314,22 +314,22 @@ const DOW_S=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
 function headerHtml(){
   const d=new Date();
-  return '<header class="header"><div class="headerLeft"><a class="back" href="index.html"><span class="backArrow">←</span> Rowan</a>'
+  return '<header class="header"><div class="headerLeft"><a class="back" href="index.html"><span class="backArrow">â†</span> Philipp</a>'
     +'<span class="dayPill">'+DOW[d.getDay()]+', '+MON[d.getMonth()]+' '+d.getDate()+'</span>'
-    +'<h1 class="title">Water</h1><p class="subtitle">Daily hydration · personal target</p></div>'
+    +'<h1 class="title">Water</h1><p class="subtitle">Daily hydration Â· personal target</p></div>'
     +'<div class="headerRight">'+themeSegHtml()+'<button class="gearBtn" data-act="settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button></header>';
 }
 
 function whyHtml(){
   const t=computeTarget(state),tu=targetUnits();
   const wDisp=state.weightUnit==='lb'?Math.round(state.weightKg*2.20462):Math.round(state.weightKg);
-  let rows='<div class="whyRow"><span class="whyLabel">Base ('+wDisp+' '+state.weightUnit+' × 35 ml)</span><span class="whyVal">'+fmtMl(t.base)+'</span></div>';
-  if(t.exercise>0)rows+='<div class="whyRow"><span class="whyLabel">+ Exercise ('+state.activityHrsPerDay+' h/day × 500 ml)</span><span class="whyVal">+ '+fmtMl(t.exercise)+'</span></div>';
+  let rows='<div class="whyRow"><span class="whyLabel">Base ('+wDisp+' '+state.weightUnit+' Ã— 35 ml)</span><span class="whyVal">'+fmtMl(t.base)+'</span></div>';
+  if(t.exercise>0)rows+='<div class="whyRow"><span class="whyLabel">+ Exercise ('+state.activityHrsPerDay+' h/day Ã— 500 ml)</span><span class="whyVal">+ '+fmtMl(t.exercise)+'</span></div>';
   if(t.caffeine>0)rows+='<div class="whyRow"><span class="whyLabel">+ Caffeine ('+state.caffeineMgPerDay+' mg/day, over 300)</span><span class="whyVal">+ '+fmtMl(t.caffeine)+'</span></div>';
   if(t.stims>0)rows+='<div class="whyRow"><span class="whyLabel">+ Stimulants ('+state.stims.length+', by dose)</span><span class="whyVal">+ '+fmtMl(t.stims)+'</span></div>';
   if(t.adjust>0)rows+='<div class="whyRow"><span class="whyLabel">+ Sex / age adjustment</span><span class="whyVal">+ '+fmtMl(t.adjust)+'</span></div>';
-  rows+='<div class="whyRow whyRowTotal"><span class="whyLabel">Daily target</span><span class="whyVal">'+fmtMl(t.total)+' ≈ '+tu+' '+unitLabel(state,true)+'</span></div>';
-  return '<div class="whyWrap"><button class="whyToggle" data-act="why"><span>Why this target?</span><span class="whyArrow '+(ui.whyOpen?'whyArrowOpen':'')+'">▾</span></button>'+(ui.whyOpen?'<div class="whyBody">'+rows+'</div>':'')+'</div>';
+  rows+='<div class="whyRow whyRowTotal"><span class="whyLabel">Daily target</span><span class="whyVal">'+fmtMl(t.total)+' â‰ˆ '+tu+' '+unitLabel(state,true)+'</span></div>';
+  return '<div class="whyWrap"><button class="whyToggle" data-act="why"><span>Why this target?</span><span class="whyArrow '+(ui.whyOpen?'whyArrowOpen':'')+'">â–¾</span></button>'+(ui.whyOpen?'<div class="whyBody">'+rows+'</div>':'')+'</div>';
 }
 
 function heroHtml(){
@@ -344,17 +344,17 @@ function heroHtml(){
   else if(pctRaw<130){helper='Target hit. Top up if you train this evening.';good=true;}
   else{helper='Strong. Way past target.';good=true;}
   let particles='';for(let i=0;i<8;i++)particles+='<span class="heroParticle" style="left:'+(8+i*11)+'%;animation-delay:'+(i*.9)+'s;animation-duration:'+(5.5+(i%3)*1.2)+'s"></span>';
-  return '<section class="heroCard"><span class="heroEyebrow"><span class="heroEyebrowMark">·02</span><span class="heroEyebrowRule"></span>Hydration</span>'
+  return '<section class="heroCard"><span class="heroEyebrow"><span class="heroEyebrowMark">Â·02</span><span class="heroEyebrowRule"></span>Hydration</span>'
     +'<div class="heroVisual"><div class="heroAurora"></div><div class="heroParticles">'+particles+'</div>'+(ui._ripple?'<span class="heroRipple"></span>':'')
     +'<svg class="heroRingSvg" viewBox="-130 -130 260 260" aria-hidden><defs><linearGradient id="wg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--brand-2)"/><stop offset="100%" stop-color="var(--brand)"/></linearGradient><filter id="rg" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'
     +'<circle cx="0" cy="0" r="'+R+'" stroke="var(--ring-track)" stroke-width="3" fill="none"/>'
     +'<circle cx="0" cy="0" r="'+R+'" stroke="'+(isOver?'var(--brand-2)':'url(#wg)')+'" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="'+CIRC+'" stroke-dashoffset="'+offset+'" transform="rotate(-90)" filter="url(#rg)" class="heroRingArc"/>'
     +(ringPct>0?'<circle cx="0" cy="'+(-R)+'" r="4" fill="var(--mint)" transform="rotate('+(ringPct/100*360)+')"/>':'')+'</svg>'
     +'<div class="heroNumWrap '+(ui.punch?'heroNumPunch':'')+'"><span class="heroNum">'+tc+'</span><span class="heroTarget">of '+tu+' '+lp+'</span></div></div>'
-    +(hit?'<div class="zonePill"><span class="zonePillCheck">✓</span> healthy zone</div>':'')
+    +(hit?'<div class="zonePill"><span class="zonePillCheck">âœ“</span> healthy zone</div>':'')
     +'<p class="helper '+(good?'helperGood':'')+'">'+esc(helper)+'</p>'
-    +'<div class="actions"><button class="undoBtn" data-act="undo"'+(tc<=0?' disabled':'')+' aria-label="Undo">−</button>'
-    +'<button class="drinkBtn" data-act="drink"><span>Drank a '+ls+'</span><span class="drinkArrow">↑</span></button></div>'
+    +'<div class="actions"><button class="undoBtn" data-act="undo"'+(tc<=0?' disabled':'')+' aria-label="Undo">âˆ’</button>'
+    +'<button class="drinkBtn" data-act="drink"><span>Drank a '+ls+'</span><span class="drinkArrow">â†‘</span></button></div>'
     +whyHtml()+'</section>';
 }
 
@@ -377,13 +377,13 @@ function historyHtml(){
 function stimListHtml(){
   const list=Array.isArray(state.stims)?state.stims:[];
   if(!list.length)return '<p class="stimEmpty">No stimulants added.</p>';
-  return '<div class="stimList">'+list.map(s=>'<div class="stimItem"><span class="stimName">'+esc(s.name)+(s.mg!=null?'<span class="stimMg">'+esc(s.mg)+' mg</span>':'')+'</span><button class="stimDel" data-act="delStim" data-id="'+esc(s.id)+'" aria-label="Remove '+esc(s.name)+'">×</button></div>').join('')+'</div>';
+  return '<div class="stimList">'+list.map(s=>'<div class="stimItem"><span class="stimName">'+esc(s.name)+(s.mg!=null?'<span class="stimMg">'+esc(s.mg)+' mg</span>':'')+'</span><button class="stimDel" data-act="delStim" data-id="'+esc(s.id)+'" aria-label="Remove '+esc(s.name)+'">Ã—</button></div>').join('')+'</div>';
 }
 function settingsHtml(){
   if(!ui.settingsOpen)return '';
   const units=[['bottle','Bottle'],['glass','Glass'],['oz','oz'],['ml','ml']];
   return '<div class="overlay" data-act="closeSettings"><div class="modal" data-stop="1">'
-    +'<div class="modalHead"><h2 class="modalTitle">Settings</h2><button class="modalClose" data-act="closeSettings">×</button></div>'
+    +'<div class="modalHead"><h2 class="modalTitle">Settings</h2><button class="modalClose" data-act="closeSettings">Ã—</button></div>'
     +'<div class="setGroup"><span class="setLabel">Count drinks in</span><div class="seg">'+units.map(u=>'<button class="segBtn '+(state.unit===u[0]?'on':'')+'" data-act="setUnit" data-v="'+u[0]+'">'+u[1]+'</button>').join('')+'</div></div>'
     +(state.unit==='bottle'?'<div class="setGroup"><span class="setLabel">Bottle size (ml)</span><input class="input" type="number" data-set="bottleMl" value="'+state.bottleMl+'"></div>':'')
     +(state.unit==='glass'?'<div class="setGroup"><span class="setLabel">Glass size (ml)</span><input class="input" type="number" data-set="glassMl" value="'+state.glassMl+'"></div>':'')
@@ -400,15 +400,15 @@ function settingsHtml(){
     +'</div></div>'
     +'<div class="setGroup"><span class="setLabel">Stimulants</span>'
       +'<div class="stimAddRow">'
-        +'<input class="input" id="stimNameInput" list="stimOptions" placeholder="Search… e.g. Concerta, Vyvanse" autocomplete="off">'
+        +'<input class="input" id="stimNameInput" list="stimOptions" placeholder="Searchâ€¦ e.g. Concerta, Vyvanse" autocomplete="off">'
         +'<input class="input" id="stimMgInput" type="number" step="1" min="0" placeholder="mg">'
         +'<button class="addBtn" data-act="addStim">Add</button>'
       +'</div>'
       +'<datalist id="stimOptions">'+STIM_OPTIONS.map(n=>'<option value="'+esc(n)+'"></option>').join('')+'</datalist>'
       +stimListHtml()
-      +'<p class="setHint">Adds <strong>~200–400 ml per drug</strong>, scaled by your mg against its typical full dose (capped at 600 ml). Stimulants commonly cause dry mouth &amp; blunt thirst — this is a precautionary estimate, not a clinical formula, so sip on a schedule rather than waiting for thirst.</p>'
+      +'<p class="setHint">Adds <strong>~200â€“400 ml per drug</strong>, scaled by your mg against its typical full dose (capped at 600 ml). Stimulants commonly cause dry mouth &amp; blunt thirst â€” this is a precautionary estimate, not a clinical formula, so sip on a schedule rather than waiting for thirst.</p>'
     +'</div>'
-    +'<p class="setHint">Target = weight × 35 ml/kg + 500 ml per exercise hour + caffeine over 300 mg + stimulants (by dose) + sex/age. Based on IOM, ACSM &amp; clinical guidelines. Changes apply live.</p>'
+    +'<p class="setHint">Target = weight Ã— 35 ml/kg + 500 ml per exercise hour + caffeine over 300 mg + stimulants (by dose) + sex/age. Based on IOM, ACSM &amp; clinical guidelines. Changes apply live.</p>'
     +'<div class="dangerRow"><button class="btnGhost" data-act="reset">Reset everything</button></div>'
     +'</div></div>';
 }

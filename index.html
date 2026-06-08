@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -19,14 +19,14 @@ img{max-width:100%;height:auto}
 @media (max-width:480px){input,select,textarea{font-size:16px !important}}
 @supports (padding:max(0px)){body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}}
 </style>
-<title>Rowan · dashboard</title>
+<title>Philipp Â· dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <script>try{document.documentElement.setAttribute("data-theme",localStorage.getItem("patron_theme")||"nocturne");}catch(e){document.documentElement.setAttribute("data-theme","nocturne");}</script>
 <style>
 /* ============================================================
- * Rowan — the main dashboard. Bento hub linking every app
+ * Philipp â€” the main dashboard. Bento hub linking every app
  * in the Patron suite + a shared "Today's vitals" tile (Whoop /
  * Apple Watch / Manual). Same token system + 3 themes as the suite.
  * ============================================================ */
@@ -212,9 +212,9 @@ body { background: var(--bg); color: var(--fg); font-family: var(--font-ui), -ap
 .srcActions .spacer { margin-right:auto; }
 
 /* ============================================================
- * Live vitals ticker — a scrolling marquee of every metric the
+ * Live vitals ticker â€” a scrolling marquee of every metric the
  * suite currently knows (vitals + finance/water/supplements).
- * Lead label is pinned; the track scrolls right→left, duplicated
+ * Lead label is pinned; the track scrolls rightâ†’left, duplicated
  * once for a seamless loop. Pauses on hover; honours reduced-motion.
  * ============================================================ */
 .ticker { position: relative; display:flex; align-items:stretch; gap: 0; margin: calc(var(--space-2) * -1) 0 var(--space-8); border: 1px solid var(--border); border-radius: var(--radius-pill); background: linear-gradient(180deg, var(--surface-2), var(--surface)); box-shadow: var(--card-shadow); overflow: hidden; }
@@ -256,18 +256,18 @@ body { background: var(--bg); color: var(--fg); font-family: var(--font-ui), -ap
 <div id="modalRoot"></div>
 <script>
 /* ============================================================
- * Apps in the suite — one bento card each.
+ * Apps in the suite â€” one bento card each.
  * ============================================================ */
 const APPS = [
-  { file: 'finance.html',     name: 'Finance',     tag: 'Net worth · subs · orders · wishlist', icon: '💰', wide: true },
-  { file: 'gym.html',         name: 'Gym',         tag: 'Progressive overload coach',           icon: '🏋️', wide: true },
-  { file: 'supplements.html', name: 'Supplements', tag: 'Your stack + smart recommendations',   icon: '💊' },
-  { file: 'whoop.html',       name: 'Fitness Band', tag: 'Whoop · Fitbit · Apple Watch sync',      icon: '🔋' },
-  { file: 'water.html',       name: 'Water',       tag: 'Daily hydration target',                icon: '💧' },
-  { file: 'creator.html',     name: 'Creator',     tag: 'Schedule · accounts · analytics',       icon: '🎬' },
-  { file: 'goals.html',       name: 'Goals',       tag: 'Goals & streaks',                       icon: '🎯' },
-  { file: 'progress.html',    name: 'Progress',    tag: 'Photos & measurements',                 icon: '📈' },
-  { file: 'macros.html',      name: 'Macros',      tag: 'Protein · carbs · fat',                 icon: '🍳' },
+  { file: 'finance.html',     name: 'Finance',     tag: 'Net worth Â· subs Â· orders Â· wishlist', icon: 'ðŸ’°', wide: true },
+  { file: 'gym.html',         name: 'Gym',         tag: 'Progressive overload coach',           icon: 'ðŸ‹ï¸', wide: true },
+  { file: 'supplements.html', name: 'Supplements', tag: 'Your stack + smart recommendations',   icon: 'ðŸ’Š' },
+  { file: 'whoop.html',       name: 'Fitness Band', tag: 'Whoop Â· Fitbit Â· Apple Watch sync',      icon: 'ðŸ”‹' },
+  { file: 'water.html',       name: 'Water',       tag: 'Daily hydration target',                icon: 'ðŸ’§' },
+  { file: 'creator.html',     name: 'Creator',     tag: 'Schedule Â· accounts Â· analytics',       icon: 'ðŸŽ¬' },
+  { file: 'goals.html',       name: 'Goals',       tag: 'Goals & streaks',                       icon: 'ðŸŽ¯' },
+  { file: 'progress.html',    name: 'Progress',    tag: 'Photos & measurements',                 icon: 'ðŸ“ˆ' },
+  { file: 'macros.html',      name: 'Macros',      tag: 'Protein Â· carbs Â· fat',                 icon: 'ðŸ³' },
 ];
 
 /* ============================================================
@@ -294,7 +294,7 @@ function themeSegHtml(){
 }
 
 /* ============================================================
- * Shared health record — the suite-wide vitals bridge.
+ * Shared health record â€” the suite-wide vitals bridge.
  * Whoop publishes it from the Whoop tab; this hub lets non-Whoop
  * users enter it manually (or tag it as Apple Watch). Supplements
  * reads it to drive its recovery/sleep recommendations.
@@ -327,13 +327,13 @@ async function syncWhoop(){
       health = { source: 'whoop', connected: true, ts: j.ts || Date.now(), recovery: j.recovery, sleepHours: j.sleepHours, sleepPerf: j.sleepPerf, sleepTargetHours: j.sleepTargetHours || 8, hrv: j.hrv, rhr: j.rhr, strain: j.strain };
       saveHealth(health);
     } else if (health && health.source === 'whoop') {
-      clearHealth(); health = null; // token expired/disconnected — drop stale Whoop data
+      clearHealth(); health = null; // token expired/disconnected â€” drop stale Whoop data
     }
   } catch (e) { whoopStatus = { connected: false, checked: true }; }
   render();
 }
 
-/* ---- Live Fitbit sync — same serverless OAuth pattern as Whoop ---- */
+/* ---- Live Fitbit sync â€” same serverless OAuth pattern as Whoop ---- */
 let fitbitStatus = { connected: false, checked: false };
 async function syncFitbit(){
   if (!ON_SERVER) return;
@@ -345,7 +345,7 @@ async function syncFitbit(){
       health = { source: 'fitbit', connected: true, ts: j.ts || Date.now(), recovery: j.recovery, sleepHours: j.sleepHours, sleepPerf: j.sleepPerf, sleepTargetHours: j.sleepTargetHours || 8, bedtime: j.bedtime, wakeTime: j.wakeTime, hrv: j.hrv, rhr: j.rhr, strain: j.strain };
       saveHealth(health);
     } else if (health && health.source === 'fitbit') {
-      clearHealth(); health = null; // token expired/disconnected — drop stale Fitbit data
+      clearHealth(); health = null; // token expired/disconnected â€” drop stale Fitbit data
     }
   } catch (e) { fitbitStatus = { connected: false, checked: true }; }
   render();
@@ -353,14 +353,14 @@ async function syncFitbit(){
 
 function sourceLabel(s){ return s === 'apple' ? 'Apple Watch' : s === 'manual' ? 'Manual' : s === 'fitbit' ? 'Fitbit' : 'Whoop'; }
 function recTone(r){ if (r == null) return 'muted'; if (r >= 67) return 'good'; if (r >= 34) return 'watch'; return 'low'; }
-function formatHM(h){ if (h == null) return '—'; const hh = Math.floor(h); const mm = Math.round((h - hh) * 60); return hh + 'h ' + String(mm).padStart(2,'0') + 'm'; }
-function formatClock(t){ if (!t) return '—'; const [h, m] = String(t).split(':').map(Number); if (!isFinite(h)) return esc(t); const ap = h < 12 ? 'am' : 'pm'; const h12 = h % 12 === 0 ? 12 : h % 12; return h12 + ':' + String(m || 0).padStart(2,'0') + ap; }
+function formatHM(h){ if (h == null) return 'â€”'; const hh = Math.floor(h); const mm = Math.round((h - hh) * 60); return hh + 'h ' + String(mm).padStart(2,'0') + 'm'; }
+function formatClock(t){ if (!t) return 'â€”'; const [h, m] = String(t).split(':').map(Number); if (!isFinite(h)) return esc(t); const ap = h < 12 ? 'am' : 'pm'; const h12 = h % 12 === 0 ? 12 : h % 12; return h12 + ':' + String(m || 0).padStart(2,'0') + ap; }
 function ago(ts){ if (!ts) return ''; const m = Math.max(0, Math.round((Date.now() - ts) / 60000)); if (m < 1) return 'just now'; if (m < 60) return m + 'm ago'; return Math.round(m / 60) + 'h ago'; }
 function esc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 /* ============================================================
- * Suite-wide profile — collected by the first-run onboarding prompt,
- * read by the apps (name, weight→water, age/sex/goal/training→supplements…).
+ * Suite-wide profile â€” collected by the first-run onboarding prompt,
+ * read by the apps (name, weightâ†’water, age/sex/goal/trainingâ†’supplementsâ€¦).
  * ============================================================ */
 const SUITE_PROFILE_KEY = 'patron_profile_v1';
 function loadProfile(){ try { const r = localStorage.getItem(SUITE_PROFILE_KEY); return r ? JSON.parse(r) : null; } catch(e){ return null; } }
@@ -378,11 +378,11 @@ const ui = { modalOpen: false, draftSource: 'manual', profileOpen: false, profil
  * ============================================================ */
 function headerHtml(){
   const name = firstName();
-  const greeting = name ? 'Welcome back, ' + esc(name) : 'Your dashboard · everything in one place';
+  const greeting = name ? 'Welcome back, ' + esc(name) : 'Your dashboard Â· everything in one place';
   const chip = profile
-    ? '<button type="button" class="profileChip" data-action="open-profile" title="Edit your profile"><span class="profileAvatar">' + esc((name || '·').charAt(0).toUpperCase()) + '</span>' + esc(name || 'Profile') + '</button>'
+    ? '<button type="button" class="profileChip" data-action="open-profile" title="Edit your profile"><span class="profileAvatar">' + esc((name || 'Â·').charAt(0).toUpperCase()) + '</span>' + esc(name || 'Profile') + '</button>'
     : '<button type="button" class="profileChip profileChipNew" data-action="open-profile">Set up profile</button>';
-  return '<header class="header"><div><h1 class="title">Rowan</h1><p class="subtitle">' + greeting + '</p></div>'
+  return '<header class="header"><div><h1 class="title">Philipp</h1><p class="subtitle">' + greeting + '</p></div>'
     + '<div class="headerControls">' + themeSegHtml() + chip + '</div></header>';
 }
 
@@ -390,26 +390,26 @@ function vitalsTileHtml(){
   const h = health;
   if (!h) {
     return '<section class="vitals">'
-      + '<div class="vitalsHead"><span class="vitalsEyebrow">Today’s vitals</span></div>'
+      + '<div class="vitalsHead"><span class="vitalsEyebrow">Todayâ€™s vitals</span></div>'
       + '<div class="vitalsEmpty"><div class="vitalsEmptyTitle">No vitals yet</div>'
-      + '<p class="vitalsEmptyBody">Connect Whoop, link your Apple Watch, or enter recovery &amp; sleep by hand. Your numbers then power the rest of the suite — the supplement recommender reads recovery &amp; sleep automatically.</p>'
+      + '<p class="vitalsEmptyBody">Connect Whoop, link your Apple Watch, or enter recovery &amp; sleep by hand. Your numbers then power the rest of the suite â€” the supplement recommender reads recovery &amp; sleep automatically.</p>'
       + '<div class="vitalsFoot"><button type="button" class="btn btn-primary" data-action="open-vitals">Add vitals</button></div></div></section>';
   }
   const tone = recTone(h.recovery);
   const circ = 2 * Math.PI * 56;
   const ring = '<div class="recRing" data-tone="' + tone + '"><svg viewBox="0 0 132 132" aria-hidden><circle cx="66" cy="66" r="56" class="recTrack"/>'
     + (h.recovery != null ? '<circle cx="66" cy="66" r="56" class="recFill" style="stroke-dasharray:' + circ + ';stroke-dashoffset:' + (circ * (1 - h.recovery / 100)) + ';"/>' : '')
-    + '</svg><div style="text-align:center"><div class="recNum">' + (h.recovery != null ? Math.round(h.recovery) : '—') + (h.recovery != null ? '<span class="recUnit">%</span>' : '') + '</div><div class="recCap">Recovery</div></div></div>';
+    + '</svg><div style="text-align:center"><div class="recNum">' + (h.recovery != null ? Math.round(h.recovery) : 'â€”') + (h.recovery != null ? '<span class="recUnit">%</span>' : '') + '</div><div class="recCap">Recovery</div></div></div>';
   function row(label, val){ return '<div class="vRow"><span class="vLabel">' + label + '</span><span class="vVal">' + val + '</span></div>'; }
-  const sleepVal = h.sleepHours != null ? formatHM(h.sleepHours) + (h.sleepPerf != null ? '<em>' + Math.round(h.sleepPerf) + '%</em>' : '') : '—';
+  const sleepVal = h.sleepHours != null ? formatHM(h.sleepHours) + (h.sleepPerf != null ? '<em>' + Math.round(h.sleepPerf) + '%</em>' : '') : 'â€”';
   const metrics = '<div class="vMetrics">'
     + row('Sleep', sleepVal)
-    + (h.bedtime && h.wakeTime ? row('In bed', formatClock(h.bedtime) + ' <em>→</em> ' + formatClock(h.wakeTime)) : '')
-    + row('HRV', h.hrv != null ? Math.round(h.hrv) + '<em>ms</em>' : '—')
-    + row('Resting HR', h.rhr != null ? Math.round(h.rhr) + '<em>bpm</em>' : '—')
+    + (h.bedtime && h.wakeTime ? row('In bed', formatClock(h.bedtime) + ' <em>â†’</em> ' + formatClock(h.wakeTime)) : '')
+    + row('HRV', h.hrv != null ? Math.round(h.hrv) + '<em>ms</em>' : 'â€”')
+    + row('Resting HR', h.rhr != null ? Math.round(h.rhr) + '<em>bpm</em>' : 'â€”')
     + '</div>';
   return '<section class="vitals">'
-    + '<div class="vitalsHead"><span class="vitalsEyebrow">Today’s vitals</span>'
+    + '<div class="vitalsHead"><span class="vitalsEyebrow">Todayâ€™s vitals</span>'
     + '<span class="srcBadge"><span class="srcDot"></span>' + esc(sourceLabel(h.source)) + '</span></div>'
     + '<div class="vitalsBody">' + ring + metrics + '</div>'
     + '<div class="vitalsFoot"><span class="vitalsSync">' + (h.ts ? 'updated ' + ago(h.ts) : '') + '</span>'
@@ -436,13 +436,13 @@ function cardHtml(a){
     ? '<div class="cardStat"><span class="cardStatValue">' + esc(st.value) + '</span><span class="cardStatLabel">' + esc(st.label) + '</span></div>'
     : '<p class="cardTag">' + esc(a.tag) + '</p>';
   return '<a class="card' + (a.wide ? ' tileWide' : '') + '" href="' + a.file + '">'
-    + '<span class="cardArrow" aria-hidden>↗</span>'
+    + '<span class="cardArrow" aria-hidden>â†—</span>'
     + '<div class="cardTop"><span class="cardIcon" aria-hidden>' + a.icon + '</span><span class="cardName">' + esc(a.name) + '</span></div>'
     + tail + '</a>';
 }
 
 /* ============================================================
- * Live ticker — collect every metric the suite currently knows
+ * Live ticker â€” collect every metric the suite currently knows
  * into a scrolling marquee. Each item: short label, value, unit,
  * a tone, and a small accent sparkline. Accent lines are decorative
  * (we don't yet log history) except where a real delta exists.
@@ -487,9 +487,9 @@ function tickerMetrics(){
 function tickerHtml(){
   const items = tickerMetrics();
   if (!items.length){
-    return '<div class="ticker"><div class="tickerLead"><span class="tickerPulse"></span>Rowan · Live</div>'
+    return '<div class="ticker"><div class="tickerLead"><span class="tickerPulse"></span>Philipp Â· Live</div>'
       + '<div class="tickerViewport"><div class="tickerTrack" style="animation:none;padding-left:var(--space-5)">'
-      + '<span class="tickerItem" style="border:0"><span class="tiLabel">No data yet — add vitals to go live</span></span>'
+      + '<span class="tickerItem" style="border:0"><span class="tiLabel">No data yet â€” add vitals to go live</span></span>'
       + '</div></div></div>';
   }
   const chip = (m, i) => '<span class="tickerItem" data-tone="' + m.tone + '">'
@@ -500,7 +500,7 @@ function tickerHtml(){
   const seq = items.map(chip).join('');
   // duration scales with item count so speed stays constant regardless of how much data we have
   const dur = Math.max(18, items.length * 6);
-  return '<div class="ticker"><div class="tickerLead"><span class="tickerPulse"></span>Rowan · Live</div>'
+  return '<div class="ticker"><div class="tickerLead"><span class="tickerPulse"></span>Philipp Â· Live</div>'
     + '<div class="tickerViewport"><div class="tickerTrack" style="animation-duration:' + dur + 's">'
     + seq + seq + '</div></div></div>';
 }
@@ -510,11 +510,11 @@ function loggedWeightToday(){ try { const s = lsGet('progress_standalone_v1'); r
 function loggedGymToday(){ try { const d = lsGet('po_coach_workout_done'); return !!(d && d[localDateKey()]); } catch(e){ return false; } }
 function remindersHtml(){
   const items = [];
-  if (!loggedWeightToday()) items.push({ file: 'progress.html', icon: '⚖️', text: 'Log today’s weight' });
-  if (!loggedGymToday()) items.push({ file: 'gym.html', icon: '🏋️', text: 'Log today’s gym' });
+  if (!loggedWeightToday()) items.push({ file: 'progress.html', icon: 'âš–ï¸', text: 'Log todayâ€™s weight' });
+  if (!loggedGymToday()) items.push({ file: 'gym.html', icon: 'ðŸ‹ï¸', text: 'Log todayâ€™s gym' });
   if (!items.length) return '';
   return '<div class="reminders" role="status"><span class="remindersLabel">Today</span>'
-    + items.map(r => '<a class="reminderChip" href="' + r.file + '"><span class="reminderDot"></span><span aria-hidden>' + r.icon + '</span> ' + r.text + ' <span class="reminderGo" aria-hidden>→</span></a>').join('')
+    + items.map(r => '<a class="reminderChip" href="' + r.file + '"><span class="reminderDot"></span><span aria-hidden>' + r.icon + '</span> ' + r.text + ' <span class="reminderGo" aria-hidden>â†’</span></a>').join('')
     + '</div>';
 }
 function render(){
@@ -540,47 +540,47 @@ function renderModal(){
     if (!ON_SERVER) {
       bodyHtml = '<p class="panelNote">Live Whoop sync runs on the deployed app (Vercel) with your Whoop API keys. Opened locally, use <strong>Apple Watch</strong> or <strong>Manual</strong> above. Once deployed &amp; configured, a one-tap <em>Connect Whoop</em> appears here. See <strong>WHOOP_SETUP.md</strong>.</p>';
     } else if (whoopStatus.connected) {
-      bodyHtml = '<p class="panelNote">✓ <strong>Whoop connected.</strong> Recovery, sleep &amp; strain sync automatically and publish across the suite. Tokens are stored server-side, never in the browser.</p>'
+      bodyHtml = '<p class="panelNote">âœ“ <strong>Whoop connected.</strong> Recovery, sleep &amp; strain sync automatically and publish across the suite. Tokens are stored server-side, never in the browser.</p>'
         + '<div class="srcActions"><button type="button" class="btn btn-link spacer" data-action="whoop-disconnect">disconnect Whoop</button><button type="button" class="btn btn-primary" data-action="whoop-sync">Sync now</button></div>';
     } else {
-      bodyHtml = '<p class="panelNote">Connect your Whoop account once — recovery, sleep &amp; strain then sync automatically and feed your supplement picks. You log in on whoop.com; your tokens stay server-side.</p>'
+      bodyHtml = '<p class="panelNote">Connect your Whoop account once â€” recovery, sleep &amp; strain then sync automatically and feed your supplement picks. You log in on whoop.com; your tokens stay server-side.</p>'
         + '<div class="srcActions"><a class="btn btn-primary" href="/api/whoop/login">Connect Whoop</a></div>';
     }
   } else if (src === 'fitbit') {
     if (!ON_SERVER) {
       bodyHtml = '<p class="panelNote">Live Fitbit sync runs on the deployed app (Vercel) with your Fitbit API keys. Opened locally, use <strong>Apple Watch</strong> or <strong>Manual</strong> above. Once deployed &amp; configured, a one-tap <em>Connect Fitbit</em> appears here. See <strong>FITBIT_SETUP.md</strong>.</p>';
     } else if (fitbitStatus.connected) {
-      bodyHtml = '<p class="panelNote">✓ <strong>Fitbit connected.</strong> Sleep, HRV, resting HR &amp; your bed/wake times sync automatically across the suite. Tokens are stored server-side, never in the browser.<br><br>Heads-up: Fitbit doesn’t expose a recovery score, so the recovery ring stays blank — everything else fills in.</p>'
+      bodyHtml = '<p class="panelNote">âœ“ <strong>Fitbit connected.</strong> Sleep, HRV, resting HR &amp; your bed/wake times sync automatically across the suite. Tokens are stored server-side, never in the browser.<br><br>Heads-up: Fitbit doesnâ€™t expose a recovery score, so the recovery ring stays blank â€” everything else fills in.</p>'
         + '<div class="srcActions"><button type="button" class="btn btn-link spacer" data-action="fitbit-disconnect">disconnect Fitbit</button><button type="button" class="btn btn-primary" data-action="fitbit-sync">Sync now</button></div>';
     } else {
-      bodyHtml = '<p class="panelNote">Connect your Fitbit account once — sleep, HRV, resting HR &amp; bed/wake times then sync automatically. You log in on fitbit.com; your tokens stay server-side. (Fitbit has no recovery score, so that ring stays blank.)</p>'
+      bodyHtml = '<p class="panelNote">Connect your Fitbit account once â€” sleep, HRV, resting HR &amp; bed/wake times then sync automatically. You log in on fitbit.com; your tokens stay server-side. (Fitbit has no recovery score, so that ring stays blank.)</p>'
         + '<div class="srcActions"><a class="btn btn-primary" href="/api/fitbit/login">Connect Fitbit</a></div>';
     }
   } else {
     bodyHtml = '<div class="fieldGrid">'
-      + '<div class="field"><label class="fieldLabel" for="f-rec">Recovery / readiness %</label><input id="f-rec" class="fieldInput" type="number" min="0" max="100" inputmode="numeric" placeholder="—" value="' + esc(v('recovery')) + '" /></div>'
+      + '<div class="field"><label class="fieldLabel" for="f-rec">Recovery / readiness %</label><input id="f-rec" class="fieldInput" type="number" min="0" max="100" inputmode="numeric" placeholder="â€”" value="' + esc(v('recovery')) + '" /></div>'
       + '<div class="field"><label class="fieldLabel" for="f-sleep">Sleep (hours)</label><input id="f-sleep" class="fieldInput" type="number" min="0" max="24" step="0.1" inputmode="decimal" placeholder="7.5" value="' + esc(v('sleepHours')) + '" /></div>'
       + '<div class="field"><label class="fieldLabel" for="f-bed">Bedtime</label><input id="f-bed" class="fieldInput" type="time" value="' + esc(v('bedtime')) + '" /></div>'
       + '<div class="field"><label class="fieldLabel" for="f-wake">Wake time</label><input id="f-wake" class="fieldInput" type="time" value="' + esc(v('wakeTime')) + '" /></div>'
-      + '<div class="field"><label class="fieldLabel" for="f-hrv">HRV (ms)</label><input id="f-hrv" class="fieldInput" type="number" min="0" max="300" inputmode="numeric" placeholder="—" value="' + esc(v('hrv')) + '" /></div>'
-      + '<div class="field"><label class="fieldLabel" for="f-rhr">Resting HR (bpm)</label><input id="f-rhr" class="fieldInput" type="number" min="20" max="150" inputmode="numeric" placeholder="—" value="' + esc(v('rhr')) + '" /></div>'
+      + '<div class="field"><label class="fieldLabel" for="f-hrv">HRV (ms)</label><input id="f-hrv" class="fieldInput" type="number" min="0" max="300" inputmode="numeric" placeholder="â€”" value="' + esc(v('hrv')) + '" /></div>'
+      + '<div class="field"><label class="fieldLabel" for="f-rhr">Resting HR (bpm)</label><input id="f-rhr" class="fieldInput" type="number" min="20" max="150" inputmode="numeric" placeholder="â€”" value="' + esc(v('rhr')) + '" /></div>'
       + '<div class="field fieldFull"><label class="fieldLabel" for="f-target">Sleep target (hours)</label><input id="f-target" class="fieldInput" type="number" min="4" max="12" step="0.5" inputmode="decimal" placeholder="8" value="' + esc(h && h.sleepTargetHours != null ? h.sleepTargetHours : 8) + '" /></div>'
       + '</div>'
-      + '<p class="howtoFoot" style="margin-top:var(--space-3)">Fill <strong>Bedtime</strong> + <strong>Wake time</strong> and we’ll work out hours asleep for you — or just type the hours directly.</p>';
-    if (src === 'apple') bodyHtml = '<div class="howto"><div class="howtoTitle">⌚ Got an Apple Watch? Here’s the 20-second way</div>'
+      + '<p class="howtoFoot" style="margin-top:var(--space-3)">Fill <strong>Bedtime</strong> + <strong>Wake time</strong> and weâ€™ll work out hours asleep for you â€” or just type the hours directly.</p>';
+    if (src === 'apple') bodyHtml = '<div class="howto"><div class="howtoTitle">âŒš Got an Apple Watch? Hereâ€™s the 20-second way</div>'
       + '<ol class="howtoSteps">'
       + '<li>Open the <strong>Health</strong> app on your iPhone.</li>'
-      + '<li>Tap <strong>Sleep</strong> and note today’s <strong>bedtime</strong> &amp; <strong>wake time</strong>, then these three numbers:<div class="howtoChips"><span class="howtoChip">Heart Rate Variability</span><span class="howtoChip">Resting Heart Rate</span><span class="howtoChip">Time Asleep</span></div></li>'
+      + '<li>Tap <strong>Sleep</strong> and note todayâ€™s <strong>bedtime</strong> &amp; <strong>wake time</strong>, then these three numbers:<div class="howtoChips"><span class="howtoChip">Heart Rate Variability</span><span class="howtoChip">Resting Heart Rate</span><span class="howtoChip">Time Asleep</span></div></li>'
       + '<li>Type them into the fields below and hit <strong>Save vitals</strong>.</li>'
       + '</ol>'
-      + '<p class="howtoFoot">Apple won’t let a website read Health data directly, so this quick copy keeps it private — nothing leaves your phone. Saved as “Apple Watch.”</p></div>'
+      + '<p class="howtoFoot">Apple wonâ€™t let a website read Health data directly, so this quick copy keeps it private â€” nothing leaves your phone. Saved as â€œApple Watch.â€</p></div>'
       + bodyHtml;
-    else bodyHtml += '<p class="panelNote">Enter whatever you track. Recovery and sleep are what drive the supplement recommendations — the rest is optional.</p>';
+    else bodyHtml += '<p class="panelNote">Enter whatever you track. Recovery and sleep are what drive the supplement recommendations â€” the rest is optional.</p>';
   }
   const canClear = !!health;
   root.innerHTML = '<div class="overlay" data-action="close-vitals"><div class="panel" data-stop="1">'
-    + '<div class="panelHead"><div><div class="panelEyebrow">Health source</div><h2 class="panelTitle">Today’s vitals</h2></div><button type="button" class="panelClose" data-action="close-vitals">×</button></div>'
-    + '<div class="srcPills">' + pill('whoop','🔋','Whoop') + pill('fitbit','💠','Fitbit') + pill('apple','⌚','Apple Watch') + pill('manual','✍️','Manual') + '</div>'
+    + '<div class="panelHead"><div><div class="panelEyebrow">Health source</div><h2 class="panelTitle">Todayâ€™s vitals</h2></div><button type="button" class="panelClose" data-action="close-vitals">Ã—</button></div>'
+    + '<div class="srcPills">' + pill('whoop','ðŸ”‹','Whoop') + pill('fitbit','ðŸ’ ','Fitbit') + pill('apple','âŒš','Apple Watch') + pill('manual','âœï¸','Manual') + '</div>'
     + bodyHtml
     + '<div class="panelActions">' + (canClear ? '<button type="button" class="btn btn-link spacer" data-action="clear-vitals">clear vitals</button>' : '')
     + '<button type="button" class="btn btn-ghost" data-action="close-vitals">Cancel</button>'
@@ -600,7 +600,7 @@ function saveVitals(){
   const recovery = num('f-rec');
   const bedtime = str('f-bed');
   const wakeTime = str('f-wake');
-  // Hours-asleep priority: explicit field → otherwise derive from bed/wake times (wake assumed next morning if earlier than bed).
+  // Hours-asleep priority: explicit field â†’ otherwise derive from bed/wake times (wake assumed next morning if earlier than bed).
   let sleepHours = num('f-sleep');
   if (sleepHours == null && bedtime && wakeTime){
     const [bh, bm] = bedtime.split(':').map(Number);
@@ -645,13 +645,13 @@ function profileModalHtml(){
   const imperial = d.units === 'imperial';
   const isEdit = !!profile;
   const sel = (key, opts) => '<select class="fieldInput" data-pf="' + key + '">'
-    + '<option value=""' + (d[key] === '' ? ' selected' : '') + '>—</option>'
+    + '<option value=""' + (d[key] === '' ? ' selected' : '') + '>â€”</option>'
     + opts.map(o => '<option value="' + o[0] + '"' + (d[key] === o[0] ? ' selected' : '') + '>' + o[1] + '</option>').join('') + '</select>';
   const inp = (key, type, ph, attrs) => '<input class="fieldInput" type="' + type + '" data-pf="' + key + '" placeholder="' + esc(ph) + '" value="' + esc(d[key]) + '" ' + (attrs || '') + ' />';
   const field = (label, inner) => '<div class="field"><label class="fieldLabel">' + label + '</label>' + inner + '</div>';
   const body = '<div class="fieldGrid">'
     + '<div class="field fieldFull"><label class="fieldLabel">Name</label>' + inp('name', 'text', 'Your name', 'autocomplete="name"') + '</div>'
-    + field('Age', inp('age', 'number', '—', 'min="0" max="120" inputmode="numeric"'))
+    + field('Age', inp('age', 'number', 'â€”', 'min="0" max="120" inputmode="numeric"'))
     + field('Sex', sel('sex', [['M', 'Male'], ['F', 'Female']]))
     + field('Units', sel('units', [['metric', 'Metric (cm/kg)'], ['imperial', 'Imperial (in/lb)']]))
     + field('Height (' + (imperial ? 'in' : 'cm') + ')', inp('height', 'number', imperial ? '70' : '178', 'min="0" inputmode="numeric"'))
@@ -663,8 +663,8 @@ function profileModalHtml(){
     + '</div>';
   return '<div class="overlay" data-action="close-profile"><div class="panel" data-stop="1">'
     + '<div class="panelHead"><div><div class="panelEyebrow">' + (isEdit ? 'Your profile' : 'Welcome') + '</div><h2 class="panelTitle">' + (isEdit ? 'Edit profile' : 'Set up your dashboard') + '</h2></div>'
-    + (isEdit ? '<button type="button" class="panelClose" data-action="close-profile">×</button>' : '') + '</div>'
-    + (isEdit ? '' : '<p class="panelNote" style="border-color:var(--brand-line)">Tell the suite a little about you — your name personalizes it, and your stats pre-fill the apps (weight → Water, age/goal/training → Supplements). Stored only in this browser; edit anytime.</p>')
+    + (isEdit ? '<button type="button" class="panelClose" data-action="close-profile">Ã—</button>' : '') + '</div>'
+    + (isEdit ? '' : '<p class="panelNote" style="border-color:var(--brand-line)">Tell the suite a little about you â€” your name personalizes it, and your stats pre-fill the apps (weight â†’ Water, age/goal/training â†’ Supplements). Stored only in this browser; edit anytime.</p>')
     + body
     + '<div class="panelActions"><button type="button" class="btn ' + (isEdit ? 'btn-ghost' : 'btn-link') + '" data-action="close-profile">' + (isEdit ? 'Cancel' : 'Skip for now') + '</button>'
     + '<button type="button" class="btn btn-primary" data-action="save-profile">' + (isEdit ? 'Save' : 'Save &amp; start') + '</button></div></div></div>';
@@ -701,7 +701,7 @@ document.addEventListener('click', e => {
   if (action === 'close-vitals') { if (!stop || btn.tagName === 'BUTTON') { ui.modalOpen = false; renderModal(); } return; }
   if (action === 'src') { ui.draftSource = btn.getAttribute('data-src'); renderModal(); return; }
   if (action === 'save-vitals') { saveVitals(); return; }
-  if (action === 'clear-vitals') { if (confirm('Clear today’s vitals from the suite?')) { clearHealth(); health = null; ui.modalOpen = false; render(); } return; }
+  if (action === 'clear-vitals') { if (confirm('Clear todayâ€™s vitals from the suite?')) { clearHealth(); health = null; ui.modalOpen = false; render(); } return; }
   if (action === 'whoop-sync') { syncWhoop(); return; }
   if (action === 'whoop-disconnect') {
     fetch('/api/whoop/logout').catch(()=>{}).then(() => {
@@ -722,7 +722,7 @@ document.addEventListener('click', e => {
   }
 });
 
-// Profile-form fields → draft (text/number on input keeps caret; selects on change; units re-renders to relabel).
+// Profile-form fields â†’ draft (text/number on input keeps caret; selects on change; units re-renders to relabel).
 // Lazy-init the draft so first-run typing is never dropped.
 document.addEventListener('input', e => {
   const t = e.target; if (!(t && t.dataset && t.dataset.pf)) return;
@@ -751,7 +751,7 @@ window.addEventListener('storage', e => {
   if (e.key === HEALTH_KEY || e.key === LEGACY_WHOOP_KEY || e.key === null) { health = loadHealth(); render(); }
 });
 
-if (!profile) { ui.profileDraft = draftFromProfile(); ui.profileOpen = true; } // first run → onboarding prompt (init draft so typing is captured)
+if (!profile) { ui.profileDraft = draftFromProfile(); ui.profileOpen = true; } // first run â†’ onboarding prompt (init draft so typing is captured)
 applyTheme(currentTheme);
 
 // On a deployed host: pick up the OAuth return + pull the latest Whoop / Fitbit vitals.
@@ -762,8 +762,8 @@ applyTheme(currentTheme);
     const w = q.get('whoop'), f = q.get('fitbit');
     if (w || f) {
       history.replaceState(null, '', location.pathname);
-      if (w === 'error' || w === 'denied') alert('Whoop connection didn’t complete. Check your WHOOP_CLIENT_ID / SECRET and the registered redirect URL (see WHOOP_SETUP.md), then try again.');
-      if (f === 'error' || f === 'denied') alert('Fitbit connection didn’t complete. Check your FITBIT_CLIENT_ID / SECRET and the registered redirect URL (see FITBIT_SETUP.md), then try again.');
+      if (w === 'error' || w === 'denied') alert('Whoop connection didnâ€™t complete. Check your WHOOP_CLIENT_ID / SECRET and the registered redirect URL (see WHOOP_SETUP.md), then try again.');
+      if (f === 'error' || f === 'denied') alert('Fitbit connection didnâ€™t complete. Check your FITBIT_CLIENT_ID / SECRET and the registered redirect URL (see FITBIT_SETUP.md), then try again.');
     }
   } catch (e) {}
   syncWhoop();

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -18,7 +18,7 @@ body{overflow-x:hidden;-webkit-tap-highlight-color:transparent}
 img{max-width:100%;height:auto}
 @media (max-width:480px){input,select,textarea{font-size:16px !important}}
 </style>
-<title>Finance · standalone</title>
+<title>Finance Â· standalone</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -26,7 +26,7 @@ img{max-width:100%;height:auto}
 <style>
 
 /* ============================================================
- * Finance — restyled: "Patron" — soft-dark electric-violet
+ * Finance â€” restyled: "Patron" â€” soft-dark electric-violet
  * modern-fintech skin. 3 themes (Nocturne / Aurora / Daylight),
  * all driven by tokens. Logic untouched.
  * ============================================================ */
@@ -82,7 +82,7 @@ img{max-width:100%;height:auto}
   --font-mono:'JetBrains Mono';
 }
 
-/* ---- Aurora (vibrant violet → teal) ---- */
+/* ---- Aurora (vibrant violet â†’ teal) ---- */
 [data-theme="aurora"] {
   color-scheme: dark;
   --bg: #080913;
@@ -514,7 +514,7 @@ body {
 <div id="modalRoot"></div>
 <script>
 /* ============================================================
- * Pure helpers — ported from state.ts
+ * Pure helpers â€” ported from state.ts
  * ============================================================ */
 const STORAGE_KEY = 'finance_standalone_v1';
 const ACTIVITY_MAX = 50;
@@ -574,10 +574,10 @@ function formatRenewal(iso) {
   const diffDays = Math.round((dayStart.getTime() - today.getTime()) / 86400000);
   const dateLabel = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
   let prefix = '';
-  if (diffDays < 0) prefix = 'past · ';
-  else if (diffDays === 0) prefix = 'today · ';
-  else if (diffDays === 1) prefix = 'tomorrow · ';
-  else if (diffDays <= 7) prefix = 'in ' + diffDays + 'd · ';
+  if (diffDays < 0) prefix = 'past Â· ';
+  else if (diffDays === 0) prefix = 'today Â· ';
+  else if (diffDays === 1) prefix = 'tomorrow Â· ';
+  else if (diffDays <= 7) prefix = 'in ' + diffDays + 'd Â· ';
   return prefix + dateLabel;
 }
 function pctClass(pct) { if (pct < 5) return 'good'; if (pct < 25) return 'warn'; return 'bad'; }
@@ -599,10 +599,10 @@ let rates = Object.assign({}, DEFAULT_RATES);
 
 /* ---- API keys / settings (stored only in this browser) ---- */
 const SETTINGS_KEY = 'finance_settings_v1';
-const DEFAULT_MODEL = 'claude-haiku-4-5'; // cheapest vision-capable model — never use Sonnet/Opus for OCR
+const DEFAULT_MODEL = 'llama-3.2-90b-vision-preview'; // vision-capable model for OCR screenshot import
 function loadSettings() {
-  try { return Object.assign({ finnhubKey: '', anthropicKey: '', anthropicModel: DEFAULT_MODEL }, JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}')); }
-  catch { return { finnhubKey: '', anthropicKey: '', anthropicModel: DEFAULT_MODEL }; }
+  try { return Object.assign({ finnhubKey: '', groqKey: '', groqModel: DEFAULT_MODEL }, JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}')); }
+  catch { return { finnhubKey: '', groqKey: '', groqModel: DEFAULT_MODEL }; }
 }
 function saveSettings() { try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch {} }
 let settings = loadSettings();
@@ -673,8 +673,8 @@ const actions = {
   },
   addHolding(ticker, shares) {
     const t = ticker.trim().toUpperCase(); if (!t || !isFinite(shares) || shares <= 0) return;
-    // No live price source in the standalone — value stays 0 until you switch
-    // to a manual entry or use the hosted app. Shown as "—".
+    // No live price source in the standalone â€” value stays 0 until you switch
+    // to a manual entry or use the hosted app. Shown as "â€”".
     state.accounts.push({ id: genId('acc'), type: 'stocks', name: t, ticker: t, shares, amountCHF: 0 });
     save(); render();
   },
@@ -777,7 +777,7 @@ function applyTheme(name){
 const TYPE_LABELS = { bank: 'Bank', stocks: 'Stocks', crypto: 'Crypto', other: 'Other' };
 const CATEGORY_ORDER = [
   { key: 'bank', label: 'Bank accounts', ph1: 'Account name', ph2: 'Amount' },
-  { key: 'stocks', label: 'Stocks · investments', ph1: 'Stock / fund', ph2: 'Value' },
+  { key: 'stocks', label: 'Stocks Â· investments', ph1: 'Stock / fund', ph2: 'Value' },
   { key: 'crypto', label: 'Crypto', ph1: 'Coin / wallet', ph2: 'Value' },
   { key: 'other', label: 'Other assets', ph1: 'Asset name', ph2: 'Value' },
 ];
@@ -790,13 +790,13 @@ function headerHtml() {
   const themeSeg = THEMES.map(t => '<button type="button" class="themeBtn ' + (t.key === currentTheme ? 'themeBtnActive' : '') + '" data-act="theme" data-theme="' + t.key + '"><span class="themeSwatch" style="background:' + t.swatch + '"></span>' + t.label + '</button>').join('');
   const segs = CURRENCIES.map(c => '<button type="button" class="currencyBtn ' + (c === state.currency ? 'currencyBtnActive' : '') + '" data-act="currency" data-c="' + c + '">' + c + '</button>').join('');
   return '<header class="header"><div class="headerLeft">'
-    + '<a class="back" href="index.html"><span class="backArrow">←</span> Rowan</a>'
-    + '<h1 class="title">Finance</h1><p class="subtitle">Net worth · subs · orders · wishlist</p>'
+    + '<a class="back" href="index.html"><span class="backArrow">â†</span> Philipp</a>'
+    + '<h1 class="title">Finance</h1><p class="subtitle">Net worth Â· subs Â· orders Â· wishlist</p>'
     + '</div>'
     + '<div class="headerRight">'
     + '<div class="headerControls">'
     + '<div class="themeSeg" role="radiogroup" aria-label="Theme">' + themeSeg + '</div>'
-    + '<button type="button" class="settingsBtn" data-act="openSettings" title="API keys & settings" aria-label="Settings">⚙</button>'
+    + '<button type="button" class="settingsBtn" data-act="openSettings" title="API keys & settings" aria-label="Settings">âš™</button>'
     + '</div>'
     + '<div class="currencySeg" role="radiogroup" aria-label="Display currency">' + segs + '</div>'
     + '</div></header>';
@@ -852,10 +852,10 @@ function dailyDeltaHtml() {
   if (last.t - baseline.t < 3600000) return '';
   const delta = last.v - baseline.v;
   const pct = Math.abs(baseline.v) > 0.005 ? (delta / Math.abs(baseline.v)) * 100 : null;
-  if (Math.abs(delta) < 0.005) return '<span class="dailyDelta flat">flat · 24h</span>';
-  const up = delta > 0, sign = up ? '+' : '−';
-  const pctLabel = pct == null ? '' : '<span class="dailyDeltaPct">' + (up ? '+' : '−') + (Math.abs(pct) >= 100 ? Math.abs(pct).toFixed(0) : Math.abs(pct).toFixed(2)) + '%</span>';
-  return '<span class="dailyDelta ' + (up ? 'up' : 'down') + '">' + sign + esc(fmt(Math.abs(delta))) + pctLabel + '<span class="dailyDeltaWindow">· 24h</span></span>';
+  if (Math.abs(delta) < 0.005) return '<span class="dailyDelta flat">flat Â· 24h</span>';
+  const up = delta > 0, sign = up ? '+' : 'âˆ’';
+  const pctLabel = pct == null ? '' : '<span class="dailyDeltaPct">' + (up ? '+' : 'âˆ’') + (Math.abs(pct) >= 100 ? Math.abs(pct).toFixed(0) : Math.abs(pct).toFixed(2)) + '%</span>';
+  return '<span class="dailyDelta ' + (up ? 'up' : 'down') + '">' + sign + esc(fmt(Math.abs(delta))) + pctLabel + '<span class="dailyDeltaWindow">Â· 24h</span></span>';
 }
 
 function smoothPath(points) {
@@ -900,8 +900,8 @@ function chartHtml() {
   const color = direction === 'up' ? 'var(--pos)' : direction === 'down' ? 'var(--neg)' : 'var(--muted)';
   let deltaLabel = '-';
   if (direction === 'flat') deltaLabel = 'Flat';
-  else if (Math.abs(first) < 0.5) deltaLabel = (change > 0 ? '+' : '−') + fmt(Math.abs(change));
-  else { const pct = (change / Math.abs(first)) * 100, absPct = Math.abs(pct); const pctStr = absPct >= 100 ? absPct.toFixed(0) : absPct >= 10 ? absPct.toFixed(1) : absPct.toFixed(2); deltaLabel = (change > 0 ? '+' : '−') + pctStr + '%'; }
+  else if (Math.abs(first) < 0.5) deltaLabel = (change > 0 ? '+' : 'âˆ’') + fmt(Math.abs(change));
+  else { const pct = (change / Math.abs(first)) * 100, absPct = Math.abs(pct); const pctStr = absPct >= 100 ? absPct.toFixed(0) : absPct >= 10 ? absPct.toFixed(1) : absPct.toFixed(2); deltaLabel = (change > 0 ? '+' : 'âˆ’') + pctStr + '%'; }
 
   const vals = history.map(p => p.v), minV = Math.min.apply(null, vals), maxV = Math.max.apply(null, vals);
   const range = (maxV - minV) || Math.max(1, Math.abs(maxV));
@@ -955,8 +955,8 @@ function accountRowHtml(acct) {
     : '<span class="accountRowName" data-act="editName" data-id="' + acct.id + '" title="Tap to rename">' + esc(acct.name) + '</span>';
   const amtCell = editingAmt
     ? '<input class="inlineEditInput inlineEditAmt" id="edit-amt-' + acct.id + '" value="' + esc(amtStr(acct)) + '" data-edit="amt" data-id="' + acct.id + '" />'
-    : '<span class="accountRowAmount" data-act="editAmt" data-id="' + acct.id + '" title="Tap to edit · type +500 to add, -200 to subtract, or a new total">' + esc(fmt(acct.amountCHF)) + '</span>';
-  return '<div class="accountRow">' + nameCell + amtCell + '<button type="button" class="deleteBtn" data-act="delAccount" data-id="' + acct.id + '" title="Delete">×</button></div>';
+    : '<span class="accountRowAmount" data-act="editAmt" data-id="' + acct.id + '" title="Tap to edit Â· type +500 to add, -200 to subtract, or a new total">' + esc(fmt(acct.amountCHF)) + '</span>';
+  return '<div class="accountRow">' + nameCell + amtCell + '<button type="button" class="deleteBtn" data-act="delAccount" data-id="' + acct.id + '" title="Delete">Ã—</button></div>';
 }
 function amtStr(acct) { const d = chfToDisplay(acct.amountCHF, state.currency, rates); return String(d.toFixed(d % 1 === 0 ? 0 : 2)); }
 
@@ -973,7 +973,7 @@ function accountCardHtml(cat, netWorth) {
       + '<button type="button" class="quickAddBtn" data-act="addAccount" data-cat="' + cat.key + '">+</button></div>'
     : '<button type="button" class="addToggle" data-act="showAdd" data-show="' + showKey + '">+ add</button>';
   return '<div class="accountCard"><div class="accountHead"><span class="accountLabel">' + esc(cat.label) + '</span>'
-    + '<span class="accountTotal">' + esc(fmt(total)) + (pct != null ? '<span class="accountTotalPct">· ' + pct.toFixed(1) + '%</span>' : '') + '</span></div>'
+    + '<span class="accountTotal">' + esc(fmt(total)) + (pct != null ? '<span class="accountTotalPct">Â· ' + pct.toFixed(1) + '%</span>' : '') + '</span></div>'
     + '<div class="accountList">' + items.map(accountRowHtml).join('') + '</div>' + addBlock + '</div>';
 }
 
@@ -984,14 +984,14 @@ function holdingRowHtml(acct) {
     : '<span class="holdingShares" data-act="editShares" data-id="' + acct.id + '" title="Tap to edit share count">' + (acct.shares || 0) + ' sh</span>';
   const hasPrice = typeof acct.lastPriceChf === 'number' && isFinite(acct.lastPriceChf);
   const priceCell = hasPrice
-    ? '<span class="holdingPrice" title="Live price · ' + (acct.lastPriceAt ? new Date(acct.lastPriceAt).toLocaleString() : '') + '">' + esc(fmt(acct.lastPriceChf)) + '</span>'
-    : '<span class="holdingPrice" title="Add a Finnhub key in ⚙ settings, then ↻ refresh prices">—</span>';
+    ? '<span class="holdingPrice" title="Live price Â· ' + (acct.lastPriceAt ? new Date(acct.lastPriceAt).toLocaleString() : '') + '">' + esc(fmt(acct.lastPriceChf)) + '</span>'
+    : '<span class="holdingPrice" title="Add a Finnhub key in âš™ settings, then â†» refresh prices">â€”</span>';
   const amtCell = hasPrice
-    ? '<span class="accountRowAmount" title="shares × live price">' + esc(fmt(acct.amountCHF)) + '</span>'
-    : '<span class="accountRowAmount" title="Add a Finnhub key in ⚙ settings, then ↻ refresh prices">—</span>';
+    ? '<span class="accountRowAmount" title="shares Ã— live price">' + esc(fmt(acct.amountCHF)) + '</span>'
+    : '<span class="accountRowAmount" title="Add a Finnhub key in âš™ settings, then â†» refresh prices">â€”</span>';
   return '<div class="holdingRow"><span class="tickerPill">' + esc(acct.ticker) + '</span>' + sharesCell
     + priceCell + amtCell
-    + '<button type="button" class="deleteBtn" data-act="delAccount" data-id="' + acct.id + '" title="Delete">×</button></div>';
+    + '<button type="button" class="deleteBtn" data-act="delAccount" data-id="' + acct.id + '" title="Delete">Ã—</button></div>';
 }
 function stocksCardHtml(netWorth) {
   const stockAccounts = state.accounts.filter(a => a.type === 'stocks');
@@ -1012,11 +1012,11 @@ function stocksCardHtml(netWorth) {
       + '<input class="quickAddInput" type="number" step="0.01" placeholder="Value" value="' + esc(dm.amt) + '" data-draft="stockManual.amt" data-enter="addStockManual" />'
       + '<button type="button" class="quickAddBtn" data-act="addStockManual">+</button></div>'
     : '';
-  return '<div class="accountCard"><div class="accountHead"><span class="accountLabel">Stocks · investments</span>'
-    + '<span class="accountTotal">' + esc(fmt(total)) + (pct != null ? '<span class="accountTotalPct">· ' + pct.toFixed(1) + '%</span>' : '') + '</span></div>'
+  return '<div class="accountCard"><div class="accountHead"><span class="accountLabel">Stocks Â· investments</span>'
+    + '<span class="accountTotal">' + esc(fmt(total)) + (pct != null ? '<span class="accountTotalPct">Â· ' + pct.toFixed(1) + '%</span>' : '') + '</span></div>'
     + '<div class="accountList">' + holdings.map(holdingRowHtml).join('') + manuals.map(accountRowHtml).join('') + '</div>'
     + addHold
-    + '<div class="holdingsFooter"><button type="button" class="linkAction" data-act="refreshPrices" title="Fetch live quotes from Finnhub (add your key in ⚙ settings)"' + (ui.pricesBusy ? ' disabled' : '') + '>' + (ui.pricesBusy ? '↻ refreshing…' : '↻ refresh prices') + '</button>'
+    + '<div class="holdingsFooter"><button type="button" class="linkAction" data-act="refreshPrices" title="Fetch live quotes from Finnhub (add your key in âš™ settings)"' + (ui.pricesBusy ? ' disabled' : '') + '>' + (ui.pricesBusy ? 'â†» refreshingâ€¦' : 'â†» refresh prices') + '</button>'
     + (showManual ? '' : '<button type="button" class="linkAction" data-act="showAdd" data-show="stocksManual">+ add manual entry</button>') + '</div>'
     + manualBlock + '</div>';
 }
@@ -1034,8 +1034,8 @@ function activityHtml() {
   ACTIVITY_BUCKETS.forEach(b => {
     const entries = buckets[b.key]; if (!entries.length) return;
     rows += '<div class="activityBucket"><div class="activityBucketLabel">' + b.label + '</div>'
-      + entries.map(e => { const sign = e.deltaCHF >= 0 ? '+' : '−'; const cls = e.deltaCHF >= 0 ? 'up' : 'down'; const kind = e.kind === 'edit' ? 'edit' : e.kind === 'delete' ? 'delete' : 'add';
-        return '<div class="activityRow"><span class="activityBar" style="background:' + TYPE_COLORS[e.accountType] + '"></span><div class="activityInfo"><div class="activityName">' + esc(e.name || '(unnamed)') + '</div><div class="activityMeta">' + TYPE_LABELS[e.accountType] + ' · ' + kind + '</div></div><span class="activityAmt ' + cls + '">' + sign + esc(fmt(Math.abs(e.deltaCHF))) + '</span><span class="activityDate">' + formatActivityDate(e.ts) + '</span></div>'; }).join('') + '</div>';
+      + entries.map(e => { const sign = e.deltaCHF >= 0 ? '+' : 'âˆ’'; const cls = e.deltaCHF >= 0 ? 'up' : 'down'; const kind = e.kind === 'edit' ? 'edit' : e.kind === 'delete' ? 'delete' : 'add';
+        return '<div class="activityRow"><span class="activityBar" style="background:' + TYPE_COLORS[e.accountType] + '"></span><div class="activityInfo"><div class="activityName">' + esc(e.name || '(unnamed)') + '</div><div class="activityMeta">' + TYPE_LABELS[e.accountType] + ' Â· ' + kind + '</div></div><span class="activityAmt ' + cls + '">' + sign + esc(fmt(Math.abs(e.deltaCHF))) + '</span><span class="activityDate">' + formatActivityDate(e.ts) + '</span></div>'; }).join('') + '</div>';
   });
   return '<div class="activity"><div class="activityHead"><span class="chartLabel">Recent activity</span><span class="chartDelta">' + state.activity.length + ' event' + (state.activity.length === 1 ? '' : 's') + '</span></div><div class="activityList">' + rows + '</div></div>';
 }
@@ -1045,7 +1045,7 @@ function netWorthViewHtml() {
   const byType = netWorthByType(state.accounts);
   const parts = [];
   ['bank','stocks','crypto','other'].forEach(t => { if (byType[t] > 0) parts.push(TYPE_LABELS[t] + ': ' + fmt(byType[t])); });
-  const breakdown = parts.join('  ·  ');
+  const breakdown = parts.join('  Â·  ');
   const isFirstRun = state.accounts.length === 0;
   const cards = CATEGORY_ORDER.map(cat => cat.key === 'stocks' ? stocksCardHtml(netWorth) : accountCardHtml(cat, netWorth)).join('');
   return '<section class="section"><div class="sectionEyebrow"><span>Net worth</span></div>'
@@ -1053,7 +1053,7 @@ function netWorthViewHtml() {
     + '<div class="nwHeroNumRow"><span class="nwHeroNum">' + esc(fmt(netWorth)) + '</span>' + dailyDeltaHtml() + '</div>'
     + (breakdown ? '<div class="nwHeroBreakdown">' + esc(breakdown) + '</div>' : '')
     + (isFirstRun ? '<div class="firstRunHint">Import a statement screenshot, or add an account manually below to start tracking.</div>' : '')
-    + '</div><button type="button" class="importTrigger ' + (isFirstRun ? 'importTriggerLarge' : '') + '" data-act="import" data-kind="statement"><span class="importTriggerIcon" aria-hidden>↗</span><span class="importTriggerText"><span class="importTriggerTitle">Import from screenshot</span><span class="importTriggerSub">' + (isFirstRun ? 'fastest way to get started' : 'read a statement in 5 seconds') + '</span></span></button></div>'
+    + '</div><button type="button" class="importTrigger ' + (isFirstRun ? 'importTriggerLarge' : '') + '" data-act="import" data-kind="statement"><span class="importTriggerIcon" aria-hidden>â†—</span><span class="importTriggerText"><span class="importTriggerTitle">Import from screenshot</span><span class="importTriggerSub">' + (isFirstRun ? 'fastest way to get started' : 'read a statement in 5 seconds') + '</span></span></button></div>'
     + '<div class="overviewGrid">' + chartHtml() + donutHtml(netWorth) + '</div>'
     + '<div class="accountsGrid">' + cards + '</div>'
     + activityHtml() + '</section>';
@@ -1063,7 +1063,7 @@ function netWorthViewHtml() {
  * SUBS view
  * ============================================================ */
 const PERIODS = [ { value:'monthly',label:'Monthly' }, { value:'yearly',label:'Yearly' }, { value:'weekly',label:'Weekly' } ];
-function accountOptions(selected) { return '<option value="">From account…</option>' + state.accounts.map(a => '<option value="' + a.id + '"' + (a.id === selected ? ' selected' : '') + '>' + esc(a.name) + '</option>').join(''); }
+function accountOptions(selected) { return '<option value="">From accountâ€¦</option>' + state.accounts.map(a => '<option value="' + a.id + '"' + (a.id === selected ? ' selected' : '') + '>' + esc(a.name) + '</option>').join(''); }
 function periodOptions(selected) { return PERIODS.map(p => '<option value="' + p.value + '"' + (p.value === selected ? ' selected' : '') + '>' + p.label + '</option>').join(''); }
 function daysToNext(s) { if (!s.renewal) return null; const next = nextRenewalDate(s.renewal, s.period); if (!next) return null; const now = new Date(); const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime(); return Math.round((next.getTime() - today) / 86400000); }
 
@@ -1091,16 +1091,16 @@ function subsViewHtml() {
         ? 'billed ' + sub.enteredCurrency + ' ' + sub.enteredAmount.toLocaleString('en-US', { minimumFractionDigits: sub.enteredAmount % 1 === 0 ? 0 : 2, maximumFractionDigits: 2 }) + ' / ' + sub.period
         : (sub.period !== 'monthly' ? 'billed ' + fmt(sub.amountCHF) + ' / ' + sub.period : null);
       return '<div class="subRow ' + (isUrgent ? 'urgent' : '') + '"><div style="min-width:0"><div class="subRowName">' + esc(sub.name) + '</div><div class="subRowPeriod">' + esc(sub.period) + '</div>'
-        + (sub.renewal ? '<div class="subRowRenew">↻ renews ' + esc(formatRenewal(sub.renewal)) + '</div>' : '')
-        + '<div class="subRowPills">' + (fromName ? '<span class="subPill">from · ' + esc(fromName) + '</span>' : '')
+        + (sub.renewal ? '<div class="subRowRenew">â†» renews ' + esc(formatRenewal(sub.renewal)) + '</div>' : '')
+        + '<div class="subRowPills">' + (fromName ? '<span class="subPill">from Â· ' + esc(fromName) + '</span>' : '')
         + '<button type="button" class="subToggle ' + (sub.autoDeduct ? 'on' : '') + '" data-act="toggleAuto" data-id="' + sub.id + '"><span class="subToggleDot"></span>' + (sub.autoDeduct ? 'auto-deduct on' : 'auto-deduct off') + '</button></div></div>'
         + '<div class="subRowCost"><div class="subRowCostBig">' + esc(fmt(monthly)) + '</div><div class="subRowCostUnit">/ month</div>' + (billedOriginal ? '<div class="subRowCostBilled">' + esc(billedOriginal) + '</div>' : '') + '</div>'
-        + '<div class="subRowActions"><button type="button" class="iconBtn" data-act="editSub" data-id="' + sub.id + '" title="Edit">✎</button><button type="button" class="iconBtn" data-act="delSub" data-id="' + sub.id + '" title="Delete">×</button></div></div>';
+        + '<div class="subRowActions"><button type="button" class="iconBtn" data-act="editSub" data-id="' + sub.id + '" title="Edit">âœŽ</button><button type="button" class="iconBtn" data-act="delSub" data-id="' + sub.id + '" title="Delete">Ã—</button></div></div>';
     }).join('');
   }
 
-  return '<section class="section"><div class="sectionEyebrow"><span>Active subscriptions</span><span class="sectionCount">' + state.subscriptions.length + ' ' + (state.subscriptions.length === 1 ? 'sub' : 'subs') + (monthlyTotal > 0 ? '<span class="sectionCountSep"> · ' + esc(fmt(monthlyTotal * 12)) + ' / yr</span>' : '') + '</span></div>'
-    + '<button type="button" class="importTrigger" data-act="import" data-kind="subs"><span class="importTriggerIcon" aria-hidden>↗</span><span class="importTriggerText"><span class="importTriggerTitle">Import subscriptions</span><span class="importTriggerSub">snap a billing page, pull every sub at once</span></span></button>'
+  return '<section class="section"><div class="sectionEyebrow"><span>Active subscriptions</span><span class="sectionCount">' + state.subscriptions.length + ' ' + (state.subscriptions.length === 1 ? 'sub' : 'subs') + (monthlyTotal > 0 ? '<span class="sectionCountSep"> Â· ' + esc(fmt(monthlyTotal * 12)) + ' / yr</span>' : '') + '</span></div>'
+    + '<button type="button" class="importTrigger" data-act="import" data-kind="subs"><span class="importTriggerIcon" aria-hidden>â†—</span><span class="importTriggerText"><span class="importTriggerTitle">Import subscriptions</span><span class="importTriggerSub">snap a billing page, pull every sub at once</span></span></button>'
     + '<div class="addCard"><div class="subsHero"><div><div class="nwHeroLabel">Monthly burn</div><div class="subsHeroNum">' + esc(fmt(monthlyTotal)) + '<span class="subsHeroNumSuffix">/ mo</span></div>' + (monthlyTotal > 0 ? '<div class="subsHeroSub">~' + esc(fmt(monthlyTotal * 12)) + ' per year</div>' : '') + '</div></div></div>'
     + addForm + '<div>' + list + '</div></section>';
 }
@@ -1126,11 +1126,11 @@ function arrivalLabel(iso) {
   const now = new Date(); const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); const dayStart = new Date(d.getFullYear(), d.getMonth(), d.getDate());
   const diff = Math.round((dayStart.getTime() - today.getTime()) / 86400000);
   const date = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-  if (diff < 0) return { label: Math.abs(diff) + 'd late · ' + date, cls: 'past' };
-  if (diff === 0) return { label: 'arrives today · ' + date, cls: 'today' };
-  if (diff === 1) return { label: 'arrives tomorrow · ' + date, cls: 'imminent' };
-  if (diff <= 5) return { label: 'in ' + diff + 'd · ' + date, cls: 'imminent' };
-  return { label: 'in ' + diff + 'd · ' + date, cls: '' };
+  if (diff < 0) return { label: Math.abs(diff) + 'd late Â· ' + date, cls: 'past' };
+  if (diff === 0) return { label: 'arrives today Â· ' + date, cls: 'today' };
+  if (diff === 1) return { label: 'arrives tomorrow Â· ' + date, cls: 'imminent' };
+  if (diff <= 5) return { label: 'in ' + diff + 'd Â· ' + date, cls: 'imminent' };
+  return { label: 'in ' + diff + 'd Â· ' + date, cls: '' };
 }
 function orderPreviewText(netWorth) {
   const d = ui.drafts.order; const isBought = d.mode === 'bought';
@@ -1138,27 +1138,27 @@ function orderPreviewText(netWorth) {
   if (isNaN(a) || a <= 0) return { text: isBought ? 'Type a cost. We will deduct it from the chosen account on Add.' : 'Type a cost. Preview will show what % of net worth it takes.', cls: '' };
   const amountCHF = displayToChf(a, state.currency, rates);
   const fromName = d.from ? ((state.accounts.find(x => x.id === d.from) || {}).name || 'unassigned') : 'unassigned';
-  if (isBought && !d.from) return { text: fmt(amountCHF) + ' · pick a "from account" to deduct from', cls: 'warn' };
+  if (isBought && !d.from) return { text: fmt(amountCHF) + ' Â· pick a "from account" to deduct from', cls: 'warn' };
   if (netWorth > 0) {
     const pct = (amountCHF / netWorth) * 100; const cls = pctClass(pct);
-    const text = isBought ? 'Will debit ' + fromName + ': ' + fmt(amountCHF) + ' · ' + pct.toFixed(2) + '% of your ' + fmt(netWorth) + ' net worth'
-      : fmt(amountCHF) + ' from ' + fromName + ' · ' + pct.toFixed(2) + '% of your ' + fmt(netWorth) + ' net worth';
+    const text = isBought ? 'Will debit ' + fromName + ': ' + fmt(amountCHF) + ' Â· ' + pct.toFixed(2) + '% of your ' + fmt(netWorth) + ' net worth'
+      : fmt(amountCHF) + ' from ' + fromName + ' Â· ' + pct.toFixed(2) + '% of your ' + fmt(netWorth) + ' net worth';
     return { text, cls: cls === 'good' ? '' : cls };
   }
-  return { text: fmt(amountCHF) + ' from ' + fromName + ' · add net worth first to see %', cls: '' };
+  return { text: fmt(amountCHF) + ' from ' + fromName + ' Â· add net worth first to see %', cls: '' };
 }
 function ordersViewHtml() {
   const netWorth = netWorthChf(state.accounts);
   const d = ui.drafts.order; const isBought = d.mode === 'bought'; const needsAccount = isBought && !d.from;
   const prev = orderPreviewText(netWorth);
-  const addForm = '<div class="addCard"><div class="addCardHead"><div class="addEyebrow">' + (isBought ? '+ today’s purchase' : '+ new order') + '</div>'
+  const addForm = '<div class="addCard"><div class="addCardHead"><div class="addEyebrow">' + (isBought ? '+ todayâ€™s purchase' : '+ new order') + '</div>'
     + '<div class="modeSeg"><button type="button" class="modeBtn ' + (!isBought ? 'modeBtnActive' : '') + '" data-act="orderMode" data-mode="incoming">Incoming</button><button type="button" class="modeBtn ' + (isBought ? 'modeBtnActive' : '') + '" data-act="orderMode" data-mode="bought">Bought today</button></div></div>'
     + '<div class="addGrid ' + (isBought ? 'addGridBought' : '') + '">'
     + '<input class="quickAddInput" type="text" placeholder="' + (isBought ? 'What did you buy?' : 'Item (e.g. New iPhone)') + '" value="' + esc(d.name) + '" data-draft="order.name" data-enter="addOrder" />'
     + '<input class="quickAddInput" type="number" step="0.01" placeholder="Cost (' + state.currency + ')" value="' + esc(d.cost) + '" data-draft="order.cost" data-orderprev="1" data-enter="addOrder" />'
-    + '<select class="quickAddInput ' + (needsAccount ? 'quickAddInputAlert' : '') + '" data-draft="order.from" data-orderprev="1"><option value="">' + (isBought ? 'From account (required)…' : 'From account…') + '</option>' + state.accounts.map(a => '<option value="' + a.id + '"' + (a.id === d.from ? ' selected' : '') + '>' + esc(a.name) + '</option>').join('') + '</select>'
+    + '<select class="quickAddInput ' + (needsAccount ? 'quickAddInputAlert' : '') + '" data-draft="order.from" data-orderprev="1"><option value="">' + (isBought ? 'From account (required)â€¦' : 'From accountâ€¦') + '</option>' + state.accounts.map(a => '<option value="' + a.id + '"' + (a.id === d.from ? ' selected' : '') + '>' + esc(a.name) + '</option>').join('') + '</select>'
     + (!isBought ? '<input class="quickAddInput" type="date" title="Expected arrival" value="' + esc(d.arrival) + '" data-draft="order.arrival" />' : '')
-    + '<button type="button" class="quickAddBtn" data-act="addOrder"' + (needsAccount ? ' disabled' : '') + '>' + (isBought ? '− Log purchase' : '+ Add order') + '</button></div>'
+    + '<button type="button" class="quickAddBtn" data-act="addOrder"' + (needsAccount ? ' disabled' : '') + '>' + (isBought ? 'âˆ’ Log purchase' : '+ Add order') + '</button></div>'
     + '<div class="addPreview ' + (prev.cls === 'warn' ? 'warn' : prev.cls === 'bad' ? 'bad' : '') + '" id="orderPreview">' + esc(prev.text) + '</div></div>';
 
   const sorted = state.orders.slice().sort((a, b) => { if (!a.date) return 1; if (!b.date) return -1; return a.date.localeCompare(b.date); });
@@ -1167,7 +1167,7 @@ function ordersViewHtml() {
   else list = sorted.map(o => orderCardHtml(o, netWorth)).join('');
 
   return '<section class="section"><div class="sectionEyebrow"><span>Incoming orders</span><span class="sectionCount">' + state.orders.length + ' ' + (state.orders.length === 1 ? 'item' : 'items') + '</span></div>'
-    + '<button type="button" class="importTrigger" data-act="import" data-kind="receipt"><span class="importTriggerIcon" aria-hidden>↗</span><span class="importTriggerText"><span class="importTriggerTitle">Import receipt</span><span class="importTriggerSub">snap a receipt, auto-log the purchase</span></span></button>'
+    + '<button type="button" class="importTrigger" data-act="import" data-kind="receipt"><span class="importTriggerIcon" aria-hidden>â†—</span><span class="importTriggerText"><span class="importTriggerTitle">Import receipt</span><span class="importTriggerSub">snap a receipt, auto-log the purchase</span></span></button>'
     + addForm + '<div>' + list + '</div></section>';
 }
 function orderCardHtml(order, netWorth) {
@@ -1184,9 +1184,9 @@ function orderCardHtml(order, netWorth) {
   else datePill = '<span class="ordPill">no arrival date</span>';
   const foot = isDeducted
     ? '<span class="ordDeductedPill">Deducted from ' + esc(order.deductedFromName || fromName) + '</span><button type="button" class="ordDeductBtn" data-act="undoDeduct" data-id="' + order.id + '">Undo</button>'
-    : '<button type="button" class="ordDeductBtn" data-act="deduct" data-id="' + order.id + '">− Deduct from net worth</button>';
-  return '<div class="ordCard ' + (isDeducted ? 'deducted' : '') + '"><div class="ordHead"><div class="ordName">' + esc(order.name) + '</div><div class="ordAmt">' + esc(fmt(order.amountCHF)) + '</div><button type="button" class="iconBtn" data-act="delOrder" data-id="' + order.id + '" title="Remove">×</button></div>'
-    + '<div class="ordMetaRow"><span class="ordPill">from · ' + esc(fromName) + '</span><span class="ordPill ' + pctPillCls + '">' + pctText + '</span>' + datePill + '</div>'
+    : '<button type="button" class="ordDeductBtn" data-act="deduct" data-id="' + order.id + '">âˆ’ Deduct from net worth</button>';
+  return '<div class="ordCard ' + (isDeducted ? 'deducted' : '') + '"><div class="ordHead"><div class="ordName">' + esc(order.name) + '</div><div class="ordAmt">' + esc(fmt(order.amountCHF)) + '</div><button type="button" class="iconBtn" data-act="delOrder" data-id="' + order.id + '" title="Remove">Ã—</button></div>'
+    + '<div class="ordMetaRow"><span class="ordPill">from Â· ' + esc(fromName) + '</span><span class="ordPill ' + pctPillCls + '">' + pctText + '</span>' + datePill + '</div>'
     + '<div class="ordFoot">' + foot + '</div></div>';
 }
 
@@ -1214,9 +1214,9 @@ function wishViewHtml() {
     const cls = pct == null ? '' : pctClass(pct); const clsName = cls === 'warn' ? 'warn' : cls === 'bad' ? 'bad' : '';
     const fill = pct == null ? 0 : Math.min(100, pct);
     const originalLabel = (item.enteredCurrency && item.enteredAmount != null) ? item.enteredCurrency + ' ' + item.enteredAmount.toLocaleString('en-US', { maximumFractionDigits: 2 }) : fmt(item.amountCHF);
-    return '<div class="wishRow"><div class="wishRowH"><div><div class="wishRowName">' + esc(item.name) + '</div><div class="wishRowMeta">' + esc(originalLabel) + ' · added ' + formatActivityDate(item.ts) + '</div></div>'
+    return '<div class="wishRow"><div class="wishRowH"><div><div class="wishRowName">' + esc(item.name) + '</div><div class="wishRowMeta">' + esc(originalLabel) + ' Â· added ' + formatActivityDate(item.ts) + '</div></div>'
       + '<div class="wishRowAmtWrap"><div class="wishRowAmt">' + esc(fmt(item.amountCHF)) + '</div><div class="wishRowPct ' + clsName + '">' + (pct == null ? '-' : pct.toFixed(2) + '%') + ' of NW</div></div>'
-      + '<button type="button" class="iconBtn" data-act="delWish" data-id="' + item.id + '" title="Remove">×</button></div>'
+      + '<button type="button" class="iconBtn" data-act="delWish" data-id="' + item.id + '" title="Remove">Ã—</button></div>'
       + '<div class="wishRowBar"><div class="wishRowBarFill ' + clsName + '" style="width:' + fill + '%"></div></div></div>';
   }).join('');
 
@@ -1229,7 +1229,7 @@ function wishViewHtml() {
 }
 
 /* ============================================================
- * Import modal (placeholder — AI import is hosted-app only)
+ * Import modal (placeholder â€” AI import is hosted-app only)
  * ============================================================ */
 const IMPORT_COPY = {
   statement: { eyebrow: 'Import', title: 'Read a <em>statement</em> screenshot', desc: 'Drop a bank/brokerage screenshot and Claude reads every account and balance, then fills them in automatically.', dropTitle: 'Drop a statement screenshot' },
@@ -1240,55 +1240,58 @@ const IMPORT_COPY = {
  * Cheapest-possible screenshot OCR (see runImport for the full rationale).
  * The system block below is byte-identical on every call (instructions +
  * field guide + few-shot), so cache_control:ephemeral lets repeat calls
- * read it cheaply. NOTE: Haiku's cacheable minimum is 4096 tokens — this
+ * read it cheaply. NOTE: Haiku's cacheable minimum is 4096 tokens â€” this
  * lean block is under that, so caching is a no-op until/unless the block
  * grows (the downscaled image is the real cost; we minimise it instead).
  * Kept identical for ALL three import kinds so the prefix is shared; the
  * per-kind hint rides in the cheap, uncached user turn.
  * ------------------------------------------------------------------ */
 const EXTRACT_SYSTEM = [
-  'You are a precise financial-screenshot OCR extractor. You read ONE screenshot of a bank/brokerage statement, a subscriptions/billing page, or a purchase receipt, and return its line items by calling the `extract` tool. Output the tool call only — never prose.',
+  'You are a precise financial-screenshot OCR extractor. You read ONE screenshot of a bank/brokerage statement, a subscriptions/billing page, or a purchase receipt, and return its line items by calling the `extract` tool. Output the tool call only â€” never prose.',
   '',
   'Each element of `items`:',
-  '- t: category — "bank","stocks","crypto","other" for statement/balance lines; "sub" for a recurring subscription; "order" for a receipt/purchase.',
+  '- t: category â€” "bank","stocks","crypto","other" for statement/balance lines; "sub" for a recurring subscription; "order" for a receipt/purchase.',
   '- n: short name (account, holding, service, or merchant). No amounts inside the name.',
   '- a: numeric amount, no thousands separators or currency symbols (e.g. 1234.50).',
-  '- c: ISO currency inferred from symbols/text — "CHF","USD","EUR","GBP". Omit if unsure.',
-  '- p: billing period, subscriptions only — "monthly","yearly","weekly". Omit otherwise.',
+  '- c: ISO currency inferred from symbols/text â€” "CHF","USD","EUR","GBP". Omit if unsure.',
+  '- p: billing period, subscriptions only â€” "monthly","yearly","weekly". Omit otherwise.',
   '',
   'Rules: one item per distinct line; skip totals that merely sum other lines; omit any field you are unsure of (never emit null or empty strings); if nothing is readable, return an empty items array.',
   '',
   'Examples (shape only):',
   '"Checking $4,210.55" -> {"t":"bank","n":"Checking","a":4210.55,"c":"USD"}',
-  '"VTI 12 sh — €3,100" -> {"t":"stocks","n":"VTI","a":3100,"c":"EUR"}',
+  '"VTI 12 sh â€” â‚¬3,100" -> {"t":"stocks","n":"VTI","a":3100,"c":"EUR"}',
   '"Netflix CHF 19.90/mo" -> {"t":"sub","n":"Netflix","a":19.9,"c":"CHF","p":"monthly"}',
   '"Migros total 54.30 CHF" -> {"t":"order","n":"Migros","a":54.3,"c":"CHF"}',
 ].join('\n');
-// Compact tool schema → short keys keep the priciest part (output tokens) tiny.
+// Compact tool schema â†’ short keys keep the priciest part (output tokens) tiny.
 const EXTRACT_TOOL = {
-  name: 'extract',
-  description: 'Return every line item read from the financial screenshot.',
-  input_schema: {
-    type: 'object',
-    additionalProperties: false,
-    properties: {
-      items: {
-        type: 'array',
+  type: 'function',
+  function: {
+    name: 'extract',
+    description: 'Return every line item read from the financial screenshot.',
+    parameters: {
+      type: 'object',
+      additionalProperties: false,
+      properties: {
         items: {
-          type: 'object',
-          additionalProperties: false,
-          properties: {
-            t: { type: 'string', enum: ['bank', 'stocks', 'crypto', 'other', 'sub', 'order'] },
-            n: { type: 'string' },
-            a: { type: 'number' },
-            c: { type: 'string', enum: ['CHF', 'USD', 'EUR', 'GBP'] },
-            p: { type: 'string', enum: ['monthly', 'yearly', 'weekly'] },
+          type: 'array',
+          items: {
+            type: 'object',
+            additionalProperties: false,
+            properties: {
+              t: { type: 'string', enum: ['bank', 'stocks', 'crypto', 'other', 'sub', 'order'] },
+              n: { type: 'string' },
+              a: { type: 'number' },
+              c: { type: 'string', enum: ['CHF', 'USD', 'EUR', 'GBP'] },
+              p: { type: 'string', enum: ['monthly', 'yearly', 'weekly'] },
+            },
+            required: ['t', 'n', 'a'],
           },
-          required: ['t', 'n', 'a'],
         },
       },
+      required: ['items'],
     },
-    required: ['items'],
   },
 };
 const KIND_HINT = {
@@ -1305,7 +1308,7 @@ function renderModal() {
 }
 
 function settingsModalHtml() {
-  const fSet = !!settings.finnhubKey, aSet = !!settings.anthropicKey;
+  const fSet = !!settings.finnhubKey, aSet = !!settings.groqKey;
   function field(id, label, set, value, type, placeholder, hint) {
     return '<div class="fieldGroup"><div class="fieldLabelRow"><span class="fieldLabel">' + label + '</span>'
       + '<span class="keyStatus ' + (set ? 'set' : 'unset') + '">' + (set ? 'set' : 'not set') + '</span></div>'
@@ -1313,11 +1316,11 @@ function settingsModalHtml() {
       + '<div class="fieldHint">' + hint + '</div></div>';
   }
   return '<div class="importOverlay" data-act="closeSettings"><div class="importPanel" data-stop="1">'
-    + '<div class="importHead"><div><div class="importEyebrow">Settings</div><h2 class="importTitle">API <em>keys</em></h2></div><button type="button" class="importClose" data-act="closeSettings">×</button></div>'
-    + '<p class="importDesc">Add your own keys to unlock live stock prices and AI screenshot import. Keys are stored only in this browser and sent directly from your device to Finnhub / Anthropic — never to any other server.</p>'
-    + field('settings-finnhub', 'Finnhub key · live stock prices', fSet, settings.finnhubKey, 'password', 'paste your Finnhub API key', 'Free key at <a href="https://finnhub.io/register" target="_blank" rel="noopener">finnhub.io/register</a>. Powers the holdings ↻ refresh prices button (US-listed symbols).')
-    + field('settings-anthropic', 'Anthropic key · AI screenshot import', aSet, settings.anthropicKey, 'password', 'paste your Anthropic API key (sk-ant-…)', 'Key at <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>. Powers reading statements / subs / receipts from a screenshot.')
-    + field('settings-model', 'Anthropic model', !!settings.anthropicModel, settings.anthropicModel, 'text', DEFAULT_MODEL, 'Vision-capable model used for import. Change it if your account uses a different model id.')
+    + '<div class="importHead"><div><div class="importEyebrow">Settings</div><h2 class="importTitle">API <em>keys</em></h2></div><button type="button" class="importClose" data-act="closeSettings">Ã—</button></div>'
+    + '<p class=”importDesc”>Add your own keys to unlock live stock prices and AI screenshot import. Keys are stored only in this browser and sent directly from your device to Finnhub / Groq — never to any other server.</p>'
+    + field('settings-finnhub', 'Finnhub key · live stock prices', fSet, settings.finnhubKey, 'password', 'paste your Finnhub API key', 'Free key at <a href=”https://finnhub.io/register” target=”_blank” rel=”noopener”>finnhub.io/register</a>. Powers the holdings ↻ refresh prices button (US-listed symbols).')
+    + field('settings-groq', 'Groq key · AI screenshot import', aSet, settings.groqKey, 'password', 'paste your Groq API key (gsk_…)', 'Key at <a href=”https://console.groq.com/keys” target=”_blank” rel=”noopener”>console.groq.com/keys</a>. Powers reading statements / subs / receipts from a screenshot.')
+    + field('settings-model', 'Groq model', !!settings.groqModel, settings.groqModel, 'text', DEFAULT_MODEL, 'Vision-capable model used for import. Change it if you want to use a different model id.')
     + '<div class="settingsActions"><button type="button" class="ghostBtn" data-act="closeSettings">Cancel</button><button type="button" class="quickAddBtn" style="height:38px" data-act="saveSettings">Save keys</button></div>'
     + '</div></div>';
 }
@@ -1325,30 +1328,30 @@ function settingsModalHtml() {
 function importModalHtml() {
   const c = IMPORT_COPY[ui.importOpen];
   let body;
-  if (!settings.anthropicKey) {
-    body = '<div class="dropZone"><div class="dropIcon">↗</div><div class="dropTitle">Screenshot import</div><div class="dropSub">needs an Anthropic key</div></div>'
-      + '<p class="setupNote"><strong>One-time setup:</strong> AI import calls Claude with your own Anthropic API key. Add it in settings — it stays in this browser and is sent straight to Anthropic. Everything else here works offline.</p>'
-      + '<div class="settingsActions"><button type="button" class="quickAddBtn" style="height:38px" data-act="openSettings">Add Anthropic key</button></div>';
+  if (!settings.groqKey) {
+    body = '<div class=”dropZone”><div class=”dropIcon”>↗</div><div class=”dropTitle”>Screenshot import</div><div class=”dropSub”>needs a Groq key</div></div>'
+      + '<p class=”setupNote”><strong>One-time setup:</strong> AI import uses your own Groq API key. Add it in settings — it stays in this browser and is sent straight to Groq. Everything else here works offline.</p>'
+      + '<div class=”settingsActions”><button type=”button” class=”quickAddBtn” style=”height:38px” data-act=”openSettings”>Add Groq key</button></div>';
   } else if (ui.importBusy) {
-    body = '<div class="importStatus"><div class="importSpinner"></div><div class="importStatusTitle">Reading your screenshot…</div><div class="importStatusBody">Claude is extracting the data. This usually takes a few seconds.</div></div>';
+    body = '<div class=”importStatus”><div class=”importSpinner”></div><div class=”importStatusTitle”>Reading your screenshot…</div><div class=”importStatusBody”>Groq is extracting the data. This usually takes a few seconds.</div></div>';
   } else if (ui.importError) {
     body = '<div class="importStatus error"><div class="importStatusTitle">Import failed</div><div class="importStatusBody">' + esc(ui.importError) + '</div></div>'
-      + '<label class="dropZone clickable"><input type="file" accept="image/*" data-importfile="' + ui.importOpen + '" style="display:none" /><div class="dropIcon">↗</div><div class="dropTitle">Try another screenshot</div><div class="dropSub">PNG · JPG</div></label>';
+      + '<label class="dropZone clickable"><input type="file" accept="image/*" data-importfile="' + ui.importOpen + '" style="display:none" /><div class="dropIcon">â†—</div><div class="dropTitle">Try another screenshot</div><div class="dropSub">PNG Â· JPG</div></label>';
   } else if (ui.importResult) {
-    body = '<div class="importStatus"><div class="dropIcon" style="width:50px;height:50px;font-size:24px">✓</div><div class="importStatusTitle">Added ' + ui.importResult.count + ' ' + esc(ui.importResult.noun) + '</div><div class="importStatusBody">' + (ui.importResult.count ? 'Review them below — every value is editable.' : 'Claude couldn\'t read any items from that image. Try a clearer screenshot.') + '</div></div>'
+    body = '<div class=”importStatus”><div class=”dropIcon” style=”width:50px;height:50px;font-size:24px”>✓</div><div class=”importStatusTitle”>Added ' + ui.importResult.count + ' ' + esc(ui.importResult.noun) + '</div><div class=”importStatusBody”>' + (ui.importResult.count ? 'Review them below — every value is editable.' : 'Groq couldn\'t read any items from that image. Try a clearer screenshot.') + '</div></div>'
       + '<div class="settingsActions"><button type="button" class="ghostBtn" data-act="closeImport">Done</button><label class="quickAddBtn" style="height:38px;display:inline-flex;align-items:center;cursor:pointer"><input type="file" accept="image/*" data-importfile="' + ui.importOpen + '" style="display:none" />Import another</label></div>';
   } else {
     body = '<p class="importDesc">' + c.desc + '</p>'
-      + '<label class="dropZone clickable"><input type="file" accept="image/*" data-importfile="' + ui.importOpen + '" style="display:none" /><div class="dropIcon">↗</div><div class="dropTitle">' + c.dropTitle + '</div><div class="dropSub">click to choose · PNG · JPG</div></label>'
-      + '<p class="setupNote">Sent directly to Anthropic with your key (model <strong>' + esc(settings.anthropicModel || DEFAULT_MODEL) + '</strong>). Nothing is uploaded anywhere else.</p>';
+      + '<label class="dropZone clickable"><input type="file" accept="image/*" data-importfile="' + ui.importOpen + '" style="display:none" /><div class="dropIcon">â†—</div><div class="dropTitle">' + c.dropTitle + '</div><div class="dropSub">click to choose Â· PNG Â· JPG</div></label>'
+      + '<p class="setupNote">Sent directly to Groq with your key (model <strong>' + esc(settings.groqModel || DEFAULT_MODEL) + '</strong>). Nothing is uploaded anywhere else.</p>';
   }
   return '<div class="importOverlay" data-act="closeImport"><div class="importPanel" data-stop="1">'
-    + '<div class="importHead"><div><div class="importEyebrow">' + c.eyebrow + '</div><h2 class="importTitle">' + c.title + '</h2></div><button type="button" class="importClose" data-act="closeImport">×</button></div>'
+    + '<div class="importHead"><div><div class="importEyebrow">' + c.eyebrow + '</div><h2 class="importTitle">' + c.title + '</h2></div><button type="button" class="importClose" data-act="closeImport">Ã—</button></div>'
     + body + '</div></div>';
 }
 
 /* ============================================================
- * Live stock prices (Finnhub) — called from the holdings card
+ * Live stock prices (Finnhub) â€” called from the holdings card
  * ============================================================ */
 async function refreshStockPrices(opts) {
   opts = opts || {};
@@ -1362,7 +1365,7 @@ async function refreshStockPrices(opts) {
       const r = await fetch('https://finnhub.io/api/v1/quote?symbol=' + encodeURIComponent(a.ticker) + '&token=' + encodeURIComponent(settings.finnhubKey));
       const j = await r.json();
       const price = Number(j && j.c);
-      // Finnhub quotes US-listed symbols in USD; convert USD → CHF (our base).
+      // Finnhub quotes US-listed symbols in USD; convert USD â†’ CHF (our base).
       if (!price || !isFinite(price)) { failed.push(a.ticker); return; }
       const priceChf = price / (rates.USD || 1);
       a.lastPriceChf = priceChf; a.lastPriceAt = Date.now();
@@ -1378,12 +1381,12 @@ async function refreshStockPrices(opts) {
 }
 
 /* ============================================================
- * AI screenshot import (Anthropic) — direct from the browser
+ * AI screenshot import (Anthropic) â€” direct from the browser
  * ============================================================ */
 function openSettings() { ui.settingsOpen = true; renderModal(); }
 function fileToDataUrl(file) { return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(file); }); }
 const IS_DEV = (function () { try { const h = location.hostname; return location.protocol === 'file:' || h === 'localhost' || h === '127.0.0.1' || h.endsWith('.local'); } catch (e) { return false; } })();
-const IMAGE_MAX_EDGE = 1024; // cap long edge — the image is ~all of the input cost
+const IMAGE_MAX_EDGE = 1024; // cap long edge â€” the image is ~all of the input cost
 
 function loadImage(src) { return new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => rej(new Error('That file is not a readable image.')); i.src = src; }); }
 
@@ -1398,7 +1401,7 @@ async function downscaleImage(file) {
   const canvas = document.createElement('canvas');
   canvas.width = tw; canvas.height = th;
   const ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, tw, th); // flatten alpha (PNG screenshots → JPEG)
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, tw, th); // flatten alpha (PNG screenshots â†’ JPEG)
   ctx.drawImage(img, 0, 0, tw, th);
   const url = canvas.toDataURL('image/jpeg', 0.8);
   const m = /^data:(image\/[^;]+);base64,(.*)$/.exec(url);
@@ -1435,66 +1438,68 @@ function applyImport(kind, items) {
 }
 
 /* ============================================================
- * runImport — cheapest-possible bank-statement / receipt OCR.
+ * runImport â€” cheapest-possible bank-statement / receipt OCR.
  *
- * Cost optimizations (input image ≫ everything else, so we attack it first):
- *  1. Model: Claude Haiku 4.5 ($1/$5 per 1M) — never Sonnet/Opus for OCR.
+ * Cost optimizations (input image â‰« everything else, so we attack it first):
+ *  1. Model: Claude Haiku 4.5 ($1/$5 per 1M) â€” never Sonnet/Opus for OCR.
  *  2. Downscale the screenshot to ~1024px long edge + re-encode JPEG BEFORE
- *     upload (downscaleImage). ~4k image tokens → ~1k. Biggest single lever.
+ *     upload (downscaleImage). ~4k image tokens â†’ ~1k. Biggest single lever.
  *  3. Prompt caching: the instructions + schema + few-shot live in a
  *     cache_control:ephemeral system block, byte-identical every call, shared
  *     across all three import kinds. (Haiku's cache minimum is 4096 tokens, so
- *     this lean block won't actually cache until it grows — harmless, and the
+ *     this lean block won't actually cache until it grows â€” harmless, and the
  *     dev log shows cache_read so you can see if/when it engages.)
  *  4. Forced structured output: tool_choice pins the `extract` tool, so the
- *     model must emit one schema-shaped object — no prose. max_tokens 500,
- *     temperature 0 (effort param is NOT sent — it errors on Haiku).
- *  5. Compact JSON: short keys (t,n,a,c,p), optional fields omitted, no nulls —
+ *     model must emit one schema-shaped object â€” no prose. max_tokens 500,
+ *     temperature 0 (effort param is NOT sent â€” it errors on Haiku).
+ *  5. Compact JSON: short keys (t,n,a,c,p), optional fields omitted, no nulls â€”
  *     output tokens are the priciest part.
  *  Robustness: parse the tool_use block; on a malformed/empty result retry
  *  once, then surface { error }. Auth errors (401/403) are not retried.
- *  NOTE: keys are server-side-only in the hosted Rowan app; this is the
+ *  NOTE: keys are server-side-only in the hosted Philipp app; this is the
  *  standalone, so the call is browser-direct with the user's own key. There is
- *  no route handler / sharp / tier-gate here — those are hosted-app concerns.
+ *  no route handler / sharp / tier-gate here â€” those are hosted-app concerns.
  * ============================================================ */
 async function callExtract(kind, img) {
-  const r = await fetch('https://api.anthropic.com/v1/messages', {
+  const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
-      'x-api-key': settings.anthropicKey,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true',
+      'Authorization': 'Bearer ' + settings.groqKey,
     },
     body: JSON.stringify({
-      model: settings.anthropicModel || DEFAULT_MODEL,
+      model: settings.groqModel || DEFAULT_MODEL,
       max_tokens: 500,
       temperature: 0,
-      system: [{ type: 'text', text: EXTRACT_SYSTEM, cache_control: { type: 'ephemeral' } }],
       tools: [EXTRACT_TOOL],
-      tool_choice: { type: 'tool', name: 'extract' },
-      messages: [{ role: 'user', content: [
-        { type: 'image', source: { type: 'base64', media_type: img.mediaType, data: img.b64 } },
-        { type: 'text', text: KIND_HINT[kind] },
-      ] }],
+      tool_choice: { type: 'function', function: { name: 'extract' } },
+      messages: [
+        { role: 'system', content: EXTRACT_SYSTEM },
+        { role: 'user', content: [
+          { type: 'image_url', image_url: { url: 'data:' + img.mediaType + ';base64,' + img.b64 } },
+          { type: 'text', text: KIND_HINT[kind] },
+        ] },
+      ],
     }),
   });
   const j = await r.json();
-  if (j.error) { const e = new Error(j.error.message || ('Anthropic API error (HTTP ' + r.status + ')')); e.status = r.status; throw e; }
-  if (IS_DEV) { const u = j.usage || {}; console.log('[finance import] ' + kind + ' ' + img.w + '×' + img.h, { in: u.input_tokens, out: u.output_tokens, cache_write: u.cache_creation_input_tokens, cache_read: u.cache_read_input_tokens }); }
-  const block = (j.content || []).find(b => b.type === 'tool_use' && b.name === 'extract');
-  if (!block || !block.input || !Array.isArray(block.input.items)) throw new Error('The model did not return the expected structure.');
-  return block.input.items;
+  if (j.error) { const e = new Error(j.error.message || ('Groq API error (HTTP ' + r.status + ')')); e.status = r.status; throw e; }
+  if (IS_DEV) { const u = j.usage || {}; console.log('[finance import] ' + kind + ' ' + img.w + '×' + img.h, { in: u.prompt_tokens, out: u.completion_tokens }); }
+  const toolCall = j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.tool_calls && j.choices[0].message.tool_calls[0];
+  if (!toolCall || !toolCall.function || !toolCall.function.arguments) throw new Error('The model did not return the expected structure.');
+  const result = JSON.parse(toolCall.function.arguments);
+  if (!Array.isArray(result.items)) throw new Error('The model did not return the expected structure.');
+  return result.items;
 }
 async function runImport(kind, file) {
-  if (!settings.anthropicKey || !file) return;
+  if (!settings.groqKey || !file) return;
   ui.importBusy = true; ui.importError = null; ui.importResult = null; renderModal();
   try {
     const img = await downscaleImage(file);
     let items = null, lastErr = null;
     for (let attempt = 0; attempt < 2 && items === null; attempt++) {
       try { items = await callExtract(kind, img); }
-      catch (e) { lastErr = e; if (e.status === 401 || e.status === 403) break; } // bad key → no retry
+      catch (e) { lastErr = e; if (e.status === 401 || e.status === 403) break; } // bad key â†’ no retry
     }
     if (items === null) throw lastErr || new Error('Could not read that screenshot.');
     const count = applyImport(kind, items);
@@ -1620,11 +1625,11 @@ document.addEventListener('click', e => {
     case 'closeSettings': if (!stop || e.target.closest('.importClose')) { ui.settingsOpen = false; renderModal(); } break;
     case 'saveSettings': {
       const fk = document.getElementById('settings-finnhub');
-      const ak = document.getElementById('settings-anthropic');
+      const ak = document.getElementById('settings-groq');
       const mk = document.getElementById('settings-model');
       settings.finnhubKey = fk ? fk.value.trim() : settings.finnhubKey;
-      settings.anthropicKey = ak ? ak.value.trim() : settings.anthropicKey;
-      settings.anthropicModel = (mk && mk.value.trim()) || DEFAULT_MODEL;
+      settings.groqKey = ak ? ak.value.trim() : settings.groqKey;
+      settings.groqModel = (mk && mk.value.trim()) || DEFAULT_MODEL;
       saveSettings(); ui.settingsOpen = false; renderModal();
       break;
     }
@@ -1654,7 +1659,7 @@ document.addEventListener('click', e => {
     case 'addSub': {
       const d = ui.drafts.subAdd; const a = parseFloat(d.amount);
       if (!d.name.trim() || isNaN(a)) break;
-      if (d.auto && !d.from) { alert('Pick a “from account” first. Auto-deduct needs somewhere to take the money from.'); break; }
+      if (d.auto && !d.from) { alert('Pick a â€œfrom accountâ€ first. Auto-deduct needs somewhere to take the money from.'); break; }
       actions.addSubscription({ name: d.name, displayAmount: a, period: d.period, renewal: d.renewal || null, fromAccountId: d.from || null, autoDeduct: d.auto });
       ui.drafts.subAdd = { name: '', amount: '', period: 'monthly', renewal: '', from: '', auto: false }; render(); break;
     }
@@ -1667,13 +1672,13 @@ document.addEventListener('click', e => {
     case 'saveSub': {
       const d = ui.drafts.subEdit; const a = parseFloat(d.amount);
       if (!d.name.trim() || isNaN(a)) break;
-      if (d.auto && !d.from) { alert('Pick a “from account” first.'); break; }
+      if (d.auto && !d.from) { alert('Pick a â€œfrom accountâ€ first.'); break; }
       actions.updateSubscription(id, { name: d.name.trim(), displayAmount: a, period: d.period, renewal: d.renewal || null, fromAccountId: d.from || null, autoDeduct: d.auto });
       ui.subEditId = null; ui.drafts.subEdit = null; render(); break;
     }
     case 'cancelSub': ui.subEditId = null; ui.drafts.subEdit = null; render(); break;
     case 'delSub': { const sub = state.subscriptions.find(x => x.id === id); if (sub && confirm('Delete "' + sub.name + '"?')) { actions.deleteSubscription(id); ui.subEditId = null; } break; }
-    case 'toggleAuto': { const sub = state.subscriptions.find(x => x.id === id); if (sub && !sub.autoDeduct && !sub.fromAccountId) { alert('Pick a “from account” first (use the ✎ edit button).'); break; } actions.toggleSubAutoDeduct(id); break; }
+    case 'toggleAuto': { const sub = state.subscriptions.find(x => x.id === id); if (sub && !sub.autoDeduct && !sub.fromAccountId) { alert('Pick a â€œfrom accountâ€ first (use the âœŽ edit button).'); break; } actions.toggleSubAutoDeduct(id); break; }
 
     case 'orderMode': ui.drafts.order.mode = btn.dataset.mode; render(); break;
     case 'addOrder': {
@@ -1682,7 +1687,7 @@ document.addEventListener('click', e => {
       actions.addOrder({ name: d.name, displayAmount: a, fromAccountId: d.from || null, date: isBought ? null : (d.arrival || null), immediate: isBought });
       ui.drafts.order = { mode: d.mode, name: '', cost: '', from: '', arrival: '' }; render(); break;
     }
-    case 'deduct': { const o = state.orders.find(x => x.id === id); if (o && !o.fromAccountId) { alert('Set a “from account” to deduct from.'); break; } actions.deductOrder(id); break; }
+    case 'deduct': { const o = state.orders.find(x => x.id === id); if (o && !o.fromAccountId) { alert('Set a â€œfrom accountâ€ to deduct from.'); break; } actions.deductOrder(id); break; }
     case 'undoDeduct': actions.undoDeductOrder(id); break;
     case 'delOrder': actions.deleteOrder(id); break;
 
@@ -1695,7 +1700,7 @@ document.addEventListener('click', e => {
 });
 
 /* ============================================================
- * Boot — snapshot NW, fetch FX rates, render
+ * Boot â€” snapshot NW, fetch FX rates, render
  * ============================================================ */
 maybeSnapshotNw(); save();
 
@@ -1705,7 +1710,7 @@ fetch('https://open.er-api.com/v6/latest/CHF')
     if (data && data.rates) {
       rates = { CHF: 1, USD: data.rates.USD || 1, EUR: data.rates.EUR || 1, GBP: data.rates.GBP || 1 };
       render();
-      // Now that USD→CHF is known, refresh live holdings prices if a key is set.
+      // Now that USDâ†’CHF is known, refresh live holdings prices if a key is set.
       if (settings.finnhubKey && state.accounts.some(a => a.type === 'stocks' && a.ticker)) refreshStockPrices({ silent: true });
     }
   })
