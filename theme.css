@@ -1,12 +1,12 @@
-/* ============================================================
- * theme.css — the shared Patron / Rowan design system.
+﻿/* ============================================================
+ * theme.css â€” the shared Patron / Philipp design system.
  *
  * Every page in the suite links this file so the look stays
  * identical everywhere. To build a NEW page: copy _template.html,
  * link this file, and use the classes below. Don't paste these
- * tokens into your page — just <link> this and they're yours.
+ * tokens into your page â€” just <link> this and they're yours.
  *
- * Change a colour/spacing/font here once → every page updates.
+ * Change a colour/spacing/font here once â†’ every page updates.
  * ============================================================ */
 
 /* ---- Design tokens: default theme (Nocturne) ---- */
@@ -134,7 +134,7 @@ body { background: var(--bg); color: var(--fg); font-family: var(--font-ui), -ap
 .fieldInput:focus { border-color: var(--brand-line); box-shadow: 0 0 0 3px var(--brand-soft); }
 
 /* ============================================================
- * Mobile / PWA hardening — installable + phone-usable suite.
+ * Mobile / PWA hardening â€” installable + phone-usable suite.
  * (Applies to pages that link theme.css; self-contained pages
  *  carry an equivalent inline #pwa-mobile block.)
  * ============================================================ */

@@ -1,5 +1,5 @@
-/* ============================================================
- * db.js — whole-device SNAPSHOT sync for the Patron / Rowan suite.
+﻿/* ============================================================
+ * db.js â€” whole-device SNAPSHOT sync for the Patron / Philipp suite.
  *
  * Design (deliberately simple so it can't half-work):
  *   The ENTIRE device's localStorage is stored in ONE Supabase row
@@ -10,7 +10,7 @@
  *     if this device has unpushed edits, push the whole snapshot up.
  *   - On any change: debounced push of the whole snapshot.
  *
- * There is NO per-key reconciliation, NO seed flags, NO merge — the old
+ * There is NO per-key reconciliation, NO seed flags, NO merge â€” the old
  * approach that kept breaking. It syncs the whole device or nothing.
  *
  * Include once per page, AFTER the Supabase library:
@@ -21,9 +21,9 @@
  * (this device only) so the app never breaks.
  * ============================================================ */
 window.PatronDB = (function () {
-  // Key resolution (first non-empty wins) — NO keys hardcoded here, so each fork
+  // Key resolution (first non-empty wins) â€” NO keys hardcoded here, so each fork
   // connects to its OWN database, never the original author's:
-  //   1. localStorage override (user pasted keys via the ☁ panel)
+  //   1. localStorage override (user pasted keys via the â˜ panel)
   //   2. /api/config  (THIS deploy's Vercel env vars: SUPABASE_URL / SUPABASE_ANON_KEY)
   // A fresh fork with no env vars set stays local-only until its owner adds them.
   const _ovUrl = (localStorage.getItem('po_supabase_url') || '').trim();
@@ -145,7 +145,7 @@ window.PatronDB = (function () {
     } catch (_) {}
     return null;
   }
-  // Write a cloud snapshot's keys into localStorage. Additive/overwrite — never
+  // Write a cloud snapshot's keys into localStorage. Additive/overwrite â€” never
   // deletes local-only keys, so it can't wipe data the cloud hasn't seen.
   function _adopt(blob) {
     let changed = false;
@@ -208,7 +208,7 @@ window.PatronDB = (function () {
     } catch (_) {}
   })();
 
-  /* ---- explicit helpers (kept for the ☁ panel / any caller) ---- */
+  /* ---- explicit helpers (kept for the â˜ panel / any caller) ---- */
   async function pushAll() { const ts = await _pushNow(); return { ok: !!ts, n: Object.keys(_gather()).length }; }
   async function pullAll() {
     const snap = await _fetchSnapshot();

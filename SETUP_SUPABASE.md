@@ -1,6 +1,6 @@
-# Supabase setup — sync phone + PC
+﻿# Supabase setup â€” sync phone + PC
 
-Follow top to bottom. Do steps 1–4 ONCE. Do step 5 on BOTH devices.
+Follow top to bottom. Do steps 1â€“4 ONCE. Do step 5 on BOTH devices.
 
 ## 1. Account
 - Open: https://supabase.com
@@ -8,14 +8,14 @@ Follow top to bottom. Do steps 1–4 ONCE. Do step 5 on BOTH devices.
 
 ## 2. New project
 - Click **New project**
-- Name it whatever your folder is (Patron-Rowan2)
+- Name it whatever your folder is (Patron-Philipp2)
 - Set a database password (save it somewhere)
-- Pick the closest region → **Create**
+- Pick the closest region â†’ **Create**
 - Wait ~1 min for it to finish
 
 ## 3. Run the SQL
-- Left sidebar → **SQL Editor** → **New query**
-- Paste the SQL block below → click **Run**
+- Left sidebar â†’ **SQL Editor** â†’ **New query**
+- Paste the SQL block below â†’ click **Run**
 - Should say "Success"
 
 ```sql
@@ -55,18 +55,18 @@ end $$;
 ```
 
 ## 4. Get your 2 keys
-- Left sidebar → **Project Settings** (gear) → **API**
+- Left sidebar â†’ **Project Settings** (gear) â†’ **API**
 - Copy **Project URL**  (looks like https://xxxx.supabase.co)
 - Copy **anon public** key  (NOT the service_role key)
 
 ## 5. Connect each device (do on PHONE and PC)
-- Open the app, tap **☁ Cloud sync** (bottom-right)
+- Open the app, tap **â˜ Cloud sync** (bottom-right)
 - Click **"Advanced: use your own Supabase project"**
-- Paste **Project URL** + **anon key** → **Save & sync**
-- Button turns green → **☁ Synced**
+- Paste **Project URL** + **anon key** â†’ **Save & sync**
+- Button turns green â†’ **â˜ Synced**
 
 ## 6. First merge
-- Device that HAS your data → ☁ → **⤒ Push this device up**
-- Other device → ☁ → **⤓ Pull cloud down**
+- Device that HAS your data â†’ â˜ â†’ **â¤’ Push this device up**
+- Other device â†’ â˜ â†’ **â¤“ Pull cloud down**
 
 Done. Finance, water, gym, goals, supplements + progress photos now sync across phone + PC automatically.
