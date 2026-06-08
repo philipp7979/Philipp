@@ -1276,19 +1276,17 @@ const EXTRACT_TOOL = {
     description: 'Return every line item read from the financial screenshot.',
     parameters: {
       type: 'object',
-      additionalProperties: false,
       properties: {
         items: {
           type: 'array',
           items: {
             type: 'object',
-            additionalProperties: false,
             properties: {
-              t: { type: 'string', enum: ['bank', 'stocks', 'crypto', 'other', 'sub', 'order'] },
-              n: { type: 'string' },
-              a: { type: 'number' },
-              c: { type: 'string', enum: ['CHF', 'USD', 'EUR', 'GBP'] },
-              p: { type: 'string', enum: ['monthly', 'yearly', 'weekly'] },
+              t: { type: 'string', description: 'Category: bank, stocks, crypto, other, sub, or order' },
+              n: { type: 'string', description: 'Short name of the account, holding, or merchant' },
+              a: { type: 'number', description: 'Numeric amount without currency symbols' },
+              c: { type: 'string', description: 'ISO currency code: CHF, USD, EUR, or GBP' },
+              p: { type: 'string', description: 'Billing period for subscriptions: monthly, yearly, or weekly' },
             },
             required: ['t', 'n', 'a'],
           },
