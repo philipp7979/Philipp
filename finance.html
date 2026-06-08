@@ -601,7 +601,11 @@ let rates = Object.assign({}, DEFAULT_RATES);
 const SETTINGS_KEY = 'finance_settings_v1';
 const DEFAULT_MODEL = 'meta-llama/llama-4-scout-17b-16e-instruct'; // vision-capable model for OCR screenshot import
 function loadSettings() {
-  try { return Object.assign({ finnhubKey: '', groqKey: '', groqModel: DEFAULT_MODEL }, JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}')); }
+  try {
+    const s = Object.assign({ finnhubKey: '', groqKey: '', groqModel: DEFAULT_MODEL }, JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}'));
+    if (s.groqModel === 'llama-3.2-90b-vision-preview' || s.groqModel === 'llama-3.2-11b-vision-preview') s.groqModel = DEFAULT_MODEL;
+    return s;
+  }
   catch { return { finnhubKey: '', groqKey: '', groqModel: DEFAULT_MODEL }; }
 }
 function saveSettings() { try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch {} }
