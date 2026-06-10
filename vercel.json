@@ -1,4 +1,8 @@
 {
+  "rewrites": [
+    { "source": "/whoop/callback", "destination": "/api/whoop/callback" },
+    { "source": "/whoop/login",    "destination": "/api/whoop/login"    }
+  ],
   "headers": [
     {
       "source": "/(.*)\\.html",
