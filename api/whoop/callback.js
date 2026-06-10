@@ -13,8 +13,9 @@ module.exports = async (req, res) => {
   const secure = L.isHttps(req);
   const back = (status) => { res.statusCode = 302; res.setHeader('Location', '/?whoop=' + status); res.end(); };
 
-  if (oauthErr) return back('denied');
-  if (!code || !state || state !== cookies.whoop_state) return back('error');
+  if (oauthErr) return back('denied&detail=' + encodeURIComponent(oauthErr));
+  if (!code) return back('error&detail=no_code');
+  if (!state || state !== cookies.whoop_state) return back('error&detail=state_mismatch_got_' + encodeURIComponent(state || 'none') + '_expected_' + encodeURIComponent(cookies.whoop_state || 'none'));
 
   let id, secret;
   try { ({ id, secret } = L.creds()); }
@@ -37,6 +38,6 @@ module.exports = async (req, res) => {
     res.setHeader('Set-Cookie', out);
     return back(tok.refresh_token ? 'connected' : 'error');
   } catch (e) {
-    return back('error');
+    return back('error&detail=' + encodeURIComponent(e.message || 'token_exchange_failed'));
   }
 };
