@@ -819,8 +819,8 @@ applyTheme(currentTheme);
     const w = q.get('whoop'), f = q.get('fitbit');
     if (w || f) {
       history.replaceState(null, '', location.pathname);
-      if (w === ‘error’ || w === ‘denied’) alert(‘Whoop connection failed. Detail: ‘ + (q.get(‘detail’) || w) + ‘\n\nCheck WHOOP_CLIENT_ID / SECRET in Vercel env vars and the redirect URL in the WHOOP portal.’);
-      if (f === 'error' || f === 'denied') alert('Fitbit connection didn’t complete. Check your FITBIT_CLIENT_ID / SECRET and the registered redirect URL (see FITBIT_SETUP.md), then try again.');
+      if (w === ‘error’ || w === ‘denied’) alert("Whoop connection failed. Detail: " + (q.get(‘detail’) || w) + "\n\nCheck WHOOP_CLIENT_ID / SECRET in Vercel env vars and the redirect URL in the WHOOP portal.");
+      if (f === ‘error’ || f === ‘denied’) alert("Fitbit connection did not complete. Check your FITBIT_CLIENT_ID / SECRET and the registered redirect URL.");
     }
   } catch (e) {}
   syncWhoop();
