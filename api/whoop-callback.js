@@ -1,4 +1,4 @@
-// GET /api/whoop-callback — registered redirect URI in the WHOOP developer portal.
+// GET /api/whoop-callback — debug version
 const L = require('./whoop/_lib');
 
 module.exports = async (req, res) => {
@@ -8,45 +8,34 @@ module.exports = async (req, res) => {
   const state = url.searchParams.get('state');
   const oauthErr = url.searchParams.get('error');
   const cookies = L.parseCookies(req);
-  const secure = L.isHttps(req);
-  const back = (status) => {
-    res.statusCode = 302;
-    res.setHeader('Location', 'https://philipp-five.vercel.app/?whoop=' + status);
-    res.end();
-  };
 
-  if (oauthErr) return back('denied&detail=' + encodeURIComponent(oauthErr));
-  if (!code) return back('error&detail=no_code');
-  if (!state || state !== cookies.whoop_state) return back('error&detail=state_mismatch');
+  let id, secret, credErr = null;
+  try { ({ id, secret } = L.creds()); } catch (e) { credErr = e.message; }
 
-  let id, secret;
-  try { ({ id, secret } = L.creds()); }
-  catch (e) { res.statusCode = 500; res.end('WHOOP not configured'); return; }
-
-  try {
-    const tok = await L.tokenRequest({
-      grant_type: 'authorization_code',
-      code,
-      client_id: id,
-      client_secret: secret,
-      redirect_uri: L.redirectUri(),
-    });
-    const out = [L.clearCookie('whoop_state', secure)];
-    if (tok.refresh_token) {
-      out.push(L.cookie('whoop_refresh', tok.refresh_token, { maxAge: 60 * 60 * 24 * 365, secure }));
-      const sb = L.supabase();
-      if (sb) await sb.save(tok.refresh_token);
-    }
-    res.setHeader('Set-Cookie', out);
-    if (tok.refresh_token) return back('connected');
-    if (tok.access_token) {
-      // Store access token directly if no refresh token
-      out.push(L.cookie('whoop_access', tok.access_token, { maxAge: tok.expires_in || 3600, secure }));
-      res.setHeader('Set-Cookie', out);
-      return back('connected');
-    }
-    return back('error&detail=no_tokens');
-  } catch (e) {
-    return back('error&detail=' + encodeURIComponent(e.message || 'token_exchange_failed'));
+  let tok = null, tokErr = null;
+  if (!credErr && code) {
+    try {
+      tok = await L.tokenRequest({
+        grant_type: 'authorization_code',
+        code, client_id: id, client_secret: secret,
+        redirect_uri: L.redirectUri(),
+      });
+    } catch (e) { tokErr = e.message; }
   }
+
+  res.statusCode = 200;
+  res.setHeader('content-type', 'text/html; charset=utf-8');
+  res.end(`<!doctype html><meta charset="utf-8">
+<body style="font-family:monospace;padding:2rem;background:#111;color:#eee;white-space:pre-wrap">
+<h2>WHOOP Callback Debug</h2>
+oauth_error:  ${oauthErr || '(none)'}
+code:         ${code || '(none)'}
+state_match:  ${state === cookies.whoop_state}
+creds_ok:     ${!credErr} ${credErr || ''}
+redirect_uri: ${L.redirectUri()}
+scope_used:   ${L.SCOPE}
+token_resp:   ${tok ? JSON.stringify(tok, null, 2) : '(none)'}
+token_err:    ${tokErr || '(none)'}
+all_params:   ${url.searchParams.toString()}
+</body>`);
 };
