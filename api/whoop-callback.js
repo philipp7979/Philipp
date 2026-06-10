@@ -12,14 +12,17 @@ module.exports = async (req, res) => {
   let id, secret, credErr = null;
   try { ({ id, secret } = L.creds()); } catch (e) { credErr = e.message; }
 
+  const verifier = cookies.whoop_verifier || null;
   let tok = null, tokErr = null;
   if (!credErr && code) {
     try {
-      tok = await L.tokenRequest({
+      const body = {
         grant_type: 'authorization_code',
         code, client_id: id, client_secret: secret,
         redirect_uri: L.redirectUri(),
-      });
+      };
+      if (verifier) body.code_verifier = verifier;
+      tok = await L.tokenRequest(body);
     } catch (e) { tokErr = e.message; }
   }
 
@@ -34,6 +37,7 @@ state_match:  ${state === cookies.whoop_state}
 creds_ok:     ${!credErr} ${credErr || ''}
 redirect_uri: ${L.redirectUri()}
 scope_used:   ${L.SCOPE}
+pkce_verifier:${verifier ? verifier.slice(0, 10) + '...' : '(none — PKCE missing!)'}
 token_resp:   ${tok ? JSON.stringify(tok, null, 2) : '(none)'}
 token_err:    ${tokErr || '(none)'}
 all_params:   ${url.searchParams.toString()}
