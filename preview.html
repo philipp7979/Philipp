@@ -435,7 +435,7 @@ function headerHtml(){
     ? '<button type="button" class="profileChip" data-action="open-profile" title="Edit your profile"><span class="profileAvatar">' + esc((name || '·').charAt(0).toUpperCase()) + '</span>' + esc(name || 'Profile') + '</button>'
     : '<button type="button" class="profileChip profileChipNew" data-action="open-profile">Set up profile</button>';
   const liveBadge = '<span class="liveBadge"><span class="liveDot"></span>Live</span>';
-  return '<header class="header"><div><h1 class="title">Philipp</h1><p class="subtitle">' + greeting + '</p></div>'
+  return '<header class="header"><div><h1 class="title">My Dashboard</h1><p class="subtitle">' + greeting + '</p></div>'
     + '<div class="headerControls">' + liveBadge + themeSegHtml() + chip + '<button type="button" class="gearBtn" data-action="open-profile" title="Settings" aria-label="Open settings">⚙</button></div></header>';
 }
 
