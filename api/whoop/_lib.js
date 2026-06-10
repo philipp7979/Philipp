@@ -13,7 +13,8 @@ function getOrigin(req) {
   const host = req.headers['x-forwarded-host'] || req.headers.host;
   return proto + '://' + host;
 }
-function redirectUri(req) { return getOrigin(req) + '/api/whoop/callback'; }
+// Hardcoded to the URL registered in the WHOOP developer portal
+function redirectUri() { return 'https://row-gray.vercel.app/api/whoop-callback'; }
 function isHttps(req) { return getOrigin(req).startsWith('https'); }
 
 function parseCookies(req) {
