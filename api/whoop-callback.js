@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
 
   if (oauthErr) return back('denied&detail=' + encodeURIComponent(oauthErr));
   if (!code) return back('error&detail=no_code');
-  if (!state || state !== cookies.whoop_state) return back('error&detail=state_mismatch');
+  if (!state || state !== cookies.whoop_state) return back('error&detail=state_mismatch_got_' + encodeURIComponent(state||'none') + '_cookie_' + encodeURIComponent(cookies.whoop_state||'none'));
 
   let id, secret;
   try { ({ id, secret } = L.creds()); }
@@ -39,7 +39,9 @@ module.exports = async (req, res) => {
       if (sb) await sb.save(tok.refresh_token);
     }
     res.setHeader('Set-Cookie', out);
-    return back(tok.refresh_token ? 'connected' : 'error');
+    if (tok.refresh_token) return back('connected');
+    if (tok.access_token) return back('error&detail=no_refresh_token_scopes_' + encodeURIComponent(tok.scope||'unknown'));
+    return back('error&detail=no_tokens_keys_' + encodeURIComponent(Object.keys(tok).join(',')));
   } catch (e) {
     return back('error&detail=' + encodeURIComponent(e.message || 'token_exchange_failed'));
   }
