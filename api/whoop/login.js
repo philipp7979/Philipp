@@ -12,24 +12,29 @@ module.exports = (req, res) => {
     return;
   }
   const state = L.crypto.randomBytes(12).toString('hex');
-  // PKCE — WHOOP requires code_challenge or returns "The error is unrecognizable"
-  const verifier = L.crypto.randomBytes(32).toString('base64url');
-  const challenge = L.crypto.createHash('sha256').update(verifier).digest('base64url');
   const secure = L.isHttps(req);
-  res.setHeader('Set-Cookie', [
-    L.cookie('whoop_state',    state,    { maxAge: 600, secure }),
-    L.cookie('whoop_verifier', verifier, { maxAge: 600, secure }),
-  ]);
-  const params = new URLSearchParams({
-    response_type:         'code',
-    client_id:             id,
-    redirect_uri:          L.redirectUri(req),
-    scope:                 L.SCOPE,
-    state,
-    code_challenge:        challenge,
-    code_challenge_method: 'S256',
-  });
-  res.statusCode = 302;
-  res.setHeader('Location', L.AUTH_URL + '?' + params.toString());
-  res.end();
+  res.setHeader('Set-Cookie', L.cookie('whoop_state', state, { maxAge: 600, secure }));
+
+  // Build URL manually with %20 scope encoding (WHOOP rejects + encoding)
+  const qs = [
+    'response_type=code',
+    'client_id=' + encodeURIComponent(id),
+    'redirect_uri=' + encodeURIComponent(L.redirectUri(req)),
+    'scope=' + L.SCOPE.split(' ').map(encodeURIComponent).join('%20'),
+    'state=' + state,
+  ].join('&');
+  const authUrl = L.AUTH_URL + '?' + qs;
+
+  // DEBUG — show the URL so we can test it directly, remove once working
+  res.statusCode = 200;
+  res.setHeader('content-type', 'text/html; charset=utf-8');
+  res.end(`<!doctype html><meta charset="utf-8">
+<body style="font-family:monospace;padding:2rem;background:#111;color:#eee;word-break:break-all">
+<h2>WHOOP Auth Debug</h2>
+<p>Click the link below — if WHOOP shows its login screen, OAuth is fixed.<br>
+If it shows an error page directly (not callback), note the URL/message.</p>
+<p><a href="${authUrl}" style="color:#6cf">→ Open WHOOP Login</a></p>
+<pre style="background:#1a1a2e;padding:1rem;border-radius:8px;overflow:auto">${authUrl.replace(/&/g, '\n&amp;')}</pre>
+<p style="color:#888">scope: ${L.SCOPE}</p>
+</body>`);
 };
