@@ -443,7 +443,7 @@ function vitalsTileHtml(){
   const h = health;
   if (!h) {
     return '<section class="vitals">'
-      + '<div class="vitalsHead"><span class="vitalsEyebrow">Today's vitals</span></div>'
+      + '<div class="vitalsHead"><span class="vitalsEyebrow">Today\'s vitals</span></div>'
       + '<div class="vitalsEmpty"><div class="vitalsEmptyTitle">No vitals yet</div>'
       + '<p class="vitalsEmptyBody">Connect Whoop, link your Apple Watch, or enter recovery &amp; sleep by hand. Your numbers then power the rest of the suite — the supplement recommender reads recovery &amp; sleep automatically.</p>'
       + '<div class="vitalsFoot"><button type="button" class="btn btn-primary" data-action="open-vitals">Add vitals</button></div></div></section>';
@@ -462,14 +462,14 @@ function vitalsTileHtml(){
     + row('Resting HR', h.rhr != null ? Math.round(h.rhr) + '<em>bpm</em>' : '—')
     + '</div>';
   return '<section class="vitals">'
-    + '<div class="vitalsHead"><span class="vitalsEyebrow">Today's vitals</span>'
+    + '<div class="vitalsHead"><span class="vitalsEyebrow">Today\'s vitals</span>'
     + '<span class="srcBadge"><span class="srcDot"></span>' + esc(sourceLabel(h.source)) + '</span></div>'
     + '<div class="vitalsBody">' + ring + metrics + '</div>'
     + '<div class="vitalsFoot"><span class="vitalsSync">' + (h.ts ? 'updated ' + ago(h.ts) : '') + '</span>'
     + '<button type="button" class="btn btn-ghost" data-action="open-vitals">Update vitals</button></div></section>';
 }
 
-/* ---- Live stats read from each app's own localStorage (defensive; tagline if unavailable) ---- */
+/* ---- Live stats read from each app\'s own localStorage (defensive; tagline if unavailable) ---- */
 function lsGet(key){ try { const r = localStorage.getItem(key); return r ? JSON.parse(r) : null; } catch(e){ return null; } }
 function fmtNum(n){ return Math.round(n).toLocaleString('en-US'); }
 function localDateKey(d){ d = d || new Date(); return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
@@ -502,7 +502,7 @@ function cardHtml(a, i){
  * Live ticker — collect every metric the suite currently knows
  * into a scrolling marquee. Each item: short label, value, unit,
  * a tone, and a small accent sparkline. Accent lines are decorative
- * (we don't yet log history) except where a real delta exists.
+ * (we don\'t yet log history) except where a real delta exists.
  * ============================================================ */
 function sparkSvg(seed){
   // deterministic, gently-varying micro-line ending in a glowing dot
@@ -562,13 +562,13 @@ function tickerHtml(){
     + seq + seq + '</div></div></div>';
 }
 
-/* ---- Daily "did you log it?" reminders (weight + gym), read from each app's storage ---- */
+/* ---- Daily "did you log it?" reminders (weight + gym), read from each app\'s storage ---- */
 function loggedWeightToday(){ try { const s = lsGet('progress_standalone_v1'); return !!(s && Array.isArray(s.entries) && s.entries.some(e => e && e.dateKey === localDateKey())); } catch(e){ return false; } }
 function loggedGymToday(){ try { const d = lsGet('po_coach_workout_done'); return !!(d && d[localDateKey()]); } catch(e){ return false; } }
 function remindersHtml(){
   const items = [];
-  if (!loggedWeightToday()) items.push({ file: 'progress.html', icon: '⚖️', text: 'Log today's weight' });
-  if (!loggedGymToday()) items.push({ file: 'gym.html', icon: '🏋️', text: 'Log today's gym' });
+  if (!loggedWeightToday()) items.push({ file: 'progress.html', icon: '⚖️', text: "Log today\'s weight" });
+  if (!loggedGymToday()) items.push({ file: 'gym.html', icon: '🏋️', text: "Log today\'s gym" });
   if (!items.length) return '';
   return '<div class="reminders" role="status"><span class="remindersLabel">Today</span>'
     + items.map(r => '<a class="reminderChip" href="' + r.file + '"><span class="reminderDot"></span><span aria-hidden>' + r.icon + '</span> ' + r.text + ' <span class="reminderGo" aria-hidden>→</span></a>').join('')
@@ -607,7 +607,7 @@ function renderModal(){
     if (!ON_SERVER) {
       bodyHtml = '<p class="panelNote">Live Fitbit sync runs on the deployed app (Vercel) with your Fitbit API keys. Opened locally, use <strong>Apple Watch</strong> or <strong>Manual</strong> above. Once deployed &amp; configured, a one-tap <em>Connect Fitbit</em> appears here. See <strong>FITBIT_SETUP.md</strong>.</p>';
     } else if (fitbitStatus.connected) {
-      bodyHtml = '<p class="panelNote">✓ <strong>Fitbit connected.</strong> Sleep, HRV, resting HR &amp; your bed/wake times sync automatically across the suite. Tokens are stored server-side, never in the browser.<br><br>Heads-up: Fitbit doesn't expose a recovery score, so the recovery ring stays blank — everything else fills in.</p>'
+      bodyHtml = '<p class="panelNote">✓ <strong>Fitbit connected.</strong> Sleep, HRV, resting HR &amp; your bed/wake times sync automatically across the suite. Tokens are stored server-side, never in the browser.<br><br>Heads-up: Fitbit doesn\'t expose a recovery score, so the recovery ring stays blank — everything else fills in.</p>'
         + '<div class="srcActions"><button type="button" class="btn btn-link spacer" data-action="fitbit-disconnect">disconnect Fitbit</button><button type="button" class="btn btn-primary" data-action="fitbit-sync">Sync now</button></div>';
     } else {
       bodyHtml = '<p class="panelNote">Connect your Fitbit account once — sleep, HRV, resting HR &amp; bed/wake times then sync automatically. You log in on fitbit.com; your tokens stay server-side. (Fitbit has no recovery score, so that ring stays blank.)</p>'
@@ -623,20 +623,20 @@ function renderModal(){
       + '<div class="field"><label class="fieldLabel" for="f-rhr">Resting HR (bpm)</label><input id="f-rhr" class="fieldInput" type="number" min="20" max="150" inputmode="numeric" placeholder="—" value="' + esc(v('rhr')) + '" /></div>'
       + '<div class="field fieldFull"><label class="fieldLabel" for="f-target">Sleep target (hours)</label><input id="f-target" class="fieldInput" type="number" min="4" max="12" step="0.5" inputmode="decimal" placeholder="8" value="' + esc(h && h.sleepTargetHours != null ? h.sleepTargetHours : 8) + '" /></div>'
       + '</div>'
-      + '<p class="howtoFoot" style="margin-top:var(--space-3)">Fill <strong>Bedtime</strong> + <strong>Wake time</strong> and we'll work out hours asleep for you — or just type the hours directly.</p>';
-    if (src === 'apple') bodyHtml = '<div class="howto"><div class="howtoTitle">⌚ Got an Apple Watch? Here's the 20-second way</div>'
+      + '<p class="howtoFoot" style="margin-top:var(--space-3)">Fill <strong>Bedtime</strong> + <strong>Wake time</strong> and we\'ll work out hours asleep for you — or just type the hours directly.</p>';
+    if (src === 'apple') bodyHtml = '<div class="howto"><div class="howtoTitle">⌚ Got an Apple Watch? Here\'s the 20-second way</div>'
       + '<ol class="howtoSteps">'
       + '<li>Open the <strong>Health</strong> app on your iPhone.</li>'
-      + '<li>Tap <strong>Sleep</strong> and note today's <strong>bedtime</strong> &amp; <strong>wake time</strong>, then these three numbers:<div class="howtoChips"><span class="howtoChip">Heart Rate Variability</span><span class="howtoChip">Resting Heart Rate</span><span class="howtoChip">Time Asleep</span></div></li>'
+      + '<li>Tap <strong>Sleep</strong> and note today\'s <strong>bedtime</strong> &amp; <strong>wake time</strong>, then these three numbers:<div class="howtoChips"><span class="howtoChip">Heart Rate Variability</span><span class="howtoChip">Resting Heart Rate</span><span class="howtoChip">Time Asleep</span></div></li>'
       + '<li>Type them into the fields below and hit <strong>Save vitals</strong>.</li>'
       + '</ol>'
-      + '<p class="howtoFoot">Apple won't let a website read Health data directly, so this quick copy keeps it private — nothing leaves your phone. Saved as "Apple Watch."</p></div>'
+      + '<p class="howtoFoot">Apple won\'t let a website read Health data directly, so this quick copy keeps it private — nothing leaves your phone. Saved as "Apple Watch."</p></div>'
       + bodyHtml;
     else bodyHtml += '<p class="panelNote">Enter whatever you track. Recovery and sleep are what drive the supplement recommendations — the rest is optional.</p>';
   }
   const canClear = !!health;
   root.innerHTML = '<div class="overlay" data-action="close-vitals"><div class="panel" data-stop="1">'
-    + '<div class="panelHead"><div><div class="panelEyebrow">Health source</div><h2 class="panelTitle">Today's vitals</h2></div><button type="button" class="panelClose" data-action="close-vitals">×</button></div>'
+    + '<div class="panelHead"><div><div class="panelEyebrow">Health source</div><h2 class="panelTitle">Today\'s vitals</h2></div><button type="button" class="panelClose" data-action="close-vitals">×</button></div>'
     + '<div class="srcPills">' + pill('whoop','🔋','Whoop') + pill('fitbit','💠','Fitbit') + pill('apple','⌚','Apple Watch') + pill('manual','✍️','Manual') + '</div>'
     + bodyHtml
     + '<div class="panelActions">' + (canClear ? '<button type="button" class="btn btn-link spacer" data-action="clear-vitals">clear vitals</button>' : '')
@@ -758,7 +758,7 @@ document.addEventListener('click', e => {
   if (action === 'close-vitals') { if (!stop || btn.tagName === 'BUTTON') { ui.modalOpen = false; renderModal(); } return; }
   if (action === 'src') { ui.draftSource = btn.getAttribute('data-src'); renderModal(); return; }
   if (action === 'save-vitals') { saveVitals(); return; }
-  if (action === 'clear-vitals') { if (confirm('Clear today's vitals from the suite?')) { clearHealth(); health = null; ui.modalOpen = false; render(); } return; }
+  if (action === 'clear-vitals') { if (confirm("Clear today\'s vitals from the suite?")) { clearHealth(); health = null; ui.modalOpen = false; render(); } return; }
   if (action === 'whoop-sync') { syncWhoop(); return; }
   if (action === 'whoop-disconnect') {
     fetch('/api/whoop/logout').catch(()=>{}).then(() => {
@@ -790,7 +790,7 @@ document.addEventListener('change', e => {
   const t = e.target; if (!(t && t.dataset && t.dataset.pf)) return;
   if (!ui.profileDraft) ui.profileDraft = draftFromProfile();
   if (t.dataset.pf === 'units') {
-    // Switching units relabels AND converts whatever's already typed, so the numbers stay sensible.
+    // Switching units relabels AND converts whatever\'s already typed, so the numbers stay sensible.
     const d = ui.profileDraft, toImp = t.value === 'imperial';
     const conv = (v, f, dp) => (v === '' || v == null || !isFinite(Number(v))) ? v : String(Math.round(Number(v) * f * (dp ? 10 : 1)) / (dp ? 10 : 1));
     if (toImp) { d.height = conv(d.height, 1/2.54, 0); d.weight = conv(d.weight, 1/0.45359237, 0); }
