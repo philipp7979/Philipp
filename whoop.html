@@ -740,7 +740,7 @@ function appleFormHtml() {
 
 function whoopConnectBodyHtml() {
   const cta = ON_SERVER
-    ? '<a class="btn btn-primary connectCta" href="/api/whoop/login">Connect Whoop</a>'
+    ? '<a class="btn btn-primary connectCta" href="https://row-gray.vercel.app/api/whoop/login">Connect Whoop</a>'
       + '<p class="setupNote"><strong>Setup note:</strong> needs your WHOOP API keys set on the host (see <em>WHOOP_SETUP.md</em>). Then this is a real one-tap sign-in — recovery, sleep &amp; strain sync automatically.</p>'
     : '<button type="button" class="btn btn-primary connectCta" data-action="connect">Preview with sample data</button>'
       + '<p class="setupNote"><strong>Setup note:</strong> live WHOOP sync runs on the deployed app. Opened locally, tap above to preview the dashboard with sample numbers — these are <em>not</em> saved into the suite.</p>';
