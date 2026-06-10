@@ -140,8 +140,33 @@ body { background: var(--bg); color: var(--fg); font-family: var(--font-ui), -ap
 .card:hover { border-color: var(--brand-line); background: rgba(79,110,247,0.08); transform: translateY(-3px); box-shadow: 0 0 50px -18px var(--brand-glow), var(--card-shadow); }
 .cardGlow { position:absolute; bottom:-28px; right:-28px; width:140px; height:140px; border-radius:50%; pointer-events:none; opacity:0.4; transition: opacity 220ms ease; }
 .card:hover .cardGlow { opacity:0.72; }
-.cardIcon { display:grid; place-items:center; width: 44px; height: 44px; border-radius: 12px; flex-shrink:0; }
-.cardIcon svg { width: 20px; height: 20px; display:block; }
+/* 3D animated icon tile (from Claude Design handoff) */
+.cardIcon { display:grid; place-items:center; width:44px; height:44px; border-radius:12px; flex-shrink:0; position:relative; background:linear-gradient(155deg, color-mix(in srgb, var(--c) 30%, transparent), color-mix(in srgb, var(--c) 9%, transparent)); box-shadow: inset 0 1px 0 rgba(255,255,255,.28), inset 0 -4px 8px color-mix(in srgb, var(--c) 26%, transparent), 0 0 0 1px color-mix(in srgb, var(--c) 22%, transparent), 0 12px 26px -8px color-mix(in srgb, var(--c) 60%, transparent); transform-style:preserve-3d; animation:tileFloat 6s cubic-bezier(.45,0,.55,1) infinite; }
+.cardIcon::before { content:""; position:absolute; inset:0; border-radius:inherit; background:linear-gradient(158deg, rgba(255,255,255,.34), rgba(255,255,255,0) 48%); pointer-events:none; transform:translateZ(1px); }
+.cardIcon svg { width:26px; height:26px; fill:none; stroke:var(--c); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; overflow:visible; transform:translateZ(9px); filter:drop-shadow(0 2px 5px color-mix(in srgb, var(--c) 70%, transparent)); display:block; }
+.cardIcon svg [class*="anim"] { transform-box:fill-box; transform-origin:center; }
+@keyframes tileFloat { 0%,100%{transform:perspective(420px) rotateX(0deg) rotateY(0deg)} 25%{transform:perspective(420px) rotateX(7deg) rotateY(-10deg)} 50%{transform:perspective(420px) rotateX(0deg) rotateY(0deg)} 75%{transform:perspective(420px) rotateX(-7deg) rotateY(10deg)} }
+.a-fin .line{stroke-dasharray:46;animation:finDraw 3.6s cubic-bezier(.65,0,.35,1) infinite}
+@keyframes finDraw{0%{stroke-dashoffset:46}55%{stroke-dashoffset:0}88%{stroke-dashoffset:0}100%{stroke-dashoffset:46}}
+.a-gym .grp{transform-box:fill-box;transform-origin:center;animation:gymPulse 2.6s cubic-bezier(.34,1.4,.64,1) infinite}
+@keyframes gymPulse{0%,100%{transform:scale(1)}45%{transform:scale(1.11)}}
+.a-sup .pill{transform-box:fill-box;transform-origin:center;animation:pillPulse 2.6s cubic-bezier(.45,0,.55,1) infinite}
+@keyframes pillPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.a-band .ecg{stroke-dasharray:18 44;animation:bandWave 2.6s linear infinite}
+@keyframes bandWave{0%{stroke-dashoffset:62}100%{stroke-dashoffset:0}}
+.a-water .fill{animation:waterRise 3.6s cubic-bezier(.45,0,.55,1) infinite}
+@keyframes waterRise{0%{transform:translateY(15px)}60%{transform:translateY(0)}100%{transform:translateY(0)}}
+.a-rec .dot{transform-box:fill-box;transform-origin:center;animation:recBlink 1.8s cubic-bezier(.45,0,.55,1) infinite}
+@keyframes recBlink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.2;transform:scale(.65)}}
+.a-goal g.flag{transform-box:fill-box;transform-origin:left center;animation:flagWave 3s cubic-bezier(.45,0,.55,1) infinite}
+@keyframes flagWave{0%,100%{transform:perspective(150px) rotateY(0)}30%{transform:perspective(150px) rotateY(30deg)}65%{transform:perspective(150px) rotateY(-14deg)}}
+.a-prog .bar{transform-box:fill-box;transform-origin:bottom;animation:progGrow 2.8s cubic-bezier(.34,1.25,.64,1) infinite}
+.a-prog .b2{animation-delay:.16s}.a-prog .b3{animation-delay:.32s}.a-prog .b4{animation-delay:.48s}
+@keyframes progGrow{0%{transform:scaleY(.25)}42%,72%{transform:scaleY(1)}100%{transform:scaleY(.25)}}
+.a-mac .steam{transform-box:fill-box;transform-origin:center;animation:macSteam 3s cubic-bezier(.45,0,.55,1) infinite;stroke-width:1.6}
+.a-mac .s2{animation-delay:.55s}.a-mac .s3{animation-delay:1.1s}
+@keyframes macSteam{0%{transform:translateY(3px);opacity:0}35%{opacity:.9}100%{transform:translateY(-6px);opacity:0}}
+@media (prefers-reduced-motion: reduce) { .cardIcon { animation:none; } .cardIcon svg * { animation:none !important; } }
 .cardName { font-family: var(--font-display); font-weight: 600; font-size: var(--text-lg); letter-spacing: -0.02em; }
 .cardTag { font-size: 12px; color: var(--muted); line-height: 1.5; margin:0; }
 .cardArrow { position:absolute; top: var(--space-5); right: var(--space-5); color: var(--muted); font-size: 15px; transition: color 220ms var(--ease-premium), transform 220ms var(--ease-premium); }
@@ -269,32 +294,32 @@ body { background: var(--bg); color: var(--fg); font-family: var(--font-ui), -ap
  * ============================================================ */
 const APPS = [
   { file: 'finance.html',     name: 'Finance',     tag: 'Net worth · subs · orders · wishlist', wide: true,
-    color:'#22C55E', ibg:'rgba(34,197,94,0.15)', ibd:'rgba(34,197,94,0.30)',
-    svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>' },
+    color:'#22C55E', ibg:'rgba(34,197,94,0.15)',
+    svg:'<svg viewBox="0 0 44 44" class="a-fin"><path class="line anim" d="M13 30 L19 24 L24 27 L31 17 M26 17 L31 17 L31 22"/></svg>' },
   { file: 'gym.html',         name: 'Gym',         tag: 'Progressive overload coach', wide: true,
-    color:'#FF5E7D', ibg:'rgba(255,94,125,0.15)', ibd:'rgba(255,94,125,0.30)',
-    svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6.5 6.5v11M17.5 6.5v11M2 9.5h4.5M17.5 9.5H22M2 14.5h4.5M17.5 14.5H22M6.5 9.5h11M6.5 14.5h11"/></svg>' },
+    color:'#FF5E7D', ibg:'rgba(255,94,125,0.15)',
+    svg:'<svg viewBox="0 0 44 44" class="a-gym"><g class="grp anim"><path d="M16 22 H28"/><path d="M15 18 V26"/><path d="M12 19.5 V24.5"/><path d="M29 18 V26"/><path d="M32 19.5 V24.5"/></g></svg>' },
   { file: 'supplements.html', name: 'Supplements', tag: 'Your stack + smart recommendations',
-    color:'#FF9F43', ibg:'rgba(255,159,67,0.15)', ibd:'rgba(255,159,67,0.30)',
-    svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 3.5a5 5 0 0 0-7.07 7.07l10 10a5 5 0 0 0 7.07-7.07l-10-10z"/><line x1="9" y1="9" x2="15" y2="15"/></svg>' },
+    color:'#FF9F43', ibg:'rgba(255,159,67,0.15)',
+    svg:'<svg viewBox="0 0 44 44" class="a-sup"><defs><clipPath id="pillClip"><rect x="12" y="18" width="20" height="8" rx="4"/></clipPath></defs><g class="pill anim"><g clip-path="url(#pillClip)"><rect x="12" y="18" width="10" height="8" fill="#FF9F43" stroke="none" opacity="0.32"/></g><rect x="12" y="18" width="20" height="8" rx="4"/><path d="M22 18 V26"/></g></svg>' },
   { file: 'whoop.html',       name: 'Fitness Band', tag: 'Whoop · Fitbit · Apple Watch sync',
-    color:'#38BDF8', ibg:'rgba(56,189,248,0.15)', ibd:'rgba(56,189,248,0.30)',
-    svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>' },
+    color:'#38BDF8', ibg:'rgba(56,189,248,0.15)',
+    svg:'<svg viewBox="0 0 44 44" class="a-band"><path class="ecg anim" d="M12 22 H17 L19 16 L22 28 L25 22 H32"/></svg>' },
   { file: 'water.html',       name: 'Water',       tag: 'Daily hydration target',
-    color:'#4FC3F7', ibg:'rgba(79,195,247,0.15)', ibd:'rgba(79,195,247,0.30)',
-    svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>' },
+    color:'#4FC3F7', ibg:'rgba(79,195,247,0.15)',
+    svg:'<svg viewBox="0 0 44 44" class="a-water"><defs><clipPath id="dropClip"><path d="M22 13 C22 13 15 21 15 26 a7 7 0 0 0 14 0 C29 21 22 13 22 13 Z"/></clipPath></defs><path d="M22 13 C22 13 15 21 15 26 a7 7 0 0 0 14 0 C29 21 22 13 22 13 Z"/><g clip-path="url(#dropClip)"><rect class="fill anim" x="14" y="24" width="16" height="12" fill="#4FC3F7" stroke="none" opacity="0.45"/></g></svg>' },
   { file: 'creator.html',     name: 'Creator',     tag: 'Schedule · accounts · analytics',
-    color:'#A78BFA', ibg:'rgba(167,139,250,0.15)', ibd:'rgba(167,139,250,0.30)',
-    svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>' },
+    color:'#A78BFA', ibg:'rgba(167,139,250,0.15)',
+    svg:'<svg viewBox="0 0 44 44" class="a-rec"><rect x="13" y="18" width="14" height="10" rx="2"/><path d="M27 21 L32 18.5 V27.5 L27 25 Z"/><circle class="dot anim" cx="17" cy="23" r="1.7" fill="#FF5E7D" stroke="none"/></svg>' },
   { file: 'goals.html',       name: 'Goals',       tag: 'Goals & streaks',
-    color:'#FBBF24', ibg:'rgba(251,191,36,0.15)', ibd:'rgba(251,191,36,0.30)',
-    svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>' },
+    color:'#FBBF24', ibg:'rgba(251,191,36,0.15)',
+    svg:'<svg viewBox="0 0 44 44" class="a-goal"><path d="M15 11 V33"/><circle cx="15" cy="11.5" r="1.4" fill="#FBBF24" stroke="none"/><g class="flag anim"><rect x="15" y="12.5" width="14" height="9.6" rx="1"/><rect x="15" y="12.5" width="4.66" height="4.8" fill="#FBBF24" stroke="none"/><rect x="24.33" y="12.5" width="4.66" height="4.8" fill="#FBBF24" stroke="none"/><rect x="19.66" y="17.3" width="4.66" height="4.8" fill="#FBBF24" stroke="none"/></g></svg>' },
   { file: 'progress.html',    name: 'Progress',    tag: 'Photos & measurements',
-    color:'#34D399', ibg:'rgba(52,211,153,0.15)', ibd:'rgba(52,211,153,0.30)',
-    svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>' },
+    color:'#34D399', ibg:'rgba(52,211,153,0.15)',
+    svg:'<svg viewBox="0 0 44 44" class="a-prog"><rect class="bar b1 anim" x="14" y="22" width="3.4" height="8" rx="1" fill="#34D399" stroke="none"/><rect class="bar b2 anim" x="19.5" y="18" width="3.4" height="12" rx="1" fill="#34D399" stroke="none"/><rect class="bar b3 anim" x="25" y="20" width="3.4" height="10" rx="1" fill="#34D399" stroke="none"/><rect class="bar b4 anim" x="30.5" y="15" width="3.4" height="15" rx="1" fill="#34D399" stroke="none"/></svg>' },
   { file: 'macros.html',      name: 'Macros',      tag: 'Protein · carbs · fat',
-    color:'#FB923C', ibg:'rgba(251,146,60,0.15)', ibd:'rgba(251,146,60,0.30)',
-    svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>' },
+    color:'#FB923C', ibg:'rgba(251,146,60,0.15)',
+    svg:'<svg viewBox="0 0 44 44" class="a-mac"><path d="M16 31 V22 M14 16 V19 M16 16 V19 M18 16 V19 M14 19 H18 M16 19 V22"/><path d="M27 31 V16 C27 16 30 17 30 21 C30 24 27 24 27 24"/><path class="steam s1 anim" d="M19 14 q1.5 -2 0 -4"/><path class="steam s2 anim" d="M22.5 13 q1.5 -2 0 -4"/><path class="steam s3 anim" d="M26 14 q1.5 -2 0 -4"/></svg>' },
 ];
 
 /* ============================================================
@@ -458,16 +483,15 @@ function statFor(file){
   } catch (e) {}
   return null;
 }
-function cardHtml(a){
+function cardHtml(a, i){
   const st = statFor(a.file);
   const ic = a.color || 'var(--brand)';
-  const ibg = a.ibg || 'var(--brand-soft)';
-  const ibd = a.ibd || 'var(--brand-line)';
-  const iconEl = '<div class="cardIcon" style="background:' + ibg + ';border:1px solid ' + ibd + ';color:' + ic + '" aria-hidden>' + (a.svg || '') + '</div>';
+  const delay = ((i || 0) * 0.45) + 's';
+  const iconEl = '<div class="cardIcon" style="--c:' + ic + ';animation-delay:' + delay + '" aria-hidden>' + (a.svg || '') + '</div>';
   const tail = st
     ? '<div class="cardStat"><span class="cardStatValue">' + esc(st.value) + '</span><span class="cardStatLabel">' + esc(st.label) + '</span></div>'
     : '<p class="cardTag">' + esc(a.tag) + '</p>';
-  const glowEl = '<div class="cardGlow" style="background:radial-gradient(circle at 65% 65%,' + ibg + ',transparent 68%)"></div>';
+  const glowEl = '<div class="cardGlow" style="background:radial-gradient(circle at 65% 65%,' + (a.ibg || 'var(--brand-soft)') + ',transparent 68%)"></div>';
   return '<a class="card' + (a.wide ? ' tileWide' : '') + '" href="' + a.file + '">'
     + '<span class="cardArrow" aria-hidden>↗</span>'
     + '<div class="cardTop">' + iconEl + '<span class="cardName">' + esc(a.name) + '</span></div>'
@@ -552,7 +576,7 @@ function remindersHtml(){
 }
 function render(){
   document.getElementById('app').innerHTML =
-    headerHtml() + tickerHtml() + '<div class="bento">' + vitalsTileHtml() + APPS.map(cardHtml).join('') + '</div>';
+    headerHtml() + tickerHtml() + '<div class="bento">' + vitalsTileHtml() + APPS.map((a,i) => cardHtml(a,i)).join('') + '</div>';
   renderModal();
 }
 
