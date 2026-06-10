@@ -20,7 +20,7 @@ module.exports = (req, res) => {
     'response_type=code',
     'client_id=' + encodeURIComponent(id),
     'redirect_uri=' + encodeURIComponent(L.redirectUri(req)),
-    'scope=' + L.SCOPE.split(' ').map(encodeURIComponent).join('%20'),
+    'scope=' + L.SCOPE.replace(/ /g, '%20'),
     'state=' + state,
   ].join('&');
   const authUrl = L.AUTH_URL + '?' + qs;
