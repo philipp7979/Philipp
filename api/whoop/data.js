@@ -39,7 +39,13 @@ module.exports = async (req, res) => {
   res.setHeader('content-type', 'application/json');
   const cookies = L.parseCookies(req);
   const secure = L.isHttps(req);
-  const refresh = cookies.whoop_refresh;
+  const sb = L.supabase();
+  let refresh = cookies.whoop_refresh;
+  if (!refresh && sb) {
+    refresh = await sb.load();
+    // Restore cookie for this session so future requests are fast
+    if (refresh) res.setHeader('Set-Cookie', L.cookie('whoop_refresh', refresh, { maxAge: 60 * 60 * 24 * 365, secure }));
+  }
   if (!refresh) { res.statusCode = 200; res.end(JSON.stringify({ connected: false })); return; }
 
   let id, secret;
@@ -55,9 +61,10 @@ module.exports = async (req, res) => {
     res.end(JSON.stringify({ connected: false, error: 'expired' }));
     return;
   }
-  // WHOOP rotates refresh tokens — persist the new one.
+  // WHOOP rotates refresh tokens — persist the new one in cookie + Supabase.
   if (tok.refresh_token && tok.refresh_token !== refresh) {
     res.setHeader('Set-Cookie', L.cookie('whoop_refresh', tok.refresh_token, { maxAge: 60 * 60 * 24 * 365, secure }));
+    if (sb) sb.save(tok.refresh_token);
   }
   const at = tok.access_token;
 

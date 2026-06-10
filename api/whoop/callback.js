@@ -29,7 +29,11 @@ module.exports = async (req, res) => {
       redirect_uri: L.redirectUri(req),
     });
     const out = [L.clearCookie('whoop_state', secure)];
-    if (tok.refresh_token) out.push(L.cookie('whoop_refresh', tok.refresh_token, { maxAge: 60 * 60 * 24 * 365, secure }));
+    if (tok.refresh_token) {
+      out.push(L.cookie('whoop_refresh', tok.refresh_token, { maxAge: 60 * 60 * 24 * 365, secure }));
+      const sb = L.supabase();
+      if (sb) await sb.save(tok.refresh_token);
+    }
     res.setHeader('Set-Cookie', out);
     return back(tok.refresh_token ? 'connected' : 'error');
   } catch (e) {

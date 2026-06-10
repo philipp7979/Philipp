@@ -51,4 +51,43 @@ async function tokenRequest(params) {
   return j;
 }
 
-module.exports = { crypto, AUTH_URL, TOKEN_URL, API_BASE, SCOPE, getOrigin, redirectUri, isHttps, parseCookies, cookie, clearCookie, creds, tokenRequest };
+// Supabase token store — persists the WHOOP refresh token so it survives
+// across devices/sessions. Requires SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY
+// env vars (service role bypasses RLS; never sent to the browser).
+function supabase() {
+  const url = (process.env.SUPABASE_URL || '').trim();
+  const key = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
+  if (!url || !key) return null;
+  const h = {
+    apikey: key,
+    Authorization: 'Bearer ' + key,
+    'Content-Type': 'application/json',
+  };
+  const base = url.replace(/\/$/, '') + '/rest/v1/whoop_tokens';
+  return {
+    async save(token) {
+      try {
+        await fetch(base, {
+          method: 'POST',
+          headers: { ...h, Prefer: 'resolution=merge-duplicates,return=minimal' },
+          body: JSON.stringify({ id: 'singleton', refresh_token: token, updated_at: new Date().toISOString() }),
+        });
+      } catch (_) {}
+    },
+    async load() {
+      try {
+        const r = await fetch(base + '?id=eq.singleton&select=refresh_token', { headers: h });
+        if (!r.ok) return null;
+        const rows = await r.json().catch(() => []);
+        return (rows[0] && rows[0].refresh_token) || null;
+      } catch (_) { return null; }
+    },
+    async clear() {
+      try {
+        await fetch(base + '?id=eq.singleton', { method: 'DELETE', headers: h });
+      } catch (_) {}
+    },
+  };
+}
+
+module.exports = { crypto, AUTH_URL, TOKEN_URL, API_BASE, SCOPE, getOrigin, redirectUri, isHttps, parseCookies, cookie, clearCookie, creds, tokenRequest, supabase };
