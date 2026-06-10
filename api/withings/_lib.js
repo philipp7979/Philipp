@@ -13,7 +13,7 @@ function getOrigin(req) {
   const host   = req.headers['x-forwarded-host'] || req.headers.host;
   return proto + '://' + host;
 }
-function redirectUri() { return 'https://row-gray.vercel.app/api/withings/callback'; }
+function redirectUri() { return 'https://philipp-five.vercel.app/api/withings/callback'; }
 function isHttps(req) { return getOrigin(req).startsWith('https'); }
 
 function parseCookies(req) {
