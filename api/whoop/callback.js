@@ -11,6 +11,46 @@ module.exports = async (req, res) => {
   const secure   = L.isHttps(req);
   const clearState = L.clearCookie('whoop_state', secure);
 
+  // ── FULL DEBUG (remove after first successful connect) ────────
+  let credId = '(not set)', credErr = null;
+  try { credId = L.creds().id; } catch(e) { credErr = e.message; }
+  const stateMatch = !!(state && state === cookies.whoop_state);
+
+  let tokStatus = 'skipped', tokBody = '';
+  if (code && credId !== '(not set)') {
+    try {
+      const r = await fetch(L.TOKEN_URL, {
+        method: 'POST',
+        headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          grant_type: 'authorization_code', code,
+          client_id: credId, client_secret: L.creds().secret,
+          redirect_uri: L.redirectUri(),
+        }).toString(),
+      });
+      tokStatus = String(r.status);
+      tokBody = await r.text();
+    } catch(e) { tokStatus = 'fetch_err'; tokBody = e.message; }
+  }
+
+  res.statusCode = 200;
+  res.setHeader('content-type', 'text/plain; charset=utf-8');
+  res.end([
+    '=== WHOOP callback debug ===',
+    'oauth_error:     ' + (oauthErr||'none'),
+    'code present:    ' + !!code,
+    'state_url:       ' + (state||'none'),
+    'state_cookie:    ' + (cookies.whoop_state||'none'),
+    'state_match:     ' + stateMatch,
+    'creds_ok:        ' + !credErr + (credErr?' — '+credErr:''),
+    'client_id:       ' + credId,
+    'redirect_uri:    ' + L.redirectUri(),
+    'token_status:    ' + tokStatus,
+    'token_response:  ' + tokBody,
+  ].join('\n'));
+  return;
+  // ── END DEBUG ─────────────────────────────────────────────────
+
   if (!state || state !== cookies.whoop_state) {
     res.setHeader('Set-Cookie', clearState);
     res.statusCode = 302;
