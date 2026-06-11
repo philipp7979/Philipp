@@ -1,4 +1,4 @@
-// GET /api/whoop/login — starts WHOOP OAuth with PKCE.
+// GET /api/whoop/login — starts WHOOP OAuth with PKCE (no state cookie needed).
 const L = require('./_lib');
 
 module.exports = (req, res) => {
@@ -11,24 +11,20 @@ module.exports = (req, res) => {
     return;
   }
 
-  const state    = L.crypto.randomBytes(16).toString('hex');
-  const verifier = L.crypto.randomBytes(32).toString('base64url');
+  // PKCE — verifier stored in cookie; challenge sent to WHOOP
+  const verifier  = L.crypto.randomBytes(32).toString('base64url');
   const challenge = L.crypto.createHash('sha256').update(verifier).digest('base64url');
-  const secure   = L.isHttps(req);
+  const secure    = L.isHttps(req);
 
-  res.setHeader('Set-Cookie', [
-    L.cookie('whoop_state',    state,    { maxAge: 600, secure }),
-    L.cookie('whoop_verifier', verifier, { maxAge: 600, secure }),
-  ]);
+  res.setHeader('Set-Cookie', L.cookie('whoop_verifier', verifier, { maxAge: 600, secure }));
 
   const params = new URLSearchParams({
-    response_type:          'code',
-    client_id:              id,
-    redirect_uri:           L.redirectUri(),
-    scope:                  L.SCOPE,
-    state,
-    code_challenge:         challenge,
-    code_challenge_method:  'S256',
+    response_type:         'code',
+    client_id:             id,
+    redirect_uri:          L.redirectUri(),
+    scope:                 L.SCOPE,
+    code_challenge:        challenge,
+    code_challenge_method: 'S256',
   });
 
   res.statusCode = 302;

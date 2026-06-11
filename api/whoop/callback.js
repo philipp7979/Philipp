@@ -1,30 +1,18 @@
-// GET /api/whoop/callback — verifies state, exchanges code+PKCE for tokens.
+// GET /api/whoop/callback — exchanges code for tokens using PKCE.
 const L = require('./_lib');
 
 module.exports = async (req, res) => {
   const origin   = L.getOrigin(req);
   const url      = new URL(req.url, origin);
   const code     = url.searchParams.get('code');
-  const state    = url.searchParams.get('state');
   const oauthErr = url.searchParams.get('error');
   const cookies  = L.parseCookies(req);
   const secure   = L.isHttps(req);
 
-  const clearCookies = [
-    L.clearCookie('whoop_state',    secure),
-    L.clearCookie('whoop_verifier', secure),
-  ];
-
-  if (!state || state !== cookies.whoop_state) {
-    res.setHeader('Set-Cookie', clearCookies);
-    res.statusCode = 302;
-    res.setHeader('Location', '/whoop.html?whoop=error&reason=state_mismatch');
-    res.end();
-    return;
-  }
+  const clearVerifier = L.clearCookie('whoop_verifier', secure);
 
   if (oauthErr || !code) {
-    res.setHeader('Set-Cookie', clearCookies);
+    res.setHeader('Set-Cookie', clearVerifier);
     res.statusCode = 302;
     res.setHeader('Location', '/whoop.html?whoop=' + (oauthErr === 'access_denied' ? 'denied' : 'error'));
     res.end();
@@ -34,7 +22,7 @@ module.exports = async (req, res) => {
   let id, secret;
   try { ({ id, secret } = L.creds()); }
   catch (e) {
-    res.setHeader('Set-Cookie', clearCookies);
+    res.setHeader('Set-Cookie', clearVerifier);
     res.statusCode = 302;
     res.setHeader('Location', '/whoop.html?whoop=error&reason=not_configured');
     res.end();
@@ -42,18 +30,18 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const body = {
+    const params = {
       grant_type:    'authorization_code',
       code,
       client_id:     id,
       client_secret: secret,
       redirect_uri:  L.redirectUri(),
     };
-    if (cookies.whoop_verifier) body.code_verifier = cookies.whoop_verifier;
+    if (cookies.whoop_verifier) params.code_verifier = cookies.whoop_verifier;
 
-    const tok = await L.tokenRequest(body);
+    const tok = await L.tokenRequest(params);
 
-    const setCookies = [...clearCookies];
+    const setCookies = [clearVerifier];
     if (tok.refresh_token) {
       setCookies.push(L.cookie('whoop_refresh', tok.refresh_token, { maxAge: 60 * 60 * 24 * 365, secure }));
       const sb = L.supabase();
@@ -64,7 +52,7 @@ module.exports = async (req, res) => {
     res.setHeader('Location', '/whoop.html?whoop=connected');
     res.end();
   } catch (e) {
-    res.setHeader('Set-Cookie', clearCookies);
+    res.setHeader('Set-Cookie', clearVerifier);
     res.statusCode = 302;
     res.setHeader('Location', '/whoop.html?whoop=error&reason=' + encodeURIComponent(e.message || 'token_failed'));
     res.end();
