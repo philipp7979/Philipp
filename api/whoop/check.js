@@ -41,7 +41,7 @@ ${(!idOk || !secretOk) ? '<p class="warn">⚠ Env vars missing — set WHOOP_CLI
 <table>
 <thead><tr><th>Check</th><th>Status</th><th>Value</th></tr></thead>
 <tbody>
-${row('WHOOP_CLIENT_ID', idOk, idOk ? id.slice(0,8) + '…' + id.slice(-4) : 'not set')}
+${row('WHOOP_CLIENT_ID', idOk, idOk ? id + ' (' + id.length + ' chars)' : 'not set')}
 ${row('WHOOP_CLIENT_SECRET', secretOk, secretOk ? '(set, ' + secret.length + ' chars)' : 'not set')}
 ${row('Redirect URI', true, redirectUri)}
 ${row('Scope', true, L.SCOPE)}

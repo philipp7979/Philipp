@@ -6,7 +6,7 @@ const crypto = require('crypto');
 const AUTH_URL = 'https://api.prod.whoop.com/oauth/oauth2/auth';
 const TOKEN_URL = 'https://api.prod.whoop.com/oauth/oauth2/token';
 const API_BASE = 'https://api.prod.whoop.com/developer';
-const SCOPE = 'read:recovery read:sleep read:cycles read:workout read:profile';
+const SCOPE = 'offline read:recovery read:sleep read:cycles read:workout read:profile read:body_measurement';
 
 function getOrigin(req) {
   const proto = String(req.headers['x-forwarded-proto'] || 'https').split(',')[0].trim();
