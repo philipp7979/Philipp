@@ -1,28 +1,30 @@
-// GET /api/whoop/callback — exchanges authorization code for tokens.
+// GET /api/whoop/callback — WHOOP redirects here with ?code & ?state.
+// Verifies state, exchanges the code for tokens, stores refresh token in httpOnly cookie.
 const L = require('./_lib');
 
 module.exports = async (req, res) => {
   const origin   = L.getOrigin(req);
   const url      = new URL(req.url, origin);
   const code     = url.searchParams.get('code');
+  const state    = url.searchParams.get('state');
   const oauthErr = url.searchParams.get('error');
+  const cookies  = L.parseCookies(req);
   const secure   = L.isHttps(req);
 
-  if (oauthErr || !code) {
+  const back = (status, reason) => {
+    let loc = '/whoop.html?whoop=' + status;
+    if (reason) loc += '&reason=' + encodeURIComponent(reason);
     res.statusCode = 302;
-    res.setHeader('Location', '/whoop.html?whoop=' + (oauthErr === 'access_denied' ? 'denied' : 'error') + '&reason=' + encodeURIComponent(oauthErr || 'no_code'));
+    res.setHeader('Location', loc);
     res.end();
-    return;
-  }
+  };
+
+  if (oauthErr) return back(oauthErr === 'access_denied' ? 'denied' : 'error', oauthErr);
+  if (!code || !state || state !== cookies.whoop_state) return back('error', 'state_mismatch');
 
   let id, secret;
   try { ({ id, secret } = L.creds()); }
-  catch (e) {
-    res.statusCode = 302;
-    res.setHeader('Location', '/whoop.html?whoop=error&reason=not_configured');
-    res.end();
-    return;
-  }
+  catch (e) { return back('error', 'not_configured'); }
 
   try {
     const tok = await L.tokenRequest({
@@ -30,20 +32,13 @@ module.exports = async (req, res) => {
       code,
       client_id:     id,
       client_secret: secret,
-      redirect_uri:  L.redirectUri(),
+      redirect_uri:  L.redirectUri(req),
     });
-
-    if (tok.refresh_token) {
-      res.setHeader('Set-Cookie', L.cookie('whoop_refresh', tok.refresh_token, { maxAge: 60 * 60 * 24 * 365, secure }));
-      const sb = L.supabase();
-      if (sb) sb.save(tok.refresh_token);
-    }
-    res.statusCode = 302;
-    res.setHeader('Location', '/whoop.html?whoop=connected');
-    res.end();
+    const out = [L.clearCookie('whoop_state', secure)];
+    if (tok.refresh_token) out.push(L.cookie('whoop_refresh', tok.refresh_token, { maxAge: 60 * 60 * 24 * 365, secure }));
+    res.setHeader('Set-Cookie', out);
+    return back(tok.refresh_token ? 'connected' : 'error', tok.refresh_token ? null : 'no_refresh_token');
   } catch (e) {
-    res.statusCode = 302;
-    res.setHeader('Location', '/whoop.html?whoop=error&reason=' + encodeURIComponent(e.message || 'token_failed'));
-    res.end();
+    return back('error', e.message || 'token_failed');
   }
 };
