@@ -11,14 +11,15 @@ module.exports = (req, res) => {
     return;
   }
 
-  const params = new URLSearchParams({
-    response_type: 'code',
-    client_id:     id,
-    redirect_uri:  L.redirectUri(),
-    scope:         L.SCOPE,
-  });
+  // WHOOP rejects + encoding for spaces — build manually with %20
+  const qs = [
+    'response_type=code',
+    'client_id=' + encodeURIComponent(id),
+    'redirect_uri=' + encodeURIComponent(L.redirectUri()),
+    'scope=' + L.SCOPE.replace(/ /g, '%20'),
+  ].join('&');
 
   res.statusCode = 302;
-  res.setHeader('Location', L.AUTH_URL + '?' + params.toString());
+  res.setHeader('Location', L.AUTH_URL + '?' + qs);
   res.end();
 };
