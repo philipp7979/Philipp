@@ -38,29 +38,54 @@ module.exports = async (req, res) => {
     return;
   }
 
+  // Make the token request manually so we can surface the raw error.
+  let tokRes, tokBody;
   try {
-    const tok = await L.tokenRequest({
-      grant_type:    'authorization_code',
-      code,
-      client_id:     id,
-      client_secret: secret,
-      redirect_uri:  L.redirectUri(),
+    tokRes = await fetch(L.TOKEN_URL, {
+      method:  'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body:    new URLSearchParams({
+        grant_type:    'authorization_code',
+        code,
+        client_id:     id,
+        client_secret: secret,
+        redirect_uri:  L.redirectUri(),
+      }).toString(),
     });
-
-    const setCookies = [clearState];
-    if (tok.refresh_token) {
-      setCookies.push(L.cookie('whoop_refresh', tok.refresh_token, { maxAge: 60 * 60 * 24 * 365, secure }));
-      const sb = L.supabase();
-      if (sb) sb.save(tok.refresh_token);
-    }
-    res.setHeader('Set-Cookie', setCookies);
-    res.statusCode = 302;
-    res.setHeader('Location', '/whoop.html?whoop=connected');
-    res.end();
-  } catch (e) {
+    tokBody = await tokRes.text();
+  } catch (fetchErr) {
     res.setHeader('Set-Cookie', clearState);
-    res.statusCode = 302;
-    res.setHeader('Location', '/whoop.html?whoop=error&reason=token_failed');
-    res.end();
+    res.statusCode = 200;
+    res.setHeader('content-type', 'text/plain');
+    res.end('fetch_error: ' + fetchErr.message);
+    return;
   }
+
+  if (!tokRes.ok) {
+    res.setHeader('Set-Cookie', clearState);
+    res.statusCode = 200;
+    res.setHeader('content-type', 'text/plain');
+    res.end('token_http_' + tokRes.status + '\n\n' + tokBody + '\n\nredirect_uri_sent: ' + L.redirectUri() + '\nclient_id: ' + id.slice(0, 8) + '...');
+    return;
+  }
+
+  let tok;
+  try { tok = JSON.parse(tokBody); } catch(e) {
+    res.setHeader('Set-Cookie', clearState);
+    res.statusCode = 200;
+    res.setHeader('content-type', 'text/plain');
+    res.end('json_parse_error\n\n' + tokBody);
+    return;
+  }
+
+  const setCookies = [clearState];
+  if (tok.refresh_token) {
+    setCookies.push(L.cookie('whoop_refresh', tok.refresh_token, { maxAge: 60 * 60 * 24 * 365, secure }));
+    const sb = L.supabase();
+    if (sb) sb.save(tok.refresh_token);
+  }
+  res.setHeader('Set-Cookie', setCookies);
+  res.statusCode = 302;
+  res.setHeader('Location', '/whoop.html?whoop=connected');
+  res.end();
 };
