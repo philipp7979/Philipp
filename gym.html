@@ -1070,6 +1070,14 @@ img, video, canvas, svg { max-width: 100%; }
   color: var(--text-3); margin-bottom: 2px;
 }
 .wt-locked-value { font-size: 16px; font-weight: 600; }
+.wt-withings-btn {
+  appearance: none; background: var(--brand-soft); color: var(--brand);
+  border: 1px solid var(--brand-line); border-radius: 999px;
+  padding: 3px 10px; font-size: 11px; font-weight: 600;
+  font-family: inherit; letter-spacing: 0.02em; cursor: pointer;
+  transition: opacity 0.15s;
+}
+.wt-withings-btn:hover { opacity: 0.7; }
 .wt-edit-btn {
   background: transparent; border: none; color: var(--good);
   font-family: inherit; font-size: 13px; font-weight: 600;
@@ -1356,7 +1364,7 @@ img, video, canvas, svg { max-width: 100%; }
 
   <!-- WEIGHT + PROGRESS PHOTOS -->
   <div class="wt-section">
-    <div class="wt-divider"><span>WEIGHT</span></div>
+    <div class="wt-divider"><span>WEIGHT</span><button class="wt-withings-btn" id="wtWithingsBtn" style="display:none">↻ Withings</button></div>
 
     <div class="wt-card">
       <div class="wt-row">
@@ -2749,6 +2757,44 @@ img, video, canvas, svg { max-width: 100%; }
   function wtSave(arr) {
     try { localStorage.setItem(WT_KEY, JSON.stringify(arr)); } catch (e) {}
   }
+  async function wtSyncFromWithings() {
+    try {
+      let body = JSON.parse(localStorage.getItem('patron_body_v1') || 'null');
+      // Fetch fresh from API if cache is missing or has no weight data
+      if ((!body || !body.connected || !body.weight) && location.protocol === 'https:') {
+        try {
+          const r = await fetch('/api/withings/data', { cache: 'no-store' });
+          const j = await r.json();
+          if (j.connected) { body = j; try { localStorage.setItem('patron_body_v1', JSON.stringify(j)); } catch(e) {} }
+        } catch(e) {}
+      }
+      if (!body || !body.connected) return false;
+      // Show the button now that we confirmed a connection
+      const btn = document.getElementById('wtWithingsBtn');
+      if (btn) btn.style.display = '';
+      const chart = Array.isArray(body.weightChart) ? body.weightChart : [];
+      const pts = chart.length ? chart : (body.weight && body.weightDate ? [{ date: body.weightDate, value: body.weight }] : []);
+      if (!pts.length) return false;
+      let changed = false;
+      pts.forEach(pt => {
+        const dk = wtDateKey(new Date(pt.date));
+        const idx = wtEntries.findIndex(e => e.dateKey === dk);
+        if (idx === -1) {
+          wtEntries.push({ dateKey: dk, weight: pt.value, source: 'withings' });
+          changed = true;
+        } else if (wtEntries[idx].source === 'withings' && Math.abs(wtEntries[idx].weight - pt.value) > 0.005) {
+          wtEntries[idx].weight = pt.value;
+          changed = true;
+        }
+      });
+      if (changed) {
+        wtEntries.sort((a, b) => a.dateKey.localeCompare(b.dateKey));
+        wtSave(wtEntries);
+        wtRender();
+      }
+      return changed;
+    } catch (e) { return false; }
+  }
   function wtDateKey(d) {
     return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
   }
@@ -2770,6 +2816,9 @@ img, video, canvas, svg { max-width: 100%; }
   }
 
   let wtEntries = wtLoad();
+
+  // Auto-import Withings data on load (async — fetches API if cache missing)
+  (async function() { try { await wtSyncFromWithings(); } catch(e) {} })();
 
   function wtSaveEntry(weight) {
     const key = wtDateKey(new Date());
@@ -3057,6 +3106,7 @@ img, video, canvas, svg { max-width: 100%; }
   $('wtInput').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') $('wtSaveBtn').click();
   });
+  $('wtWithingsBtn').addEventListener('click', async () => { await wtSyncFromWithings(); });
   $('wtEditBtn').addEventListener('click', () => {
     $('wtLocked').classList.add('hidden');
     $('wtInputRow').classList.remove('hidden');

@@ -503,6 +503,14 @@ async function syncData() {
     if (j.connected) {
       data = j;
       try { localStorage.setItem(BODY_KEY, JSON.stringify(j)); } catch(e){}
+      // Keep suite profile weight in sync with the scale
+      if (j.weight) {
+        try {
+          const prof = JSON.parse(localStorage.getItem('patron_profile_v1') || 'null') || {};
+          prof.weightKg = j.weight;
+          localStorage.setItem('patron_profile_v1', JSON.stringify(prof));
+        } catch(e) {}
+      }
     } else {
       data = null;
       try { localStorage.removeItem(BODY_KEY); } catch(e){}

@@ -45,8 +45,8 @@ module.exports = async (req, res) => {
 
     // latest[type] = most recent value
     const latest = {};
-    // weight history for 30-day chart (all groups in last 30 days)
-    const chartStart = now - 30 * 24 * 3600;
+    // weight history — all groups in the full 90-day fetch window
+    const chartStart = now - 90 * 24 * 3600;
     const weightHistory = [];
 
     for (const grp of groups) {
@@ -78,6 +78,7 @@ module.exports = async (req, res) => {
     res.end(JSON.stringify({
       connected:    true,
       weight:       get(1),     // kg
+      weightDate:   latest[1]  ? latest[1].date  * 1000 : null, // ms timestamp of most recent weight
       fatPct:       get(6),     // %
       fatMass:      get(8),     // kg
       muscle:       get(76),    // kg
