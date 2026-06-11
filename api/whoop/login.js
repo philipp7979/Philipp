@@ -11,12 +11,14 @@ module.exports = (req, res) => {
     return;
   }
 
-  // WHOOP rejects + encoding for spaces — build manually with %20
+  // WHOOP requires a state param and rejects + encoding for spaces
+  const state = L.crypto.randomBytes(12).toString('hex');
   const qs = [
     'response_type=code',
     'client_id=' + encodeURIComponent(id),
     'redirect_uri=' + encodeURIComponent(L.redirectUri()),
     'scope=' + L.SCOPE.replace(/ /g, '%20'),
+    'state=' + state,
   ].join('&');
 
   res.statusCode = 302;
