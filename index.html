@@ -618,7 +618,7 @@ function renderModal(){
         + '<div class="srcActions"><button type="button" class="btn btn-link spacer" data-action="whoop-disconnect">disconnect Whoop</button><button type="button" class="btn btn-primary" data-action="whoop-sync">Sync now</button></div>';
     } else {
       bodyHtml = '<p class="panelNote">Connect your Whoop account once — recovery, sleep &amp; strain then sync automatically and feed your supplement picks. You log in on whoop.com; your tokens stay server-side.</p>'
-        + '<div class="srcActions"><a class="btn btn-primary" href="https://row-gray.vercel.app/api/whoop/login">Connect Whoop</a></div>';
+        + '<div class="srcActions"><a class="btn btn-primary" href="/api/whoop/login">Connect Whoop</a></div>';
     }
   } else if (src === 'fitbit') {
     if (!ON_SERVER) {
