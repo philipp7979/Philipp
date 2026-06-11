@@ -13,8 +13,8 @@ module.exports = (req, res) => {
   }
 
   const state = L.crypto.randomBytes(12).toString('hex');
-  // Scope must use %20 (not +) — WHOOP treats + literally in URL query params
-  const scope = L.SCOPE.replace(/ /g, '%20');
+  // encodeURIComponent encodes both spaces (%20) and colons (%3A) — WHOOP may require full encoding
+  const scope = encodeURIComponent(L.SCOPE);
   const redirectUri = L.redirectUri(req);
   const authUrl = L.AUTH_URL
     + '?response_type=code'
