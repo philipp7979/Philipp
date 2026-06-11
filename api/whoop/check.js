@@ -52,6 +52,15 @@ ${idOk && secretOk
   ? `<p>Everything looks configured. Click below to test the full WHOOP auth flow — if WHOOP shows its login screen, the URL is correct.</p>
 <a class="btn" href="/api/whoop/login">→ Test WHOOP Login</a>`
   : `<p>Fix the missing env vars above, then reload this page.</p>`}
+<p style="margin:2rem 0 .5rem;font-size:13px;color:#aaa">Credential test (sends a dummy code — WHOOP tells us if your client_id/secret are accepted):</p>
+<pre id="credtest">testing...</pre>
+<script>
+fetch('/api/whoop/credtest').then(r=>r.json()).then(d=>{
+  var el=document.getElementById('credtest');
+  el.style.color=d.ok?'#46E0A8':'#FB7185';
+  el.textContent=d.message;
+}).catch(function(e){document.getElementById('credtest').textContent='fetch failed: '+e;});
+</script>
 </body></html>`;
 
   res.statusCode = 200;

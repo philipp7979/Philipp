@@ -845,7 +845,14 @@ applyTheme(currentTheme);
     const w = q.get('whoop'), f = q.get('fitbit');
     if (w || f) {
       history.replaceState(null, '', location.pathname);
-      if (w === 'error' || w === 'denied') alert('Whoop connection failed: ' + (q.get('reason') || 'unknown') + '. Check WHOOP_CLIENT_ID / SECRET in Vercel env vars.');
+      if (w === 'error' || w === 'denied') {
+        const reason = q.get('reason') || 'unknown';
+        const banner = document.createElement('div');
+        banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#7f1d1d;color:#fecaca;padding:1rem 1.5rem;font-size:15px;font-family:system-ui,sans-serif;display:flex;align-items:center;gap:1rem';
+        banner.innerHTML = '<strong>WHOOP connection failed.</strong> Reason: <code style="background:#991b1b;padding:2px 8px;border-radius:4px;font-size:13px">' + reason + '</code><span style="flex:1"></span><a href="/api/whoop/check" style="color:#fca5a5;text-decoration:underline;white-space:nowrap">Run diagnostics</a><button onclick="this.parentNode.remove()" style="background:none;border:none;color:#fca5a5;font-size:20px;cursor:pointer;padding:0 0 0 1rem">&times;</button>';
+        document.body.prepend(banner);
+        alert('WHOOP error: ' + reason + '\n\nVisit /api/whoop/check to diagnose.');
+      }
       if (f === 'error' || f === 'denied') alert("Fitbit connection didn't complete — check the host's FITBIT keys & redirect URL (FITBIT_SETUP.md).");
       if (f === 'connected') connectSource = 'fitbit';
     }
