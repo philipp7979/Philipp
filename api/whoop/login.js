@@ -13,14 +13,15 @@ module.exports = (req, res) => {
   }
   const state = L.crypto.randomBytes(12).toString('hex');
   res.setHeader('Set-Cookie', L.cookie('whoop_state', state, { maxAge: 600, secure: L.isHttps(req) }));
+  // Build all params with URLSearchParams except scope — WHOOP needs %20 not + for spaces
   const params = new URLSearchParams({
     response_type: 'code',
     client_id:     id,
     redirect_uri:  L.redirectUri(req),
-    scope:         L.SCOPE,
     state,
   });
+  const loc = L.AUTH_URL + '?' + params.toString() + '&scope=' + L.SCOPE.replace(/ /g, '%20');
   res.statusCode = 302;
-  res.setHeader('Location', L.AUTH_URL + '?' + params.toString());
+  res.setHeader('Location', loc);
   res.end();
 };
