@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
   };
 
   if (oauthErr) return back(oauthErr === 'access_denied' ? 'denied' : 'error', oauthErr);
-  if (!code || !state || state !== cookies.whoop_state) return back('error', 'state_mismatch');
+  if (!code) return back('error', 'no_code');
 
   let id, secret;
   try { ({ id, secret } = L.creds()); }

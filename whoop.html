@@ -855,6 +855,7 @@ applyTheme(currentTheme);
       }
       if (f === 'error' || f === 'denied') alert("Fitbit connection didn't complete — check the host's FITBIT keys & redirect URL (FITBIT_SETUP.md).");
       if (f === 'connected') connectSource = 'fitbit';
+      if (w === 'connected') connectSource = 'whoop';
     }
   } catch (e) {}
   syncWhoopLive();
