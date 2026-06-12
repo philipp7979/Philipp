@@ -5,6 +5,15 @@
 // Same-origin, so the browser hits it with no CORS.
 const L = require('./_lib');
 
+// Extract local HH:MM from an ISO 8601 timestamp.
+// WHOOP embeds local time in the string itself (e.g. "T07:00:00-07:00"),
+// so the HH:MM portion before the offset is already the user's local time.
+function isoToHHMM(isoStr) {
+  if (!isoStr) return null;
+  const m = String(isoStr).match(/T(\d{2}):(\d{2})/);
+  return m ? (m[1] + ':' + m[2]) : null;
+}
+
 function pick(obj, paths) {
   for (const p of paths) {
     let cur = obj, ok = true;
@@ -68,6 +77,10 @@ module.exports = async (req, res) => {
   ]);
   const rec = recs[0] || null, slp = slps[0] || null, cyc = cycs[0] || null;
 
+  // Wake time = when the sleep session ended; bedtime = when it started.
+  const wakeTime = isoToHHMM(pick(slp, ['end']));
+  const bedtime  = isoToHHMM(pick(slp, ['start']));
+
   const recovery = pick(rec, ['score.recovery_score', 'recovery_score']);
   const hrv = pick(rec, ['score.hrv_rmssd_milli', 'hrv_rmssd_milli']);
   const rhr = pick(rec, ['score.resting_heart_rate', 'resting_heart_rate']);
@@ -95,6 +108,8 @@ module.exports = async (req, res) => {
     sleepPerf: sleepPerf != null ? Math.round(sleepPerf) : null,
     sleepHours,
     sleepTargetHours: 8,
+    wakeTime,
+    bedtime,
     strain: strain != null ? Math.round(strain * 10) / 10 : null,
     recoveryTrend,
     sleepDebt7d,

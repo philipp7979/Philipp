@@ -556,6 +556,7 @@ function publishWhoopData(d) {
     recovery: d.recovery, hrv: d.hrv, rhr: d.rhr,
     sleepPerf: d.sleepPerf, sleepHours: d.sleepHours,
     sleepTargetHours: d.sleepTargetHours, strain: d.strain,
+    wakeTime: d.wakeTime || null, bedtime: d.bedtime || null,
     vitalityScore: d.vitalityScore,
   };
   try { localStorage.setItem(WHOOP_SHARE_KEY, JSON.stringify(snap)); } catch (e) {}
@@ -652,6 +653,7 @@ function buildLiveData(j) {
     date: 'today',
     recovery: j.recovery, hrv: j.hrv, rhr: j.rhr,
     sleepPerf: j.sleepPerf, sleepHours: j.sleepHours, strain: j.strain,
+    wakeTime: j.wakeTime || null, bedtime: j.bedtime || null,
     hrvBaseline: null, rhrBaseline: null, sleepPerfBaseline: null,
     strainWeeklyAvg: j.strainWeeklyAvg != null ? j.strainWeeklyAvg : null,
     hrvAnomalous: false,

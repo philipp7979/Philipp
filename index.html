@@ -393,7 +393,7 @@ async function syncWhoop(){
     const j = await r.json();
     whoopStatus = { connected: !!j.connected, checked: true };
     if (j.connected) {
-      health = { source: 'whoop', connected: true, ts: j.ts || Date.now(), recovery: j.recovery, sleepHours: j.sleepHours, sleepPerf: j.sleepPerf, sleepTargetHours: j.sleepTargetHours || 8, hrv: j.hrv, rhr: j.rhr, strain: j.strain };
+      health = { source: 'whoop', connected: true, ts: j.ts || Date.now(), recovery: j.recovery, sleepHours: j.sleepHours, sleepPerf: j.sleepPerf, sleepTargetHours: j.sleepTargetHours || 8, wakeTime: j.wakeTime || null, bedtime: j.bedtime || null, hrv: j.hrv, rhr: j.rhr, strain: j.strain };
       saveHealth(health);
     } else if (health && health.source === 'whoop') {
       clearHealth(); health = null; // token expired/disconnected — drop stale Whoop data
